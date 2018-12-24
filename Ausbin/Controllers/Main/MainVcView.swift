@@ -1,9 +1,9 @@
 //
 //  MainVcView.swift
-//  Acupuncture
+//  Ausbin
 //
 //  Created by BinHuang on 2018/9/18.
-//  Copyright © 2018年 TechTCM. All rights reserved.
+//  Copyright © 2018年 BinHuang. All rights reserved.
 //
 
 import UIKit
@@ -23,7 +23,7 @@ class MainVcView: UIView {
         self.asb_setAction([ACTION_CLICK_LEFT_BTN, ACTION_CLICK_CENTER_BTN, ACTION_CLICK_RIGHT_BTN, ACTION_SELECT_TABLE_ROW]);
         self.mainVcModel = model;
         self.initAllViews();
-        self.asb_refreshViews(keyPath: nil);
+        self.asb_needToRefreshViews(keyPath: nil);
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -138,8 +138,8 @@ class MainVcView: UIView {
 
 extension MainVcView : AusbinVcViewDelegate{
     
-    func asb_refreshViews(keyPath : String?){
-        print(keyPath);
+    func asb_needToRefreshViews(keyPath : String?){
+        //print(keyPath);
         if(keyPath == nil || keyPath == "topText"){
             self.topLabel.text = self.mainVcModel.topText;
         }

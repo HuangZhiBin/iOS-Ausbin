@@ -1,9 +1,9 @@
 //
 //  MainVcModel.swift
-//  Acupuncture
+//  Ausbin
 //
 //  Created by BinHuang on 2018/9/18.
-//  Copyright © 2018年 TechTCM. All rights reserved.
+//  Copyright © 2018年 BinHuang. All rights reserved.
 //
 
 import UIKit

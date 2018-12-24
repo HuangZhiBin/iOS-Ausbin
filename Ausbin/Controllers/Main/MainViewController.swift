@@ -87,6 +87,6 @@ extension MainViewController : AusbinViewControllerDelegate{
     }
     
     func asb_didWhenModelChange(keyPath : String?){
-        self.vcView.asb_refreshViews(keyPath: keyPath);
+        self.vcView.asb_needToRefreshViews(keyPath: keyPath);
     }
 }
