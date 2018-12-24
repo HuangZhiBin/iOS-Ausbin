@@ -1,0 +1,516 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		336152C74FB587F8101B45FC /* libPods-Ausbin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DD9C69FC10422EAB097C66 /* libPods-Ausbin.a */; };
+		34B6F74F21D11F2200D8A9AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F74E21D11F2200D8A9AD /* AppDelegate.swift */; };
+		34B6F75621D11F2200D8A9AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34B6F75521D11F2200D8A9AD /* Assets.xcassets */; };
+		34B6F75921D11F2200D8A9AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34B6F75721D11F2200D8A9AD /* LaunchScreen.storyboard */; };
+		34B6F77921D11FC000D8A9AD /* AusbinVcViewChangeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F77221D11FC000D8A9AD /* AusbinVcViewChangeDelegate.swift */; };
+		34B6F77A21D11FC000D8A9AD /* AusbinVcViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F77321D11FC000D8A9AD /* AusbinVcViewDelegate.swift */; };
+		34B6F77B21D11FC000D8A9AD /* AusbinViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F77421D11FC000D8A9AD /* AusbinViewControllerDelegate.swift */; };
+		34B6F77C21D11FC000D8A9AD /* NSObject+AusbinVcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F77521D11FC000D8A9AD /* NSObject+AusbinVcView.swift */; };
+		34B6F77D21D11FC000D8A9AD /* UIViewController+Ausbin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F77621D11FC000D8A9AD /* UIViewController+Ausbin.swift */; };
+		34B6F7A721D11FCE00D8A9AD /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F79521D11FCE00D8A9AD /* MainTableViewCell.swift */; };
+		34B6F7A821D11FCE00D8A9AD /* MainVcModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F79621D11FCE00D8A9AD /* MainVcModel.swift */; };
+		34B6F7A921D11FCE00D8A9AD /* MainVcService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F79721D11FCE00D8A9AD /* MainVcService.swift */; };
+		34B6F7AA21D11FCE00D8A9AD /* MainVcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F79821D11FCE00D8A9AD /* MainVcView.swift */; };
+		34B6F7AB21D11FCE00D8A9AD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F79921D11FCE00D8A9AD /* MainViewController.swift */; };
+		34B6F7AF21D1201500D8A9AD /* MyNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F7AD21D1201500D8A9AD /* MyNavigationBar.swift */; };
+		34B6F7B021D1201500D8A9AD /* MyNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F7AE21D1201500D8A9AD /* MyNavigationViewController.swift */; };
+		34B6F7B221D1206E00D8A9AD /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F7B121D1206E00D8A9AD /* API.swift */; };
+		34B6F7BA21D1212100D8A9AD /* UIButton+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F7B921D1212100D8A9AD /* UIButton+Block.m */; };
+		34B6F7BD21D123E100D8A9AD /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F7BC21D123E100D8A9AD /* UIColor+Hex.m */; };
+		34B6F7C021D1260700D8A9AD /* UIView+Show.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F7BE21D1260700D8A9AD /* UIView+Show.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		34B6F74B21D11F2200D8A9AD /* Ausbin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ausbin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		34B6F74E21D11F2200D8A9AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		34B6F75521D11F2200D8A9AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		34B6F75821D11F2200D8A9AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		34B6F75A21D11F2200D8A9AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		34B6F77221D11FC000D8A9AD /* AusbinVcViewChangeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AusbinVcViewChangeDelegate.swift; sourceTree = "<group>"; };
+		34B6F77321D11FC000D8A9AD /* AusbinVcViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AusbinVcViewDelegate.swift; sourceTree = "<group>"; };
+		34B6F77421D11FC000D8A9AD /* AusbinViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AusbinViewControllerDelegate.swift; sourceTree = "<group>"; };
+		34B6F77521D11FC000D8A9AD /* NSObject+AusbinVcView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+AusbinVcView.swift"; sourceTree = "<group>"; };
+		34B6F77621D11FC000D8A9AD /* UIViewController+Ausbin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ausbin.swift"; sourceTree = "<group>"; };
+		34B6F79521D11FCE00D8A9AD /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		34B6F79621D11FCE00D8A9AD /* MainVcModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVcModel.swift; sourceTree = "<group>"; };
+		34B6F79721D11FCE00D8A9AD /* MainVcService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVcService.swift; sourceTree = "<group>"; };
+		34B6F79821D11FCE00D8A9AD /* MainVcView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVcView.swift; sourceTree = "<group>"; };
+		34B6F79921D11FCE00D8A9AD /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		34B6F7AD21D1201500D8A9AD /* MyNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNavigationBar.swift; sourceTree = "<group>"; };
+		34B6F7AE21D1201500D8A9AD /* MyNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNavigationViewController.swift; sourceTree = "<group>"; };
+		34B6F7B121D1206E00D8A9AD /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		34B6F7B321D120FD00D8A9AD /* Ausbin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ausbin-Bridging-Header.h"; sourceTree = "<group>"; };
+		34B6F7B821D1212100D8A9AD /* UIButton+Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Block.h"; sourceTree = "<group>"; };
+		34B6F7B921D1212100D8A9AD /* UIButton+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Block.m"; sourceTree = "<group>"; };
+		34B6F7BB21D123E100D8A9AD /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
+		34B6F7BC21D123E100D8A9AD /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
+		34B6F7BE21D1260700D8A9AD /* UIView+Show.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Show.m"; sourceTree = "<group>"; };
+		34B6F7BF21D1260700D8A9AD /* UIView+Show.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Show.h"; sourceTree = "<group>"; };
+		A7DD9C69FC10422EAB097C66 /* libPods-Ausbin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ausbin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1A55A15FE401B82918F10B9 /* Pods-Ausbin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ausbin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ausbin/Pods-Ausbin.release.xcconfig"; sourceTree = "<group>"; };
+		F71894231BDF7347AAC0B3BE /* Pods-Ausbin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ausbin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ausbin/Pods-Ausbin.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		34B6F74821D11F2200D8A9AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				336152C74FB587F8101B45FC /* libPods-Ausbin.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1407E1CB959CDBA44040530A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A7DD9C69FC10422EAB097C66 /* libPods-Ausbin.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		34B6F74221D11F2200D8A9AD = {
+			isa = PBXGroup;
+			children = (
+				34B6F74D21D11F2200D8A9AD /* Ausbin */,
+				34B6F74C21D11F2200D8A9AD /* Products */,
+				90936585EADE668113A5279D /* Pods */,
+				1407E1CB959CDBA44040530A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		34B6F74C21D11F2200D8A9AD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				34B6F74B21D11F2200D8A9AD /* Ausbin.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		34B6F74D21D11F2200D8A9AD /* Ausbin */ = {
+			isa = PBXGroup;
+			children = (
+				34B6F76F21D11FC000D8A9AD /* AusbinFramework */,
+				34B6F7AC21D1201500D8A9AD /* Base */,
+				34B6F77E21D11FCE00D8A9AD /* Controllers */,
+				34B6F7B721D1212100D8A9AD /* Utils */,
+				34B6F7B121D1206E00D8A9AD /* API.swift */,
+				34B6F74E21D11F2200D8A9AD /* AppDelegate.swift */,
+				34B6F75521D11F2200D8A9AD /* Assets.xcassets */,
+				34B6F75721D11F2200D8A9AD /* LaunchScreen.storyboard */,
+				34B6F75A21D11F2200D8A9AD /* Info.plist */,
+				34B6F7B321D120FD00D8A9AD /* Ausbin-Bridging-Header.h */,
+			);
+			path = Ausbin;
+			sourceTree = "<group>";
+		};
+		34B6F76F21D11FC000D8A9AD /* AusbinFramework */ = {
+			isa = PBXGroup;
+			children = (
+				34B6F77221D11FC000D8A9AD /* AusbinVcViewChangeDelegate.swift */,
+				34B6F77321D11FC000D8A9AD /* AusbinVcViewDelegate.swift */,
+				34B6F77421D11FC000D8A9AD /* AusbinViewControllerDelegate.swift */,
+				34B6F77521D11FC000D8A9AD /* NSObject+AusbinVcView.swift */,
+				34B6F77621D11FC000D8A9AD /* UIViewController+Ausbin.swift */,
+			);
+			path = AusbinFramework;
+			sourceTree = "<group>";
+		};
+		34B6F77E21D11FCE00D8A9AD /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				34B6F79321D11FCE00D8A9AD /* Main */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		34B6F79321D11FCE00D8A9AD /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				34B6F79421D11FCE00D8A9AD /* Components */,
+				34B6F79921D11FCE00D8A9AD /* MainViewController.swift */,
+				34B6F79621D11FCE00D8A9AD /* MainVcModel.swift */,
+				34B6F79721D11FCE00D8A9AD /* MainVcService.swift */,
+				34B6F79821D11FCE00D8A9AD /* MainVcView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		34B6F79421D11FCE00D8A9AD /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				34B6F79521D11FCE00D8A9AD /* MainTableViewCell.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		34B6F7AC21D1201500D8A9AD /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				34B6F7AD21D1201500D8A9AD /* MyNavigationBar.swift */,
+				34B6F7AE21D1201500D8A9AD /* MyNavigationViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		34B6F7B721D1212100D8A9AD /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				34B6F7BF21D1260700D8A9AD /* UIView+Show.h */,
+				34B6F7BE21D1260700D8A9AD /* UIView+Show.m */,
+				34B6F7BB21D123E100D8A9AD /* UIColor+Hex.h */,
+				34B6F7BC21D123E100D8A9AD /* UIColor+Hex.m */,
+				34B6F7B821D1212100D8A9AD /* UIButton+Block.h */,
+				34B6F7B921D1212100D8A9AD /* UIButton+Block.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		90936585EADE668113A5279D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F71894231BDF7347AAC0B3BE /* Pods-Ausbin.debug.xcconfig */,
+				B1A55A15FE401B82918F10B9 /* Pods-Ausbin.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		34B6F74A21D11F2200D8A9AD /* Ausbin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 34B6F75D21D11F2200D8A9AD /* Build configuration list for PBXNativeTarget "Ausbin" */;
+			buildPhases = (
+				B4208E2610482CD2F9ADDBD1 /* [CP] Check Pods Manifest.lock */,
+				34B6F74721D11F2200D8A9AD /* Sources */,
+				34B6F74821D11F2200D8A9AD /* Frameworks */,
+				34B6F74921D11F2200D8A9AD /* Resources */,
+				A8AF79A09841FFB739A30F12 /* [CP] Embed Pods Frameworks */,
+				C9CAD196421DFE621DDCCD70 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Ausbin;
+			productName = Ausbin;
+			productReference = 34B6F74B21D11F2200D8A9AD /* Ausbin.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		34B6F74321D11F2200D8A9AD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0910;
+				LastUpgradeCheck = 0910;
+				ORGANIZATIONNAME = BinHuang;
+				TargetAttributes = {
+					34B6F74A21D11F2200D8A9AD = {
+						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 0910;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 34B6F74621D11F2200D8A9AD /* Build configuration list for PBXProject "Ausbin" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 34B6F74221D11F2200D8A9AD;
+			productRefGroup = 34B6F74C21D11F2200D8A9AD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				34B6F74A21D11F2200D8A9AD /* Ausbin */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		34B6F74921D11F2200D8A9AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				34B6F75921D11F2200D8A9AD /* LaunchScreen.storyboard in Resources */,
+				34B6F75621D11F2200D8A9AD /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A8AF79A09841FFB739A30F12 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ausbin/Pods-Ausbin-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B4208E2610482CD2F9ADDBD1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C9CAD196421DFE621DDCCD70 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ausbin/Pods-Ausbin-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		34B6F74721D11F2200D8A9AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				34B6F7B021D1201500D8A9AD /* MyNavigationViewController.swift in Sources */,
+				34B6F7BD21D123E100D8A9AD /* UIColor+Hex.m in Sources */,
+				34B6F7A721D11FCE00D8A9AD /* MainTableViewCell.swift in Sources */,
+				34B6F7AB21D11FCE00D8A9AD /* MainViewController.swift in Sources */,
+				34B6F7AF21D1201500D8A9AD /* MyNavigationBar.swift in Sources */,
+				34B6F7AA21D11FCE00D8A9AD /* MainVcView.swift in Sources */,
+				34B6F7A821D11FCE00D8A9AD /* MainVcModel.swift in Sources */,
+				34B6F77921D11FC000D8A9AD /* AusbinVcViewChangeDelegate.swift in Sources */,
+				34B6F77D21D11FC000D8A9AD /* UIViewController+Ausbin.swift in Sources */,
+				34B6F77A21D11FC000D8A9AD /* AusbinVcViewDelegate.swift in Sources */,
+				34B6F7A921D11FCE00D8A9AD /* MainVcService.swift in Sources */,
+				34B6F74F21D11F2200D8A9AD /* AppDelegate.swift in Sources */,
+				34B6F77B21D11FC000D8A9AD /* AusbinViewControllerDelegate.swift in Sources */,
+				34B6F7BA21D1212100D8A9AD /* UIButton+Block.m in Sources */,
+				34B6F7C021D1260700D8A9AD /* UIView+Show.m in Sources */,
+				34B6F7B221D1206E00D8A9AD /* API.swift in Sources */,
+				34B6F77C21D11FC000D8A9AD /* NSObject+AusbinVcView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		34B6F75721D11F2200D8A9AD /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				34B6F75821D11F2200D8A9AD /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		34B6F75B21D11F2200D8A9AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		34B6F75C21D11F2200D8A9AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		34B6F75E21D11F2200D8A9AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F71894231BDF7347AAC0B3BE /* Pods-Ausbin.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 32YMLWPCBK;
+				INFOPLIST_FILE = Ausbin/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.techtcm.acup.Ausbin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Ausbin/Ausbin-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		34B6F75F21D11F2200D8A9AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1A55A15FE401B82918F10B9 /* Pods-Ausbin.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 32YMLWPCBK;
+				INFOPLIST_FILE = Ausbin/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.techtcm.acup.Ausbin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Ausbin/Ausbin-Bridging-Header.h";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		34B6F74621D11F2200D8A9AD /* Build configuration list for PBXProject "Ausbin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				34B6F75B21D11F2200D8A9AD /* Debug */,
+				34B6F75C21D11F2200D8A9AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		34B6F75D21D11F2200D8A9AD /* Build configuration list for PBXNativeTarget "Ausbin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				34B6F75E21D11F2200D8A9AD /* Debug */,
+				34B6F75F21D11F2200D8A9AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 34B6F74321D11F2200D8A9AD /* Project object */;
+}
