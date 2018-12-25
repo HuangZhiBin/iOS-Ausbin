@@ -36,17 +36,18 @@ class MainVcService: NSObject {
             item.itemTitle = item.itemTitle.replacingOccurrences(of: "（已选中）", with: "");
         }
         self.mainVcModel.items[index].itemTitle = self.mainVcModel.items[index].itemTitle + "（已选中）";
-        self.mainVcModel.items[index] = self.mainVcModel.items[index];
+        self.mainVcModel.items = self.mainVcModel.items;//强制刷新数组
     }
     
     func webLoadList(success: @escaping ServiceSuccessCallback, error: @escaping ServiceErrorCallback,  fail : @escaping ServiceNetworkFailCallback){
-        API.getAllSymptoms(success: { (dict : Dictionary<String, Any>) in
+        API.getAllList(success: { (dict : Dictionary<String, Any>) in
             success();
+            print("load success");
             
             var items : [ItemModel] = [];
             
             let dataDict : Dictionary<String,Any>? = dict as Dictionary<String,Any>?;
-            let arr : [Any]? = dataDict!["data"] as? Array;
+            let arr : [Any]? = dataDict!["list"] as? Array;
             for item in arr! {
                 var itemDict:Dictionary<String,Any>? = item as? Dictionary<String, Any>;
                 items.append(ItemModel.init(itemTitle: itemDict!["name"] as! String, itemContent: itemDict!["value"] as! String));
@@ -54,8 +55,7 @@ class MainVcService: NSObject {
             
             self.mainVcModel.items = items;
         }, error: { (errorCode : String, errorMsg : String) in
-            print(errorCode);
-            print(errorMsg);
+            print(errorCode,errorMsg);
             error(errorCode,errorMsg);
         }, fail:{ (task : URLSessionDataTask?, error : Error) in
             print("error description = "+error.localizedDescription);

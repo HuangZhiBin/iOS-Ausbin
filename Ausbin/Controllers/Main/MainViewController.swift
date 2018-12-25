@@ -64,6 +64,7 @@ extension MainViewController : AusbinViewControllerDelegate{
             self.vcService.changeTopValue();
         }
         else if(action == self.vcView.ACTION_CLICK_CENTER_BTN){
+            print("ACTION_CLICK_CENTER_BTN")
             self.view.showLoadingProgressHUB("请稍等");
             self.vcService.webLoadList(success: { () in
                 self.view.hideLoadingProgressHUB();

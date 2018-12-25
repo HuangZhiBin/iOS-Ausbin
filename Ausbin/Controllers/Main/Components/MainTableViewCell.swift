@@ -10,14 +10,14 @@ import UIKit
 
 class MainTableViewCell: UITableViewCell {
     
-    lazy var leftLabel : UILabel! = {
+    lazy var topLabel : UILabel! = {
         let label = UILabel.init(frame: CGRect.init(x: 15, y: 17, width: ScreenWidth-30, height: 20));
         label.font = UIFont.systemFont(ofSize: 16);
         label.textColor = UIColor.init(hexString: "333333");
         return label;
     }();
     
-    lazy var rightLabel : UILabel! = {
+    lazy var bottomLabel : UILabel! = {
         let label = UILabel.init(frame: CGRect.init(x: 15, y: 40, width: ScreenWidth-30, height: 20));
         label.font = UIFont.systemFont(ofSize: 14);
         label.textColor = UIColor.init(hexString: "888888");
@@ -39,13 +39,13 @@ class MainTableViewCell: UITableViewCell {
     func initializeAllView() {
         // Initialization code
         print("initializeAllView()");
-        self.addSubview(self.leftLabel);
-        self.addSubview(self.rightLabel);
+        self.addSubview(self.topLabel);
+        self.addSubview(self.bottomLabel);
     }
     
     func updateCell(title : String, content : String) {
-        self.leftLabel.text = title;
-        self.rightLabel.text = content;
+        self.topLabel.text = title;
+        self.bottomLabel.text = content;
     }
     
     override func awakeFromNib() {

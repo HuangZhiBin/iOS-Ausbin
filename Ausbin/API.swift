@@ -66,12 +66,12 @@ class API: NSObject {
     }
     
     @discardableResult
-    static func getAllSymptoms(success: @escaping NetworkSuccessCallback, error: @escaping NetworkErrorCallback,  fail : @escaping NetworkFailCallback) -> URLSessionDataTask?{
-        let urlString = "https://raw.githubusercontent.com/HuangZhiBin/iOS-Ausbin/master/Ausbin/list.json";
+    static func getAllList(success: @escaping NetworkSuccessCallback, error: @escaping NetworkErrorCallback,  fail : @escaping NetworkFailCallback) -> URLSessionDataTask?{
+        let urlString = "https://www.koudaikr.cn/ios/list.json";
         
         let parameters : [String : Any] = [:];
         
-        let sessionDataTask = getManager().post(urlString, parameters: parameters, progress: {(progress : Progress) -> Void in
+        let sessionDataTask = getManager().get(urlString, parameters: parameters, progress: {(progress : Progress) -> Void in
             
         }, success: {(task : URLSessionDataTask, responseObj : Any?) -> Void in
             handleResponseObject(responseObject: responseObj!, task: task, success: success, error: error);
