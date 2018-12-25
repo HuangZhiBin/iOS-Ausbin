@@ -8,83 +8,31 @@
 
 import UIKit
 
-class MainViewController: UIViewController,AusbinVcViewChangeDelegate {
+class MainViewController: UIViewController {
     
-    var vcService : MainVcService!;
     var vcView : MainVcView!;
-    var vcModel : MainVcModel!;
+    var vcService : MainVcService!;
     
     override func viewDidLoad() {
         super.viewDidLoad();
         
         self.title = "Ausbin数据驱动型iOS框架";
         
-        self.vcModel = MainVcModel(coder: nil);
+        self.vcService = MainVcService();
         
-        self.vcView = MainVcView(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height:ScreenHeight-Status_Bar_Height-Navigation_Bar_Height), model:self.vcModel);
-        self.vcView.asb_viewChangeDelegate = self;
+        self.vcView = MainVcView(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height:ScreenHeight-Status_Bar_Height-Navigation_Bar_Height), service: self.vcService);
         self.view.addSubview(self.vcView);
         
-        self.vcService = MainVcService(model:self.vcModel);
-        
-        self.asb_addObserverFor(self.vcModel);
-        self.asb_addObserverFor(self.vcModel.childModel);
+        self.asb_addObserverFor(self.vcService.vcModel);
+        //self.vcService.vcModel.checkedIndex = 0;
     }
     
     deinit {
-        self.asb_removeObserverFor(self.vcModel);
-        self.asb_removeObserverFor(self.vcModel.childModel);
+        self.asb_removeObserverFor(self.vcService.vcModel);
     }
     
     //MARK: - 监听Model变化->刷新View
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if((object as! NSObject) == self.vcModel){
-            self.asb_didWhenModelChange(keyPath: keyPath);
-        }
-        else if((object as! NSObject) == self.vcModel.childModel){
-            self.asb_didWhenModelChange(keyPath: "childModel." + keyPath!);
-        }
-//        var targetKeyPath = keyPath;
-//        if((object as AnyObject?) === (self.vcModel as! MainVcModel).egg){
-//            targetKeyPath = "egg." + keyPath!;
-//        }
-//        self.asb_didWhenModelChange(keyPath: keyPath);
-    }
-    
-    //MARK: - 监听View事件->更新Model数据
-    func asb_viewDidChanged(action: String, params: [Any]) {
-        self.asb_didWhenViewChange(action: action, params: params);
-    }
-}
-
-//MARK: - Model <-> View交互
-extension MainViewController : AusbinViewControllerDelegate{
-    func asb_didWhenViewChange(action : String, params: [Any]){
-        if(action == self.vcView.ACTION_CLICK_LEFT_BTN){
-            self.vcService.changeTopValue();
-        }
-        else if(action == self.vcView.ACTION_CLICK_CENTER_BTN){
-            print("ACTION_CLICK_CENTER_BTN")
-            self.view.showLoadingProgressHUB("请稍等");
-            self.vcService.webLoadList(success: { () in
-                self.view.hideLoadingProgressHUB();
-            }, error: { (errorCode : String, errorMsg : String) in
-                self.view.showProgressHUB(forSuccess: false, message: errorMsg);
-            }, fail:{ () in
-                self.view.showProgressHUB(forSuccess: false, message: "网络繁忙，请重试");
-            });
-        }
-        else if(action == self.vcView.ACTION_CLICK_RIGHT_BTN){
-            self.vcService.changeBottomValue();
-        }
-        else if(action == self.vcView.ACTION_SELECT_TABLE_ROW){
-            print(params[0] as! Int);
-            let value = params[0] as! Int;
-            self.vcService.changeTableValue(index: value);
-        }
-    }
-    
-    func asb_didWhenModelChange(keyPath : String?){
-        self.vcView.asb_needToRefreshViews(keyPath: keyPath);
+        self.vcView.asb_needToRefreshViews(object: object, keyPath: keyPath);
     }
 }

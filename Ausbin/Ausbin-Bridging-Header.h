@@ -5,5 +5,6 @@
 #import "UIButton+Block.h"
 #import "UIColor+Hex.h"
 #import "UIView+Show.h"
+#import "UIViewController+Dealloc.h"
 #import <AFNetworking/AFNetworking.h>
 #import <MBProgressHUD/MBProgressHUD.h>

@@ -11,7 +11,7 @@ import UIKit
 class MainTableViewCell: UITableViewCell {
     
     lazy var topLabel : UILabel! = {
-        let label = UILabel.init(frame: CGRect.init(x: 15, y: 17, width: ScreenWidth-30, height: 20));
+        let label = UILabel.init(frame: CGRect.init(x: 15, y: 15, width: ScreenWidth-30, height: 20));
         label.font = UIFont.systemFont(ofSize: 16);
         label.textColor = UIColor.init(hexString: "333333");
         return label;
@@ -22,6 +22,12 @@ class MainTableViewCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 14);
         label.textColor = UIColor.init(hexString: "888888");
         return label;
+    }();
+    
+    lazy var checkImageView : UIImageView! = {
+        let checkImageView = UIImageView.init(frame: CGRect.init(x: ScreenWidth-50, y: 20, width: 30, height: 30));
+        checkImageView.image = UIImage.init(named: "uncheck");
+        return checkImageView;
     }();
     
     //MARK: - 初始化View
@@ -41,6 +47,7 @@ class MainTableViewCell: UITableViewCell {
         print("initializeAllView()");
         self.addSubview(self.topLabel);
         self.addSubview(self.bottomLabel);
+        self.addSubview(self.checkImageView);
     }
     
     func updateCell(title : String, content : String) {

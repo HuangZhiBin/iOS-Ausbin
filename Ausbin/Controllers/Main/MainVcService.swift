@@ -10,33 +10,48 @@ import UIKit
 
 class MainVcService: NSObject {
     
-    var mainVcModel : MainVcModel!;
+    private(set) var vcModel: MainVcModel!;
     
-    init(model : MainVcModel) {
+    override init() {
         super.init();
-        self.mainVcModel = model;
+        self.vcModel = MainVcModel(coder: nil);
     }
     
-    func changeTopValue(){
+    func changeLevelValue1(){
         let now = Date()
         let timeInterval: TimeInterval = now.timeIntervalSince1970
         let millisecond = CLongLong(round(timeInterval*1000))
-        self.mainVcModel.topText = "顶部时间戳：" + String(millisecond);
+        self.vcModel.innerText = "1级子变量innerText的值:"+String(millisecond);
     }
     
-    func changeBottomValue(){
+    func changeLevelValue2(){
         let now = Date()
         let timeInterval: TimeInterval = now.timeIntervalSince1970
         let millisecond = CLongLong(round(timeInterval*1000))
-        self.mainVcModel.childModel.innerText = "底部时间戳：" + String(millisecond);
+        self.vcModel.childModel.innerText = "2级子变量innerText的值:"+String(millisecond);
+    }
+    
+    func changeLevelValue3(){
+        let now = Date()
+        let timeInterval: TimeInterval = now.timeIntervalSince1970
+        let millisecond = CLongLong(round(timeInterval*1000))
+        self.vcModel.childModel.childItemModel.innerText = "3级子变量innerText的值:"+String(millisecond);
+    }
+    
+    func changeLevelValue4(){
+        let now = Date()
+        let timeInterval: TimeInterval = now.timeIntervalSince1970
+        let millisecond = CLongLong(round(timeInterval*1000))
+        self.vcModel.childModel.childItemModel.childSubItemModel.innerText = "4级子变量innerText的值:"+String(millisecond);
     }
     
     func changeTableValue(index : Int){
-        for item in self.mainVcModel.items{
+        self.vcModel.checkedIndex = NSNumber.init(value: index);
+        for item in self.vcModel.items{
             item.itemTitle = item.itemTitle.replacingOccurrences(of: "（已选中）", with: "");
         }
-        self.mainVcModel.items[index].itemTitle = self.mainVcModel.items[index].itemTitle + "（已选中）";
-        self.mainVcModel.items = self.mainVcModel.items;//强制刷新数组
+        self.vcModel.items[index].itemTitle = self.vcModel.items[index].itemTitle + "（已选中）";
+        self.vcModel.items = self.vcModel.items;//强制刷新数组
     }
     
     func webLoadList(success: @escaping ServiceSuccessCallback, error: @escaping ServiceErrorCallback,  fail : @escaping ServiceNetworkFailCallback){
@@ -44,16 +59,17 @@ class MainVcService: NSObject {
             success();
             print("load success");
             
-            var items : [ItemModel] = [];
+            var items : [ListItemModel] = [];
             
             let dataDict : Dictionary<String,Any>? = dict as Dictionary<String,Any>?;
             let arr : [Any]? = dataDict!["list"] as? Array;
             for item in arr! {
                 var itemDict:Dictionary<String,Any>? = item as? Dictionary<String, Any>;
-                items.append(ItemModel.init(itemTitle: itemDict!["name"] as! String, itemContent: itemDict!["value"] as! String));
+                items.append(ListItemModel.init(itemTitle: itemDict!["name"] as! String, itemContent: itemDict!["value"] as! String));
             }
             
-            self.mainVcModel.items = items;
+            self.vcModel.items = items;
+            self.vcModel.checkedIndex = -1;
         }, error: { (errorCode : String, errorMsg : String) in
             print(errorCode,errorMsg);
             error(errorCode,errorMsg);

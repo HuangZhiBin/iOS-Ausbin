@@ -10,32 +10,22 @@ import UIKit
 
 class MainVcModel: NSObject {
     
-    @objc dynamic var topText : String! = "这是最原始的顶部文字";
+    @objc dynamic var items : [ListItemModel] = [ListItemModel.init(itemTitle: "可乐", itemContent: "2.00元"),ListItemModel.init(itemTitle: "雪碧", itemContent: "3.00元")];
     
-    @objc dynamic var childModel : ChildModel! = ChildModel.init(innerText: "这是最原始的底部文字");
+    @objc dynamic var innerText : String! = "1级子变量innerText的值:0";
     
-    @objc dynamic var items : [ItemModel] = [ItemModel.init(itemTitle: "可乐", itemContent: "可乐的价格是2.00元"),ItemModel.init(itemTitle: "雪碧", itemContent: "雪碧的价格是3.00元")];
+    @objc dynamic var childModel : ChildModel! = ChildModel.init(innerText: "2级子变量innerText的值:0", childItemModel: ChildItemModel.init(innerText: "3级子变量innerText的值:0", childSubItemModel: ChildSubItemModel.init(innerText: "4级子变量innerText的值:0")));
     
-    required init(coder aDecoder: NSCoder?) {
-        super.init();
-    }
-}
-
-class ChildModel: NSObject {
+    @objc dynamic var checkedIndex : NSNumber = -1;
     
-    @objc dynamic var innerText : String!;
-    
-    init(innerText : String) {
-        super.init();
-        self.innerText = innerText;
-    }
+    @objc dynamic var optionalModel : OptionalModel?;
     
     required init(coder aDecoder: NSCoder?) {
         super.init();
     }
 }
 
-class ItemModel: NSObject {
+class ListItemModel: NSObject {
     
     @objc dynamic var itemTitle : String!;
     
@@ -45,9 +35,64 @@ class ItemModel: NSObject {
         super.init();
         self.itemTitle = itemTitle;
         self.itemContent = itemContent;
+        
     }
     
     required init(coder aDecoder: NSCoder?) {
         super.init();
     }
+}
+
+class ChildModel: NSObject {
+    
+    @objc dynamic var innerText : String!;
+    @objc dynamic var childItemModel : ChildItemModel!;
+    
+    init(innerText : String, childItemModel: ChildItemModel) {
+        super.init();
+        self.innerText = innerText;
+        self.childItemModel = childItemModel;
+    }
+    
+    required init(coder aDecoder: NSCoder?) {
+        super.init();
+    }
+}
+
+class ChildItemModel: NSObject {
+    
+    @objc dynamic var innerText : String!;
+    @objc dynamic var childSubItemModel : ChildSubItemModel!;
+    
+    init(innerText : String, childSubItemModel: ChildSubItemModel) {
+        super.init();
+        self.innerText = innerText;
+        self.childSubItemModel = childSubItemModel;
+    }
+    
+    required init(coder aDecoder: NSCoder?) {
+        super.init();
+    }
+}
+
+class ChildSubItemModel: NSObject {
+    
+    @objc dynamic var innerText : String!;
+    
+    
+    init(innerText : String) {
+        super.init();
+        self.innerText = innerText;
+        
+    }
+    
+    required init(coder aDecoder: NSCoder?) {
+        super.init();
+    }
+}
+
+class OptionalModel: NSObject {
+    
+    @objc dynamic var optionalProperty : String?;
+    
 }

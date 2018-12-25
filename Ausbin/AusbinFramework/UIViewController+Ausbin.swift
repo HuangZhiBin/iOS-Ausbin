@@ -8,33 +8,43 @@
 
 import UIKit
 
-private var actionsKey: Void?
-
 extension UIViewController{
     
-    private var asb_actions : [String]? {
-        get {
-            return objc_getAssociatedObject(self, &actionsKey) as? [String];
-        }
-        set(newValue) {
-            objc_setAssociatedObject(self, &actionsKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        }
-    };
-    
     func asb_addObserverFor(_ obj : AnyObject){
-        let properties : [String] = getAllProperties(obj: obj);
+        if(obj is NSNull){
+            return;
+        }
+        let properties : [String:String] = (obj as! NSObject).asb_getProperties()!;
         for property in properties{
-            obj.addObserver(self, forKeyPath:property , options: .new, context: nil);
+            let propertyName = property.key;
+            let typeName = property.value;
+            if(typeName.contains(ProjectName)){
+                //print("<=====");
+                asb_addObserverFor(obj.value(forKey: propertyName) as AnyObject);
+            }
+            obj.addObserver(self, forKeyPath:propertyName , options: .new, context: nil);
+            print("[Ausbin] ♥️add Observer for propertyName " + propertyName);
         }
     }
     
     func asb_removeObserverFor(_ obj : AnyObject){
-        let properties : [String] = getAllProperties(obj: obj);
+        if(obj is NSNull){
+            return;
+        }
+        let properties : [String:String] = (obj as! NSObject).asb_getProperties()!;
         for property in properties{
-            obj.removeObserver(self, forKeyPath:property , context: nil);
+            let propertyName = property.key;
+            let typeName = property.value;
+            if(typeName.contains(ProjectName)){
+                //print("<=====");
+                asb_removeObserverFor(obj.value(forKey: propertyName) as AnyObject);
+            }
+            obj.removeObserver(self, forKeyPath:propertyName , context: nil);
+            print("[Ausbin] 🔥remove Observer for propertyName " + propertyName);
         }
     }
     
+    /*
     private func getAllProperties(obj : AnyObject) -> [String]{
         var properties : [String] = [];
         var count: UInt32 = 0
@@ -62,5 +72,5 @@ extension UIViewController{
         free(list) //释放list
         return properties;
     }
-    
+    */
 }

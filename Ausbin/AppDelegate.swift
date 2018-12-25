@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds);
         
-        let mainVC = MainViewController();//MainViewController();
+        let mainVC = ViewController();//MainViewController();
         self.navigationVCMain = MyNavigationViewController(rootViewController:mainVC);
         self.window?.rootViewController = navigationVCMain;
         
