@@ -7,7 +7,8 @@
 //
 import UIKit
 protocol AusbinVcViewDelegate : NSObjectProtocol{
+    func asb_setRouter(router : NSObject);
     func asb_getActions() -> [String];
-    func asb_needToRefreshViews(object: Any?, keyPath : String?);
+    func asb_refreshViews(routerKey: String?);
     func asb_handleAction(action : String, params: [Any]);
 }

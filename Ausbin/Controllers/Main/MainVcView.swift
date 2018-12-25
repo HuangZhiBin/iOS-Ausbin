@@ -11,24 +11,25 @@ import UIKit
 class MainVcView: UIView {
     
     //action的值可以随意取，但要保证不重复
-    let ACTION_CLICK_CENTER_BTN = UIView.asb_generateAction();
-    let ACTION_CLICK_LEVEL_BTN_1 = UIView.asb_generateAction();
-    let ACTION_CLICK_LEVEL_BTN_2 = UIView.asb_generateAction();
-    let ACTION_CLICK_LEVEL_BTN_3 = UIView.asb_generateAction();
-    let ACTION_CLICK_LEVEL_BTN_4 = UIView.asb_generateAction();
-    let ACTION_SELECT_TABLE_ROW = UIView.asb_generateAction();
+    let ACTION_CLICK_CENTER_BTN = UIView.asb_vc_view_generateAction();
+    let ACTION_CLICK_LEVEL_BTN_1 = UIView.asb_vc_view_generateAction();
+    let ACTION_CLICK_LEVEL_BTN_2 = UIView.asb_vc_view_generateAction();
+    let ACTION_CLICK_LEVEL_BTN_3 = UIView.asb_vc_view_generateAction();
+    let ACTION_SELECT_TABLE_ROW = UIView.asb_vc_view_generateAction();
     
-    weak var vcService : MainVcService!;
+    private weak var vcRouter : MainVcRouter!{
+        didSet{
+            //必须在view加载完成后执行下面的代码
+            self.asb_refreshViews(routerKey: nil);
+        }
+    }
     
     let CELL_IDENTIFIER = "cell";
 
     //可以将外界的参数传进来
-    init(frame: CGRect, service: MainVcService) {
+    override init(frame: CGRect) {
         super.init(frame: frame);
-        self.vcService = service;
         self.initAllViews();
-        //必须在view加载完成后执行下面的代码
-        self.asb_didVcViewLoaded();
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -43,11 +44,9 @@ class MainVcView: UIView {
         self.tableView.addSubview(self.levelLabel1);
         self.tableView.addSubview(self.levelLabel2);
         self.tableView.addSubview(self.levelLabel3);
-        self.tableView.addSubview(self.levelLabel4);
         self.tableView.addSubview(self.levelBtn1);
         self.tableView.addSubview(self.levelBtn2);
         self.tableView.addSubview(self.levelBtn3);
-        self.tableView.addSubview(self.levelBtn4);
         
         self.centerBtn.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
             self?.asb_handleAction(action: (self?.ACTION_CLICK_CENTER_BTN)!, params: []);
@@ -64,10 +63,6 @@ class MainVcView: UIView {
         self.levelBtn3.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
             self?.asb_handleAction(action: (self?.ACTION_CLICK_LEVEL_BTN_3)!, params: []);
         });
-        
-        self.levelBtn4.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
-            self?.asb_handleAction(action: (self?.ACTION_CLICK_LEVEL_BTN_4)!, params: []);
-        });
     }
     
     override func layoutSubviews() {
@@ -75,30 +70,23 @@ class MainVcView: UIView {
     }
     
     lazy var levelLabel1 : UILabel! = {
-        let label = UILabel.init(frame: CGRect.init(x: 10, y: 210, width: ScreenWidth-20, height: 20));
+        let label = UILabel.init(frame: CGRect.init(x: 10, y: 220, width: ScreenWidth-20, height: 20));
         label.font = UIFont.boldSystemFont(ofSize: 14);
         label.textColor = UIColor.init(hexString: "f03a39");
         return label;
     }();
     
     lazy var levelLabel2 : UILabel! = {
-        let label = UILabel.init(frame: CGRect.init(x: 10, y: 310, width: ScreenWidth-20, height: 20));
+        let label = UILabel.init(frame: CGRect.init(x: 10, y: 320, width: ScreenWidth-20, height: 20));
         label.font = UIFont.boldSystemFont(ofSize: 14);
         label.textColor = UIColor.init(hexString: "0075fa");
         return label;
     }();
     
     lazy var levelLabel3 : UILabel! = {
-        let label = UILabel.init(frame: CGRect.init(x: 10, y: 410, width: ScreenWidth-20, height: 20));
+        let label = UILabel.init(frame: CGRect.init(x: 10, y: 420, width: ScreenWidth-20, height: 20));
         label.font = UIFont.boldSystemFont(ofSize: 14);
         label.textColor = UIColor.init(hexString: "ff416a");
-        return label;
-    }();
-    
-    lazy var levelLabel4 : UILabel! = {
-        let label = UILabel.init(frame: CGRect.init(x: 10, y: 510, width: ScreenWidth-20, height: 20));
-        label.font = UIFont.boldSystemFont(ofSize: 14);
-        label.textColor = UIColor.init(hexString: "d75201");
         return label;
     }();
     
@@ -116,7 +104,7 @@ class MainVcView: UIView {
     
     lazy var levelBtn1 : UIButton! = {
         let btn : UIButton = UIButton.init(type: .system);
-        btn.frame = CGRect.init(x: 10, y: 240, width: ScreenWidth-20, height: 50);
+        btn.frame = CGRect.init(x: 10, y: 250, width: ScreenWidth-20, height: 50);
         btn.layer.masksToBounds = true;
         btn.layer.cornerRadius = 3;
         btn.setTitle("更新1级子变量innerText", for: .normal);
@@ -128,7 +116,7 @@ class MainVcView: UIView {
     
     lazy var levelBtn2 : UIButton! = {
         let btn : UIButton = UIButton.init(type: .system);
-        btn.frame = CGRect.init(x: 10, y: 340, width: ScreenWidth-20, height: 50);
+        btn.frame = CGRect.init(x: 10, y: 350, width: ScreenWidth-20, height: 50);
         btn.layer.masksToBounds = true;
         btn.layer.cornerRadius = 3;
         btn.setTitle("更新2级子变量innerText", for: .normal);
@@ -140,25 +128,13 @@ class MainVcView: UIView {
     
     lazy var levelBtn3 : UIButton! = {
         let btn : UIButton = UIButton.init(type: .system);
-        btn.frame = CGRect.init(x: 10, y: 440, width: ScreenWidth-20, height: 50);
+        btn.frame = CGRect.init(x: 10, y: 450, width: ScreenWidth-20, height: 50);
         btn.layer.masksToBounds = true;
         btn.layer.cornerRadius = 3;
         btn.setTitle("更新3级子变量innerText", for: .normal);
         btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         btn.setTitleColor(UIColor.init(hexString: "ffffff"), for: .normal);
         btn.backgroundColor = UIColor.init(hexString: "ff416a");
-        return btn;
-    }();
-    
-    lazy var levelBtn4 : UIButton! = {
-        let btn : UIButton = UIButton.init(type: .system);
-        btn.frame = CGRect.init(x: 10, y: 540, width: ScreenWidth-20, height: 50);
-        btn.layer.masksToBounds = true;
-        btn.layer.cornerRadius = 3;
-        btn.setTitle("更新4级子变量innerText", for: .normal);
-        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        btn.setTitleColor(UIColor.init(hexString: "ffffff"), for: .normal);
-        btn.backgroundColor = UIColor.init(hexString: "d75201");
         return btn;
     }();
     
@@ -194,10 +170,10 @@ class MainVcView: UIView {
 extension MainVcView : UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(self.vcService.vcModel == nil){
+        if(self.vcRouter == nil){
             return 0;
         }
-        return self.vcService.vcModel.items.count;
+        return self.vcRouter.items.count;
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -213,7 +189,7 @@ extension MainVcView : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item : ListItemModel = self.vcService.vcModel.items[indexPath.row];
+        let item : ListItemModel = self.vcRouter.items[indexPath.row];
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CELL_IDENTIFIER, for: indexPath) as! MainTableViewCell;
         
@@ -221,7 +197,7 @@ extension MainVcView : UITableViewDelegate,UITableViewDataSource{
         
         cell.selectedBackgroundView = UIView.init(frame: cell.frame);
         cell.selectedBackgroundView?.backgroundColor = UIColor.init(hexString: "f9f9f9");
-        if(indexPath.row == self.vcService.vcModel.checkedRowIndex.intValue){
+        if(indexPath.row == self.vcRouter.checkedRowIndex.intValue){
             cell.checkImageView.image = UIImage.init(named: "checked");
         }
         else{
@@ -246,34 +222,33 @@ extension MainVcView : UITableViewDelegate,UITableViewDataSource{
 
 extension MainVcView : AusbinVcViewDelegate{
     
+    func asb_setRouter(router : NSObject){
+        self.vcRouter = router as! MainVcRouter;
+    }
+    
     func asb_getActions() -> [String]{
         return [
             ACTION_CLICK_LEVEL_BTN_1,
             ACTION_CLICK_LEVEL_BTN_2,
             ACTION_CLICK_LEVEL_BTN_3,
-            ACTION_CLICK_LEVEL_BTN_4,
-            
             ACTION_CLICK_CENTER_BTN,
             ACTION_SELECT_TABLE_ROW
         ];
     }
     
     func asb_handleAction(action : String, params: [Any]){
-        if(self.asb_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_1)){
-            self.vcService.changeLevelValue1();
+        if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_1)){
+            self.vcRouter.changeLevelValue1();
         }
-        else if(self.asb_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_2)){
-            self.vcService.changeLevelValue2();
+        else if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_2)){
+            self.vcRouter.changeLevelValue2();
         }
-        else if(self.asb_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_3)){
-            self.vcService.changeLevelValue3();
+        else if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_3)){
+            self.vcRouter.changeLevelValue3();
         }
-        else if(self.asb_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_4)){
-            self.vcService.changeLevelValue4();
-        }
-        else if(self.asb_isActionAvailble(action, ACTION_CLICK_CENTER_BTN)){
+        else if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_CENTER_BTN)){
             self.showLoadingProgressHUB("请稍等");
-            self.vcService.webLoadList(success: { () in
+            self.vcRouter.webLoadList(success: { () in
                 self.hideLoadingProgressHUB();
             }, error: { (errorCode : String, errorMsg : String) in
                 self.showProgressHUB(forSuccess: false, message: errorMsg);
@@ -281,31 +256,25 @@ extension MainVcView : AusbinVcViewDelegate{
                 self.showProgressHUB(forSuccess: false, message: "网络繁忙，请重试");
             });
         }
-        else if(self.asb_isActionAvailble(action, ACTION_SELECT_TABLE_ROW)){
+        else if(self.asb_vc_view_isActionAvailble(action, ACTION_SELECT_TABLE_ROW)){
             print(params[0] as! Int);
             let indexValue = params[0] as! Int;
-            self.vcService.changeTableValue(index: indexValue);
+            self.vcRouter.changeTableValue(index: indexValue);
         }
     }
     
-    func asb_needToRefreshViews(object: Any?,keyPath : String?){
-        
-        let fullKeyPath = self.vcService.vcModel.asb_getFullKeyPath(object: object, keyPath: keyPath);
-        
-        if(self.asb_handleKeyPath(fullKeyPath, "items", true)){
+    func asb_refreshViews(routerKey: String?){
+        if(routerKey == nil || routerKey == "items"){
             self.tableView.reloadData();
         }
-        if(self.asb_handleKeyPath(fullKeyPath, "innerText", true)){
-            self.levelLabel1.text = "" + self.vcService.vcModel.innerText;
+        if(routerKey == nil || routerKey == "innerText1"){
+            self.levelLabel1.text = self.vcRouter.innerText1;
         }
-        if(self.asb_handleKeyPath(fullKeyPath, "childModel.innerText", true)){
-            self.levelLabel2.text = self.vcService.vcModel.childModel.innerText;
+        if(routerKey == nil || routerKey == "innerText2"){
+            self.levelLabel2.text = self.vcRouter.innerText2;
         }
-        if(self.asb_handleKeyPath(fullKeyPath, "childModel.childItemModel.innerText", true)){
-            self.levelLabel3.text = self.vcService.vcModel.childModel.childItemModel.innerText;
-        }
-        if(self.asb_handleKeyPath(fullKeyPath, "childModel.childItemModel.childSubItemModel.innerText", true)){
-            self.levelLabel4.text = self.vcService.vcModel.childModel.childItemModel.childSubItemModel.innerText;
+        if(routerKey == nil || routerKey == "innerText3"){
+            self.levelLabel3.text = self.vcRouter.innerText3;
         }
     }
 }

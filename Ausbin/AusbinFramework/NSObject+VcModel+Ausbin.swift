@@ -23,88 +23,23 @@ let valueTypesMap: Dictionary<String, String> = [
     "{" : "Decimal"
 ]
 
-private var keyPathsKey: Void?
+//private var keyPathsKey: Void?
 
 /**
  ViewController的Model的扩展方法
  */
 extension NSObject{
-    
-    var abs_keyPathsDict : [String : Any]? {
-        get {
-            return objc_getAssociatedObject(self, &keyPathsKey) as? [String : Any];
-        }
-        set(newValue) {
-            objc_setAssociatedObject(self, &keyPathsKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        }
-    };
-    
-    /// 获取继承自该类的所有子类
-    ///
-    /// - Returns: 子类名称数组
-    private func subclasses() -> [NSString] {
-        var count: UInt32 = 0, result: [NSString] = []
-        let allClasses = objc_copyClassList(&count)!
-        
-        for n in 0 ..< count {
-            let someClass: AnyClass = allClasses[Int(n)]
-            guard let someSuperClass = class_getSuperclass(someClass), String(describing: someSuperClass) == String(describing: self) else { continue }
-            //返回的类会带module名，如果把module名截取了，就无法转换成对应的类了
-            let className: NSString = NSStringFromClass(someClass) as NSString
-            
-            result.append(className)
-        }
-        return result
-    }
-    
-    /// 获取属性名和类型列表
-    ///
-    /// - Returns: 属性名和类型的字典
-    func asb_getProperties() -> Dictionary<String, String>? {
-        var count = UInt32()
-        guard let properties = class_copyPropertyList(self.classForCoder, &count) else { return nil }
-        var types: Dictionary<String, String> = [:]
-        for i in 0..<Int(count) {
-            let property: objc_property_t = properties[i]
-            /// 获取属性名
-            guard let name = getNameOf(property: property)
-                else { continue }
-            /// 获取属性类型
-            let type = getTypeOf(property: property)
-            types[name] = type
-//            print(name);
-//            print(type!);
-//            print("=====");
-        }
-        free(properties)
-        return types
-    }
-    
-    func asb_getAllFullKeyPath(object: Any?, keyPath : String?) -> String?{
-        if(object == nil){
-            return nil;
-        }
-        if (object as! NSObject) == self{
-            return keyPath;
-        }
-        return nil;
-    }
-    
-    private func asb_getKeyDicts(currentKayPath : String, obj : Any?) -> [String:Any]{
-        var all : [String:Any] = [:]
-        let properties : [String:String] = (obj as! NSObject).asb_getProperties()!;//getAllProperties(obj: obj);
-        for property in properties{
-            let propertyName = property.key;
-            let typeName = property.value;
-            if(typeName.contains(ProjectName)){
-                //obj.value(forKey: propertyName)
-            }
-            all[currentKayPath + "." + propertyName] = currentKayPath + propertyName;
-        }
-        return all;
-    }
-    
-    func asb_getFullKeyPath(object: Any?, keyPath : String?) -> String?{
+//
+//    var abs_keyPathsDict : [String : Any]? {
+//        get {
+//            return objc_getAssociatedObject(self, &keyPathsKey) as? [String : Any];
+//        }
+//        set(newValue) {
+//            objc_setAssociatedObject(self, &keyPathsKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//        }
+//    };
+
+    func asb_vc_model_getFullKeyPath(object: Any?, keyPath : String?) -> String?{
         if(object == nil){
             return nil;
         }
@@ -168,39 +103,22 @@ extension NSObject{
         return fullKeyPath;
     }
     
-    /// 获取属性名
+    /// 获取继承自该类的所有子类
     ///
-    /// - Parameter property: 属性对象
-    /// - Returns: 属性名
-    private func getNameOf(property: objc_property_t) -> String? {
-        guard
-            let name: NSString = NSString(utf8String: property_getName(property))
-            else { return nil }
-        return name as String
-    }
-    
-    /// attributes对应的类型
-    ///
-    /// - Parameter attributes: attributes
-    /// - Returns: 类型名
-    private func valueType(withAttributes attributes: String) -> String? {
-        let tmp = attributes as NSString
-        let letter = tmp.substring(with: NSMakeRange(1, 1))
-        guard let type = valueTypesMap[letter] else { return nil }
-        return type
-    }
-    
-    /// 获取属性类型
-    ///
-    /// - Parameter property: 属性对象
-    /// - Returns: 属性类型
-    private func getTypeOf(property: objc_property_t) -> String? {
-        guard let attributesAsNSString: NSString = NSString(utf8String: property_getAttributes(property)!) else { return nil }
-        let attributes = attributesAsNSString as String
-        let slices = attributes.components(separatedBy: "\"")
-        guard slices.count > 1 else { return valueType(withAttributes: attributes) }
-        let objectClassName = slices[1]
-        return objectClassName
+    /// - Returns: 子类名称数组
+    private func subclasses() -> [NSString] {
+        var count: UInt32 = 0, result: [NSString] = []
+        let allClasses = objc_copyClassList(&count)!
+        
+        for n in 0 ..< count {
+            let someClass: AnyClass = allClasses[Int(n)]
+            guard let someSuperClass = class_getSuperclass(someClass), String(describing: someSuperClass) == String(describing: self) else { continue }
+            //返回的类会带module名，如果把module名截取了，就无法转换成对应的类了
+            let className: NSString = NSStringFromClass(someClass) as NSString
+            
+            result.append(className)
+        }
+        return result
     }
 
 }

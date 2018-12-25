@@ -10,7 +10,7 @@ import UIKit
 
 class MainVcService: NSObject {
     
-    private(set) var vcModel: MainVcModel!;
+    var vcModel: MainVcModel!;
     
     override init() {
         super.init();
@@ -36,13 +36,6 @@ class MainVcService: NSObject {
         let timeInterval: TimeInterval = now.timeIntervalSince1970
         let millisecond = CLongLong(round(timeInterval*1000))
         self.vcModel.childModel.childItemModel.innerText = "3级子变量innerText的值:"+String(millisecond);
-    }
-    
-    func changeLevelValue4(){
-        let now = Date()
-        let timeInterval: TimeInterval = now.timeIntervalSince1970
-        let millisecond = CLongLong(round(timeInterval*1000))
-        self.vcModel.childModel.childItemModel.childSubItemModel.innerText = "4级子变量innerText的值:"+String(millisecond);
     }
     
     func changeTableValue(index : Int){

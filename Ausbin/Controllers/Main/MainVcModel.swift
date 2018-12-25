@@ -18,8 +18,7 @@ class MainVcModel: NSObject {
     @objc dynamic var innerText : String! = "1级子变量innerText的值:0";
     
     @objc dynamic var childModel : ChildModel! = ChildModel.init(innerText: "2级子变量innerText的值:0",
-                                childItemModel: ChildItemModel.init(innerText: "3级子变量innerText的值:0",
-                                         childSubItemModel: ChildSubItemModel.init(innerText: "4级子变量innerText的值:0")));
+                                childItemModel: ChildItemModel.init(innerText: "3级子变量innerText的值:0"));
     
     @objc dynamic var checkedRowIndex : NSNumber = -1;
     
@@ -67,28 +66,10 @@ class ChildModel: NSObject {
 class ChildItemModel: NSObject {
     
     @objc dynamic var innerText : String!;
-    @objc dynamic var childSubItemModel : ChildSubItemModel!;
-    
-    init(innerText : String, childSubItemModel: ChildSubItemModel) {
-        super.init();
-        self.innerText = innerText;
-        self.childSubItemModel = childSubItemModel;
-    }
-    
-    required init(coder aDecoder: NSCoder?) {
-        super.init();
-    }
-}
-
-class ChildSubItemModel: NSObject {
-    
-    @objc dynamic var innerText : String!;
-    
     
     init(innerText : String) {
         super.init();
         self.innerText = innerText;
-        
     }
     
     required init(coder aDecoder: NSCoder?) {

@@ -25,7 +25,7 @@ extension UIView {
         }
     };
     
-    static func asb_generateAction() -> String{
+    static func asb_vc_view_generateAction() -> String{
         let now = Date()
         let timeInterval: TimeInterval = now.timeIntervalSince1970
         let millisecond = CLongLong(round(timeInterval*1000))
@@ -33,30 +33,17 @@ extension UIView {
         return "Action@\(millisecond)@\(random)";
     }
     
-    func asb_didVcViewLoaded() {
-        self.asb_actions = (self as! AusbinVcViewDelegate).asb_getActions();
-        //根据当前model初始化view
-        (self as! AusbinVcViewDelegate).asb_needToRefreshViews(object: nil, keyPath: nil);
-    }
-    
-    func asb_isActionAvailble(_ action: String, _ targetAction: String) -> Bool{
-//        if(self.asb_actions == nil){
-//            self.asb_actions = (self as! AusbinVcViewDelegate).asb_getActions();
-//            for item in self.asb_actions!{
-//                print("actions=\(item)");
-//            }
-//        }
+    func asb_vc_view_isActionAvailble(_ action: String, _ targetAction: String) -> Bool{
+        if(self.asb_actions == nil){
+            self.asb_actions = (self as! AusbinVcViewDelegate).asb_getActions();
+            for item in self.asb_actions!{
+                print("actions=\(item)");
+            }
+        }
         if(action == targetAction && (self.asb_actions?.contains(action))!){
             return true;
         }
         return false;
-    }
-    
-    func asb_handleKeyPath(_ keyPath: String?, _ targetKeyPath: String, _ allowHandleWhenKeyPathIsNull: Bool) -> Bool{
-        if(allowHandleWhenKeyPathIsNull){
-            return true;
-        }
-        return keyPath == targetKeyPath;
     }
     
     /**
