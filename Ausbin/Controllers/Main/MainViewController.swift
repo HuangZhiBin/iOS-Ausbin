@@ -41,9 +41,6 @@ class MainViewController: UIViewController,AusbinVcViewChangeDelegate {
         if((object as! NSObject) == self.vcModel){
             self.asb_didWhenModelChange(keyPath: keyPath);
         }
-//        else if((object as! [Any]) == self.vcModel.items){
-//            self.asb_didWhenModelChange(keyPath: "items." + keyPath!);
-//        }
         else if((object as! NSObject) == self.vcModel.childModel){
             self.asb_didWhenModelChange(keyPath: "childModel." + keyPath!);
         }

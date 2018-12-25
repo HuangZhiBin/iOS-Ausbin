@@ -43,10 +43,16 @@ class MainVcService: NSObject {
         API.getAllSymptoms(success: { (dict : Dictionary<String, Any>) in
             success();
             
-            self.mainVcModel.items = [
-                ItemModel.init(itemTitle: "苹果", itemContent: "苹果的价格是15元"),
-                ItemModel.init(itemTitle: "雪梨", itemContent: "雪梨的价格是25元")
-            ];
+            var items : [ItemModel] = [];
+            
+            let dataDict : Dictionary<String,Any>? = dict as Dictionary<String,Any>?;
+            let arr : [Any]? = dataDict!["data"] as? Array;
+            for item in arr! {
+                var itemDict:Dictionary<String,Any>? = item as? Dictionary<String, Any>;
+                items.append(ItemModel.init(itemTitle: itemDict!["name"] as! String, itemContent: itemDict!["value"] as! String));
+            }
+            
+            self.mainVcModel.items = items;
         }, error: { (errorCode : String, errorMsg : String) in
             print(errorCode);
             print(errorMsg);

@@ -23,7 +23,7 @@ class MainVcView: UIView {
         self.asb_setAction([ACTION_CLICK_LEFT_BTN, ACTION_CLICK_CENTER_BTN, ACTION_CLICK_RIGHT_BTN, ACTION_SELECT_TABLE_ROW]);
         self.mainVcModel = model;
         self.initAllViews();
-        self.asb_needToRefreshViews(keyPath: nil);
+        self.asb_needToRefreshViews(keyPath: nil);//根据model初始化view
     }
     
     required init(coder aDecoder: NSCoder) {

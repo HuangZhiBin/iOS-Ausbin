@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		336152C74FB587F8101B45FC /* libPods-Ausbin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DD9C69FC10422EAB097C66 /* libPods-Ausbin.a */; };
+		3449CD1721D1B9690017C289 /* list.json in Resources */ = {isa = PBXBuildFile; fileRef = 3449CD1621D1B9690017C289 /* list.json */; };
 		34B6F74F21D11F2200D8A9AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F74E21D11F2200D8A9AD /* AppDelegate.swift */; };
 		34B6F75621D11F2200D8A9AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34B6F75521D11F2200D8A9AD /* Assets.xcassets */; };
 		34B6F75921D11F2200D8A9AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34B6F75721D11F2200D8A9AD /* LaunchScreen.storyboard */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3449CD1621D1B9690017C289 /* list.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = list.json; sourceTree = "<group>"; };
 		34B6F74B21D11F2200D8A9AD /* Ausbin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ausbin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34B6F74E21D11F2200D8A9AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34B6F75521D11F2200D8A9AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				34B6F75721D11F2200D8A9AD /* LaunchScreen.storyboard */,
 				34B6F75A21D11F2200D8A9AD /* Info.plist */,
 				34B6F7B321D120FD00D8A9AD /* Ausbin-Bridging-Header.h */,
+				3449CD1621D1B9690017C289 /* list.json */,
 			);
 			path = Ausbin;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 			files = (
 				34B6F75921D11F2200D8A9AD /* LaunchScreen.storyboard in Resources */,
 				34B6F75621D11F2200D8A9AD /* Assets.xcassets in Resources */,
+				3449CD1721D1B9690017C289 /* list.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

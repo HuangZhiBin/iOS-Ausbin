@@ -67,7 +67,7 @@ class API: NSObject {
     
     @discardableResult
     static func getAllSymptoms(success: @escaping NetworkSuccessCallback, error: @escaping NetworkErrorCallback,  fail : @escaping NetworkFailCallback) -> URLSessionDataTask?{
-        let urlString = "https://www.koudaikr.cn/WxTopiker/exam_allExams.action";
+        let urlString = "https://raw.githubusercontent.com/HuangZhiBin/iOS-Ausbin/master/Ausbin/list.json";
         
         let parameters : [String : Any] = [:];
         
