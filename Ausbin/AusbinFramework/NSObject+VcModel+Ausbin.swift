@@ -25,6 +25,9 @@ let valueTypesMap: Dictionary<String, String> = [
 
 private var keyPathsKey: Void?
 
+/**
+ ViewController的Model的扩展方法
+ */
 extension NSObject{
     
     var abs_keyPathsDict : [String : Any]? {

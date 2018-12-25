@@ -10,14 +10,15 @@ import UIKit
 
 class MainVcView: UIView {
     
-    let ACTION_CLICK_CENTER_BTN = "click center button to change table";
-    let ACTION_CLICK_LEVEL_BTN_1 = "click level button 1 to change level 1 property's value";
-    let ACTION_CLICK_LEVEL_BTN_2 = "click level button 2 to change level 2 property's value";
-    let ACTION_CLICK_LEVEL_BTN_3 = "click level button 3 to change level 3 property's value";
-    let ACTION_CLICK_LEVEL_BTN_4 = "click level button 4 to change level 4 property's value";
-    let ACTION_SELECT_TABLE_ROW = "select one table row";
+    //action的值可以随意取，但要保证不重复
+    let ACTION_CLICK_CENTER_BTN = UIView.asb_generateAction();
+    let ACTION_CLICK_LEVEL_BTN_1 = UIView.asb_generateAction();
+    let ACTION_CLICK_LEVEL_BTN_2 = UIView.asb_generateAction();
+    let ACTION_CLICK_LEVEL_BTN_3 = UIView.asb_generateAction();
+    let ACTION_CLICK_LEVEL_BTN_4 = UIView.asb_generateAction();
+    let ACTION_SELECT_TABLE_ROW = UIView.asb_generateAction();
     
-    var vcService : MainVcService! //可读，不可改变对象的值
+    weak var vcService : MainVcService!;
     
     let CELL_IDENTIFIER = "cell";
 
@@ -26,7 +27,8 @@ class MainVcView: UIView {
         super.init(frame: frame);
         self.vcService = service;
         self.initAllViews();
-        self.asb_needToRefreshViews(object: nil, keyPath: nil);//根据model初始化view
+        //必须在view加载完成后执行下面的代码
+        self.asb_didVcViewLoaded();
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -69,7 +71,7 @@ class MainVcView: UIView {
     }
     
     override func layoutSubviews() {
-        print("layoutSubviews...");
+        print("MainVcView layoutSubviews...");
     }
     
     lazy var levelLabel1 : UILabel! = {
@@ -219,7 +221,7 @@ extension MainVcView : UITableViewDelegate,UITableViewDataSource{
         
         cell.selectedBackgroundView = UIView.init(frame: cell.frame);
         cell.selectedBackgroundView?.backgroundColor = UIColor.init(hexString: "f9f9f9");
-        if(indexPath.row == self.vcService.vcModel.checkedIndex.intValue){
+        if(indexPath.row == self.vcService.vcModel.checkedRowIndex.intValue){
             cell.checkImageView.image = UIImage.init(named: "checked");
         }
         else{
@@ -245,23 +247,31 @@ extension MainVcView : UITableViewDelegate,UITableViewDataSource{
 extension MainVcView : AusbinVcViewDelegate{
     
     func asb_getActions() -> [String]{
-        return [self.ACTION_CLICK_LEVEL_BTN_1, ACTION_CLICK_CENTER_BTN, ACTION_CLICK_LEVEL_BTN_2, ACTION_CLICK_LEVEL_BTN_3, ACTION_CLICK_LEVEL_BTN_4, ACTION_SELECT_TABLE_ROW];
+        return [
+            ACTION_CLICK_LEVEL_BTN_1,
+            ACTION_CLICK_LEVEL_BTN_2,
+            ACTION_CLICK_LEVEL_BTN_3,
+            ACTION_CLICK_LEVEL_BTN_4,
+            
+            ACTION_CLICK_CENTER_BTN,
+            ACTION_SELECT_TABLE_ROW
+        ];
     }
     
     func asb_handleAction(action : String, params: [Any]){
-        if(self.asb_isActionAvailble(action: action, targetAction: ACTION_CLICK_LEVEL_BTN_1)){
+        if(self.asb_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_1)){
             self.vcService.changeLevelValue1();
         }
-        else if(self.asb_isActionAvailble(action: action, targetAction: ACTION_CLICK_LEVEL_BTN_2)){
+        else if(self.asb_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_2)){
             self.vcService.changeLevelValue2();
         }
-        else if(self.asb_isActionAvailble(action: action, targetAction: ACTION_CLICK_LEVEL_BTN_3)){
+        else if(self.asb_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_3)){
             self.vcService.changeLevelValue3();
         }
-        else if(self.asb_isActionAvailble(action: action, targetAction: ACTION_CLICK_LEVEL_BTN_4)){
+        else if(self.asb_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_4)){
             self.vcService.changeLevelValue4();
         }
-        else if(self.asb_isActionAvailble(action: action, targetAction: ACTION_CLICK_CENTER_BTN)){
+        else if(self.asb_isActionAvailble(action, ACTION_CLICK_CENTER_BTN)){
             self.showLoadingProgressHUB("请稍等");
             self.vcService.webLoadList(success: { () in
                 self.hideLoadingProgressHUB();
@@ -271,31 +281,30 @@ extension MainVcView : AusbinVcViewDelegate{
                 self.showProgressHUB(forSuccess: false, message: "网络繁忙，请重试");
             });
         }
-        else if(self.asb_isActionAvailble(action: action, targetAction: ACTION_SELECT_TABLE_ROW)){
+        else if(self.asb_isActionAvailble(action, ACTION_SELECT_TABLE_ROW)){
             print(params[0] as! Int);
-            let value = params[0] as! Int;
-            self.vcService.changeTableValue(index: value);
+            let indexValue = params[0] as! Int;
+            self.vcService.changeTableValue(index: indexValue);
         }
     }
     
     func asb_needToRefreshViews(object: Any?,keyPath : String?){
         
         let fullKeyPath = self.vcService.vcModel.asb_getFullKeyPath(object: object, keyPath: keyPath);
-        print("refresh keyPath = " + (fullKeyPath ?? keyPath ?? "nil"));
         
-        if(keyPath == nil || fullKeyPath == "items"){
+        if(self.asb_handleKeyPath(fullKeyPath, "items", true)){
             self.tableView.reloadData();
         }
-        if(keyPath == nil || fullKeyPath == "innerText"){
+        if(self.asb_handleKeyPath(fullKeyPath, "innerText", true)){
             self.levelLabel1.text = "" + self.vcService.vcModel.innerText;
         }
-        if(keyPath == nil || fullKeyPath == "childModel.innerText"){
+        if(self.asb_handleKeyPath(fullKeyPath, "childModel.innerText", true)){
             self.levelLabel2.text = self.vcService.vcModel.childModel.innerText;
         }
-        if(keyPath == nil || fullKeyPath == "childModel.childItemModel.innerText"){
+        if(self.asb_handleKeyPath(fullKeyPath, "childModel.childItemModel.innerText", true)){
             self.levelLabel3.text = self.vcService.vcModel.childModel.childItemModel.innerText;
         }
-        if(keyPath == nil || fullKeyPath == "childModel.childItemModel.childSubItemModel.innerText"){
+        if(self.asb_handleKeyPath(fullKeyPath, "childModel.childItemModel.childSubItemModel.innerText", true)){
             self.levelLabel4.text = self.vcService.vcModel.childModel.childItemModel.childSubItemModel.innerText;
         }
     }

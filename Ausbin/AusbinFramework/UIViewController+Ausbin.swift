@@ -8,9 +8,13 @@
 
 import UIKit
 
+/**
+ ViewController的扩展方法
+ */
 extension UIViewController{
     
-    func asb_addObserverFor(_ obj : AnyObject){
+    func asb_addObserver(vcModel : AnyObject){
+        let obj = vcModel;
         if(obj is NSNull){
             return;
         }
@@ -20,14 +24,15 @@ extension UIViewController{
             let typeName = property.value;
             if(typeName.contains(ProjectName)){
                 //print("<=====");
-                asb_addObserverFor(obj.value(forKey: propertyName) as AnyObject);
+                asb_addObserver(vcModel: obj.value(forKey: propertyName) as AnyObject);
             }
             obj.addObserver(self, forKeyPath:propertyName , options: .new, context: nil);
             print("[Ausbin] ♥️add Observer for propertyName " + propertyName);
         }
     }
     
-    func asb_removeObserverFor(_ obj : AnyObject){
+    func asb_removeObserver(vcModel : AnyObject){
+        let obj = vcModel;
         if(obj is NSNull){
             return;
         }
@@ -37,7 +42,7 @@ extension UIViewController{
             let typeName = property.value;
             if(typeName.contains(ProjectName)){
                 //print("<=====");
-                asb_removeObserverFor(obj.value(forKey: propertyName) as AnyObject);
+                asb_removeObserver(vcModel: obj.value(forKey: propertyName) as AnyObject);
             }
             obj.removeObserver(self, forKeyPath:propertyName , context: nil);
             print("[Ausbin] 🔥remove Observer for propertyName " + propertyName);

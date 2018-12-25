@@ -1,6 +1,6 @@
 //
 //  MyNavigationViewController.swift
-//  Hanxin
+//  Ausbin
 //
 //  Created by iMac on 16/10/12.
 //  Copyright © 2016年 Dianbo.co. All rights reserved.

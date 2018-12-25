@@ -1,6 +1,6 @@
 //
 //  MainViewController.swift
-//  Hanxin
+//  Ausbin
 //
 //  Created by iMac on 16/10/12.
 //  Copyright © 2016年 Dianbo.co. All rights reserved.
@@ -16,22 +16,25 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad();
         
-        self.title = "Ausbin数据驱动型iOS框架";
+        self.title = "演示";
         
+        //初始化vcService
         self.vcService = MainVcService();
         
+        //初始化vcView
         self.vcView = MainVcView(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height:ScreenHeight-Status_Bar_Height-Navigation_Bar_Height), service: self.vcService);
         self.view.addSubview(self.vcView);
         
-        self.asb_addObserverFor(self.vcService.vcModel);
-        //self.vcService.vcModel.checkedIndex = 0;
+        //MARK: - 开始监听vcModel的数据改变(+KVC)
+        self.asb_addObserver(vcModel: self.vcService.vcModel);
     }
     
     deinit {
-        self.asb_removeObserverFor(self.vcService.vcModel);
+        //MARK: - 解除监听vcModel的数据改变(-KVC)
+        self.asb_removeObserver(vcModel: self.vcService.vcModel);
     }
     
-    //MARK: - 监听Model变化->刷新View
+    //MARK: - KVC 监听Model变化->刷新View
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         self.vcView.asb_needToRefreshViews(object: object, keyPath: keyPath);
     }

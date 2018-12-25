@@ -10,13 +10,18 @@ import UIKit
 
 class MainVcModel: NSObject {
     
-    @objc dynamic var items : [ListItemModel] = [ListItemModel.init(itemTitle: "可乐", itemContent: "2.00元"),ListItemModel.init(itemTitle: "雪碧", itemContent: "3.00元")];
+    @objc dynamic var items : [ListItemModel] = [
+        ListItemModel.init(itemTitle: "可乐", itemContent: "2.00元"),
+        ListItemModel.init(itemTitle: "雪碧", itemContent: "3.00元")
+    ];
     
     @objc dynamic var innerText : String! = "1级子变量innerText的值:0";
     
-    @objc dynamic var childModel : ChildModel! = ChildModel.init(innerText: "2级子变量innerText的值:0", childItemModel: ChildItemModel.init(innerText: "3级子变量innerText的值:0", childSubItemModel: ChildSubItemModel.init(innerText: "4级子变量innerText的值:0")));
+    @objc dynamic var childModel : ChildModel! = ChildModel.init(innerText: "2级子变量innerText的值:0",
+                                childItemModel: ChildItemModel.init(innerText: "3级子变量innerText的值:0",
+                                         childSubItemModel: ChildSubItemModel.init(innerText: "4级子变量innerText的值:0")));
     
-    @objc dynamic var checkedIndex : NSNumber = -1;
+    @objc dynamic var checkedRowIndex : NSNumber = -1;
     
     @objc dynamic var optionalModel : OptionalModel?;
     

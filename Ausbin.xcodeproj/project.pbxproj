@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		336152C74FB587F8101B45FC /* libPods-Ausbin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DD9C69FC10422EAB097C66 /* libPods-Ausbin.a */; };
 		3449CD1721D1B9690017C289 /* list.json in Resources */ = {isa = PBXBuildFile; fileRef = 3449CD1621D1B9690017C289 /* list.json */; };
-		3449CD1921D1D28A0017C289 /* NSObject+Ausbin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3449CD1821D1D28A0017C289 /* NSObject+Ausbin.swift */; };
+		3449CD1921D1D28A0017C289 /* NSObject+VcModel+Ausbin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3449CD1821D1D28A0017C289 /* NSObject+VcModel+Ausbin.swift */; };
 		3449CD1D21D1FEF20017C289 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3449CD1C21D1FEF20017C289 /* Constants.swift */; };
 		3449CD2021D22A7A0017C289 /* UIViewController+Dealloc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3449CD1E21D22A7A0017C289 /* UIViewController+Dealloc.m */; };
 		3449CD2221D22EAE0017C289 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3449CD2121D22EAE0017C289 /* ViewController.swift */; };
@@ -18,7 +18,7 @@
 		34B6F75921D11F2200D8A9AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34B6F75721D11F2200D8A9AD /* LaunchScreen.storyboard */; };
 		34B6F77921D11FC000D8A9AD /* AusbinVcViewChangeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F77221D11FC000D8A9AD /* AusbinVcViewChangeDelegate.swift */; };
 		34B6F77A21D11FC000D8A9AD /* AusbinVcViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F77321D11FC000D8A9AD /* AusbinVcViewDelegate.swift */; };
-		34B6F77C21D11FC000D8A9AD /* UIView+Ausbin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F77521D11FC000D8A9AD /* UIView+Ausbin.swift */; };
+		34B6F77C21D11FC000D8A9AD /* UIView+VcView+Ausbin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F77521D11FC000D8A9AD /* UIView+VcView+Ausbin.swift */; };
 		34B6F77D21D11FC000D8A9AD /* UIViewController+Ausbin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F77621D11FC000D8A9AD /* UIViewController+Ausbin.swift */; };
 		34B6F7A721D11FCE00D8A9AD /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F79521D11FCE00D8A9AD /* MainTableViewCell.swift */; };
 		34B6F7A821D11FCE00D8A9AD /* MainVcModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F79621D11FCE00D8A9AD /* MainVcModel.swift */; };
@@ -35,7 +35,7 @@
 
 /* Begin PBXFileReference section */
 		3449CD1621D1B9690017C289 /* list.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = list.json; sourceTree = "<group>"; };
-		3449CD1821D1D28A0017C289 /* NSObject+Ausbin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Ausbin.swift"; sourceTree = "<group>"; };
+		3449CD1821D1D28A0017C289 /* NSObject+VcModel+Ausbin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+VcModel+Ausbin.swift"; sourceTree = "<group>"; };
 		3449CD1C21D1FEF20017C289 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3449CD1E21D22A7A0017C289 /* UIViewController+Dealloc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Dealloc.m"; sourceTree = "<group>"; };
 		3449CD1F21D22A7A0017C289 /* UIViewController+Dealloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Dealloc.h"; sourceTree = "<group>"; };
@@ -47,7 +47,7 @@
 		34B6F75A21D11F2200D8A9AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34B6F77221D11FC000D8A9AD /* AusbinVcViewChangeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AusbinVcViewChangeDelegate.swift; sourceTree = "<group>"; };
 		34B6F77321D11FC000D8A9AD /* AusbinVcViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AusbinVcViewDelegate.swift; sourceTree = "<group>"; };
-		34B6F77521D11FC000D8A9AD /* UIView+Ausbin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Ausbin.swift"; sourceTree = "<group>"; };
+		34B6F77521D11FC000D8A9AD /* UIView+VcView+Ausbin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+VcView+Ausbin.swift"; sourceTree = "<group>"; };
 		34B6F77621D11FC000D8A9AD /* UIViewController+Ausbin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ausbin.swift"; sourceTree = "<group>"; };
 		34B6F79521D11FCE00D8A9AD /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		34B6F79621D11FCE00D8A9AD /* MainVcModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVcModel.swift; sourceTree = "<group>"; };
@@ -132,9 +132,9 @@
 			children = (
 				34B6F77321D11FC000D8A9AD /* AusbinVcViewDelegate.swift */,
 				34B6F77221D11FC000D8A9AD /* AusbinVcViewChangeDelegate.swift */,
-				34B6F77521D11FC000D8A9AD /* UIView+Ausbin.swift */,
+				34B6F77521D11FC000D8A9AD /* UIView+VcView+Ausbin.swift */,
 				34B6F77621D11FC000D8A9AD /* UIViewController+Ausbin.swift */,
-				3449CD1821D1D28A0017C289 /* NSObject+Ausbin.swift */,
+				3449CD1821D1D28A0017C289 /* NSObject+VcModel+Ausbin.swift */,
 			);
 			path = AusbinFramework;
 			sourceTree = "<group>";
@@ -336,14 +336,14 @@
 				34B6F77D21D11FC000D8A9AD /* UIViewController+Ausbin.swift in Sources */,
 				3449CD2221D22EAE0017C289 /* ViewController.swift in Sources */,
 				34B6F77A21D11FC000D8A9AD /* AusbinVcViewDelegate.swift in Sources */,
-				3449CD1921D1D28A0017C289 /* NSObject+Ausbin.swift in Sources */,
+				3449CD1921D1D28A0017C289 /* NSObject+VcModel+Ausbin.swift in Sources */,
 				34B6F7A921D11FCE00D8A9AD /* MainVcService.swift in Sources */,
 				34B6F74F21D11F2200D8A9AD /* AppDelegate.swift in Sources */,
 				3449CD1D21D1FEF20017C289 /* Constants.swift in Sources */,
 				34B6F7BA21D1212100D8A9AD /* UIButton+Block.m in Sources */,
 				34B6F7C021D1260700D8A9AD /* UIView+Show.m in Sources */,
 				34B6F7B221D1206E00D8A9AD /* API.swift in Sources */,
-				34B6F77C21D11FC000D8A9AD /* UIView+Ausbin.swift in Sources */,
+				34B6F77C21D11FC000D8A9AD /* UIView+VcView+Ausbin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

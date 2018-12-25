@@ -46,7 +46,7 @@ class MainVcService: NSObject {
     }
     
     func changeTableValue(index : Int){
-        self.vcModel.checkedIndex = NSNumber.init(value: index);
+        self.vcModel.checkedRowIndex = NSNumber.init(value: index);
         for item in self.vcModel.items{
             item.itemTitle = item.itemTitle.replacingOccurrences(of: "（已选中）", with: "");
         }
@@ -69,7 +69,7 @@ class MainVcService: NSObject {
             }
             
             self.vcModel.items = items;
-            self.vcModel.checkedIndex = -1;
+            self.vcModel.checkedRowIndex = -1;
         }, error: { (errorCode : String, errorMsg : String) in
             print(errorCode,errorMsg);
             error(errorCode,errorMsg);
