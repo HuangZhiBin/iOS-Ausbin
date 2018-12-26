@@ -230,7 +230,7 @@ extension MainVcView : AusbinVcViewDelegate{
         return [
             ACTION_CLICK_LEVEL_BTN_1,
             ACTION_CLICK_LEVEL_BTN_2,
-            //ACTION_CLICK_LEVEL_BTN_3,
+            ACTION_CLICK_LEVEL_BTN_3,
             ACTION_CLICK_CENTER_BTN,
             ACTION_SELECT_TABLE_ROW
         ];
