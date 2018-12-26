@@ -127,11 +127,10 @@ class SampleVcService: NSObject {
 
 vcView需要建立与vcRouter的联系，一是将接收到的UI事件（点击按钮、长按、切换图片等）反馈给vcRouter，二是响应vcRouter返回的UI刷新请求。
 
-- 1.&nbsp;创建`weak`类型的私有vcRouter实例(weak防止强制持有，避免循环引用)
-- 2.&nbsp;vcRouter实例赋值后执行刷新当前view
-- 3.&nbsp;vcView实现`AusbinVcViewDelegate`代理
-- 4.&nbsp;代理方法`asb_setRouter()`引入外部vcRouter
-- 5.&nbsp;代理方法`asb_refreshViews()`接受vcRouter的UI更新请求
+- 1.&nbsp;创建`weak`类型的私有vcRouter实例(weak防止强制持有，避免循环引用，类型为私有，保证vcRouter实例由代理引入)
+- 2.&nbsp;vcView实现`AusbinVcViewDelegate`代理
+- 3.&nbsp;代理方法`asb_setRouter()`引入外部vcRouter，刷新当前view
+- 4.&nbsp;代理方法`asb_refreshViews()`接受vcRouter的UI更新请求
 
 ```swift
 class SampleVcView: UIView {
@@ -175,12 +174,12 @@ extension SampleVcView : AusbinVcViewDelegate{
 
 新增vcRouter类，作为vcView和vcService的信任中介。这是Ausbin框架的重点。
 
-- 1.&nbsp;创建vcService(创建时同样也初始化了vcModel)，提供vcModel数据
+- 1.&nbsp;创建vcService(vcService创建的同样也初始化了vcModel)
 - 2.&nbsp;引入外部vcView
 - 3.&nbsp;创建**dataSet** (vcRouter提供给vcView的变量集)
-- 4.&nbsp;创建**handler** (vcRouter处理vcView的Action事件，通过vcService更新vcModel数据)
+- 4.&nbsp;创建**handler** (vcRouter调用vcService的接口更新vcModel数据)
 - 5.&nbsp;开始通过KVC监听vcModel的数据改变(+KVC)
-- 6.&nbsp;vcView实现`AusbinVcRouterDelegate`代理
+- 6.&nbsp;vcRouter实现`AusbinVcRouterDelegate`代理
 - 7.&nbsp;代理方法`asb_handleKeyPathChange()`当KVC监听到了vcModel变化，vcRouter通知vcView刷新UI
 - 8.&nbsp;代理方法`asb_deinitRouter()`在vc销毁时解除监听vcModel的数据改变(-KVC)
 
@@ -213,7 +212,7 @@ class SampleVcRouter: NSObject {
         self.asb_handleKeyPathChange(keyPath: keyPath, object: object);
     }
     
-    // [Ausbin] vcService提供给vcView的变量，根据vcView的实际需要进行选择性的提供
+    // [Ausbin] vcService根据vcView的实际需要，选择性的给vcView提供只读数据
     @objc var dataSet : DataSet!;
     //DataSet为内部类
     class DataSet: NSObject {
@@ -236,7 +235,7 @@ class SampleVcRouter: NSObject {
         };
     }
     
-    // [Ausbin] 处理vcView的Action事件，通过vcService刷新vcModel数据
+    // [Ausbin] 调用vcService提供的接口更新vcModel数据
     var handler : Handler!;
     //Handler为内部类
     class Handler: NSObject {
