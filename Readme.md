@@ -15,8 +15,14 @@ PS: 业务再多也不怕啦~
 - 数据驱动框架的优点在于view、model各司其职，view的代码只需处理前端UI的渲染与交互，而不直接操作model数据。可以由独立的service处理业务逻辑，对model进行数据的更新
 - view与model之间动态绑定，由model决定view的显示，而model也可以根据view的交互做出相应的处理，两者的交互由中间件完成，实现业务的解耦
 
+### Ausbin框架实现语言
+`Swift4`
+
 ### Ausbin框架核心技术
 `KVC`
+
+### Ausbin框架版本
+`1.1.0`
 
 ### 基于Ausbin的最简单的例子
 以一个最简单的Sample作为例子，分析一下Ausbin的运行过程。下面是Sample这个vc的目录结构（具体参考master/Ausbin/Controllers/Sample）, Sample的文件夹里面有5个文件:
@@ -119,12 +125,12 @@ class SampleVcService: NSObject {
 vcView需要建立与vcRouter的联系，一是将接收到的UI事件（点击按钮、长按、切换图片等）反馈给vcRouter，二是响应vcRouter返回的UI刷新请求。
 
 - 1.为每一个UI响应事件添加action
-- 2.创建`weak`类型的vcRouter实例(weak防止强制持有，避免循环引用)
+- 2.创建`weak`类型的私有vcRouter实例(weak防止强制持有，避免循环引用)
 - 3.vcRouter实例赋值后执行刷新当前view
 - 4.vcView实现`AusbinVcViewDelegate`代理
 - 5.代理方法`asb_setRouter()`引入外部vcRouter
-- 6.代理方法`asb_getAvailableActions()`定义可执行的action数组，没有设置可行的action将无法更新model
-- 7.代理方法`asb_handleAction()`接受vcView的action事件
+- 6.代理方法`asb_getAvailableActions()`定义可执行的action数组，没有设置可行的action将无法向vcRouter发送请求
+- 7.代理方法`asb_handleAction()`处理vcView的action事件
 - 8.代理方法`asb_refreshViews()`接受vcRouter的UI更新请求
 
 ```swift
@@ -162,7 +168,7 @@ extension SampleVcView : AusbinVcViewDelegate{
         self.vcRouter = router as! SampleVcRouter;
     }
     
-    // [Ausbin] 定义可执行的action数组，没有设置可行的action将无法更新model
+    // [Ausbin] 定义可执行的action数组，没有设置可行的action将无法向vcRouter发送请求
     func asb_getAvailableActions() -> [String]{
         return [
             ACTION_CLICK_BTN
@@ -186,24 +192,24 @@ extension SampleVcView : AusbinVcViewDelegate{
 }
 ```
 **关于vcView的设计模式：**
-> - 1.为每个有效UI事件（点击、长按等，并会触发model数据的更新等事件）定义一个action，常量名为`ACTION_...`(名称必须可读且有意义，标记好该action实际对应的事件)
-- 2.规定有效的actions数组，必须判断该action的有效性，没有设置可行的action将无法向vcRouter发送请求
-- 3.vcView无法获取model数据，只能得到vcRouter提供的可用数据（来自model），并且为只读模式，即vcView无法修改model的数据
-- 4.通过将所有的有效UI事件封装为action，所有事件作为action交付代理方法`asb_handleAction()`进行统一处理，限制了vcRouter处理action的唯一入口，还可以封禁某个action，使其事件失效
-- 5.遵循vcView与vcService(或vcModel)互不信任的模式，vcView无法直接操作vcService(或vcModel)，只能得到vcRouter提供的只读数据；vcService(或vcModel)也无法直接操作vcView
+> - 1.为每个有效UI事件（点击、长按等，并会更新model的等事件）定义一个action，常量名为`ACTION_...`(名称必须可读且有意义，标记了该action实际对应的事件)
+> - 2.规定有效的actions数组，向vcRouter发送action请求前必须判断该action的有效性，没有设置可行的action将无法向vcRouter发送请求
+> - 3.vcView无法获取model数据，只能得到vcRouter提供的可用数据（数据来自model），并且对于vcView数据只读，无法修改
+> - 4.通过将所有的有效UI事件封装为action，所有事件作为action交付代理方法`asb_handleAction()`进行统一处理，控制了vcRouter处理action的唯一入口；还可以封禁某个action，使其无法向vcRouter发送请求
+> - 5.遵循vcView与vcService(或vcModel)互不信任的模式，vcView无法直接操作vcService(或vcModel)，只能得到vcRouter提供的只读数据；vcService(或vcModel)也无法直接操作vcView
 
 ###### （5）SampleVcRouter.swift
 
 新增vcRouter类，作为vcView和vcService的信任中介。这是Ausbin框架的重点。
 
-- 1.创建vcService，提供vcModel数据
+- 1.创建vcService(创建时同样也初始化了vcModel)，提供vcModel数据
 - 2.引入外部vcView
-- 3.创建**dataSet** (vcService提供给vcView的变量集)
-- 4.创建**handler** (处理vcView的Action事件，通过vcService更新vcModel数据)
-- 5.开始监听vcModel的数据改变(+KVC)
-- 6. vcView实现`AusbinVcRouterDelegate`代理
-- 7.代理方法`asb_handleKeyPathChange()`KVC 监听到了vcModel变化，使vcView刷新UI
-- 8.代理方法`asb_deinitRouter()`解除监听vcModel的数据改变(-KVC)
+- 3.创建**dataSet** (vcRouter提供给vcView的变量集)
+- 4.创建**handler** (vcRouter处理vcView的Action事件，通过vcService更新vcModel数据)
+- 5.开始通过KVC监听vcModel的数据改变(+KVC)
+- 6.vcView实现`AusbinVcRouterDelegate`代理
+- 7.代理方法`asb_handleKeyPathChange()`当KVC监听到了vcModel变化，vcRouter通知vcView刷新UI
+- 8.代理方法`asb_deinitRouter()`在vc销毁时解除监听vcModel的数据改变(-KVC)
 
 ```swift
 class SampleVcRouter: NSObject {
@@ -302,7 +308,7 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 ------------
 
 ### 基于Ausbin的进阶例子
-以Main作为例子，分析一下Ausbin框架。（具体参考master/Ausbin/Controllers/Main）
+以Main作为例子，分析一下实际业务应用时可能遇到的情况。（具体参考master/Ausbin/Controllers/Main）
 - 1.当vcModel为多个子对象互相嵌套时，使所有子对象都能响应KVC
 - 2.子对象互相嵌套时，获取vcModel子对象的keyPath
 - 3.网络访问的情况
@@ -315,9 +321,8 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 
 ### 讨论
 项目还存在以下的问题，欢迎批评指正
-- 1.当vcModel为多个子对象互相嵌套时，如何使所有子对象都能响应KVC
-- 2.获取vcModel子对象的keyPath
-- 3.更加方便地引入Ausbin
+- 1.如何更加方便地引入Ausbin？（代码更精简）
+- 2.
 
 待续……
 
@@ -326,4 +331,4 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 | 作者  | **黄智彬** |
 | 原创  | **100%** |
 | 微信  | **ikrboy** |
-| 邮箱  |   ikrboy@163.com |
+| 邮箱  |   **ikrboy@163.com** |
