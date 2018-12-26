@@ -33,14 +33,6 @@ extension UIView {
         return "Action@\(millisecond)@\(random)";
     }
     
-    func asb_vc_view_isActionAvailble(action: String) -> Bool{
-        let asb_actions = (self as! AusbinVcViewDelegate).asb_getAvailableActions();
-        if(asb_actions.contains(action)){
-            return true;
-        }
-        return false;
-    }
-    
     /**
      生成随机字符串,
      

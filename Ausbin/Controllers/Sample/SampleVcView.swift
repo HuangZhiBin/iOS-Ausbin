@@ -37,7 +37,7 @@ class SampleVcView: UIView {
         self.addSubview(self.btn);
         
         self.btn.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
-            self?.asb_handleAction(action: (self?.ACTION_CLICK_BTN)!, params: [:]);
+            self?.vcRouter.handler.changeInnerText();
         });
     }
     
@@ -68,23 +68,6 @@ extension SampleVcView : AusbinVcViewDelegate{
     // [Ausbin] 引入外部vcRouter
     func asb_setRouter(router : NSObject){
         self.vcRouter = router as! SampleVcRouter;
-    }
-    
-    // [Ausbin] 定义可执行的action数组，没有设置可行的action将无法更新model
-    func asb_getAvailableActions() -> [String]{
-        return [
-            ACTION_CLICK_BTN
-        ];
-    }
-    
-    // [Ausbin] 接受vcView的action事件，并让vcRouter作出相应的处理(即vcRouter调用vcService的接口更新数据)
-    func asb_handleAction(action : String, params: [String:Any?]){
-        // [Ausbin] 必须判断该action的有效性
-        guard (self.asb_vc_view_isActionAvailble(action: action)) else { return; }
-        
-        if(action == ACTION_CLICK_BTN){
-            self.vcRouter.handler.changeInnerText();
-        }
     }
     
     // [Ausbin] 接受vcRouter的UI更新请求，并让vcView作出相应的UI刷新操作

@@ -10,20 +10,7 @@ import UIKit
 
 class MainVcView: UIView {
     
-    //action的值可以随意取，但要保证不重复
-    let ACTION_CLICK_CENTER_BTN = UIView.asb_vc_view_generateAction();
-    
-    let ACTION_CLICK_LEVEL_BTN_1 = UIView.asb_vc_view_generateAction();
-    let ACTION_CLICK_LEVEL_BTN_2 = UIView.asb_vc_view_generateAction();
-    let ACTION_CLICK_LEVEL_BTN_3 = UIView.asb_vc_view_generateAction();
-    let ACTION_SELECT_TABLE_ROW = UIView.asb_vc_view_generateAction();
-    
-    private weak var vcRouter : MainVcRouter!{
-        didSet{
-            //model初始化view
-            self.asb_refreshViews(routerKey: nil);
-        }
-    }
+    private weak var vcRouter : MainVcRouter!;
     
     let CELL_IDENTIFIER = "cell";
 
@@ -50,19 +37,26 @@ class MainVcView: UIView {
         self.tableView.addSubview(self.levelBtn3);
         
         self.centerBtn.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
-            self?.asb_handleAction(action: (self?.ACTION_CLICK_CENTER_BTN)!, params: [:]);
+            self?.showLoadingProgressHUB("请稍等");
+            self?.vcRouter.handler.webLoadList(success: { () in
+                self?.hideLoadingProgressHUB();
+            }, error: { (errorCode : String, errorMsg : String) in
+                self?.showProgressHUB(forSuccess: false, message: errorMsg);
+            }, fail:{ () in
+                self?.showProgressHUB(forSuccess: false, message: "网络繁忙，请重试");
+            });
         });
         
         self.levelBtn1.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
-            self?.asb_handleAction(action: (self?.ACTION_CLICK_LEVEL_BTN_1)!, params: [:]);
+            self?.vcRouter.handler.changeLevelValue1();
         });
         
         self.levelBtn2.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
-            self?.asb_handleAction(action: (self?.ACTION_CLICK_LEVEL_BTN_2)!, params: [:]);
+            self?.vcRouter.handler.changeLevelValue2();
         });
         
         self.levelBtn3.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
-            self?.asb_handleAction(action: (self?.ACTION_CLICK_LEVEL_BTN_3)!, params: [:]);
+            self?.vcRouter.handler.changeLevelValue3();
         });
     }
     
@@ -212,7 +206,7 @@ extension MainVcView : UITableViewDelegate,UITableViewDataSource{
         tableView.deselectRow(at: indexPath, animated: false);
         print("didSelectRowAt=\(indexPath.row)");
         
-        self.asb_handleAction(action: ACTION_SELECT_TABLE_ROW, params: ["index":indexPath.row]);
+        self.vcRouter.handler.changeTableValue(index: indexPath.row);
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -225,45 +219,8 @@ extension MainVcView : AusbinVcViewDelegate{
     
     func asb_setRouter(router : NSObject){
         self.vcRouter = router as! MainVcRouter;
-    }
-    
-    func asb_getAvailableActions() -> [String]{
-        return [
-            ACTION_CLICK_LEVEL_BTN_1,
-            ACTION_CLICK_LEVEL_BTN_2,
-            ACTION_CLICK_LEVEL_BTN_3,
-            ACTION_CLICK_CENTER_BTN,
-            ACTION_SELECT_TABLE_ROW
-        ];
-    }
-    
-    func asb_handleAction(action : String, params: [String:Any?]){
-        guard (self.asb_vc_view_isActionAvailble(action: action)) else { return; }
-        
-        if(action == ACTION_CLICK_LEVEL_BTN_1){
-            self.vcRouter.handler.changeLevelValue1();
-        }
-        else if(action == ACTION_CLICK_LEVEL_BTN_2){
-            self.vcRouter.handler.changeLevelValue2();
-        }
-        else if(action == ACTION_CLICK_LEVEL_BTN_3){
-            self.vcRouter.handler.changeLevelValue3();
-        }
-        else if(action == ACTION_CLICK_CENTER_BTN){
-            self.showLoadingProgressHUB("请稍等");
-            self.vcRouter.handler.webLoadList(success: { () in
-                self.hideLoadingProgressHUB();
-            }, error: { (errorCode : String, errorMsg : String) in
-                self.showProgressHUB(forSuccess: false, message: errorMsg);
-            }, fail:{ () in
-                self.showProgressHUB(forSuccess: false, message: "网络繁忙，请重试");
-            });
-        }
-        else if(action == ACTION_SELECT_TABLE_ROW){
-            print(params["index"] as! Int);
-            let indexValue = params["index"] as! Int;
-            self.vcRouter.handler.changeTableValue(index: indexValue);
-        }
+        //model初始化view
+        self.asb_refreshViews(routerKey: nil);
     }
     
     func asb_refreshViews(routerKey: String?){
