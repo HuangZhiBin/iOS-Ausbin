@@ -1,12 +1,10 @@
 # Ausbin框架
 ### 基于数据驱动的iOS开源框架
 Ausbin框架是基于数据驱动的iOS开源框架，其原理类似于前端的VUE/react框架。
+PS: 业务再多也不怕啦~
 > Ausbin is an iOS open-source framework based on Data-driven project, just like frontend frameworks, like VUE/react etc.
 
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/ausbin.png)
-
-**目录 (Table of Contents)**
-[TOC]
 
 ### 推荐使用数据驱动框架的原因
 - 在iOS的开发过程中，我们将ViewController（以下简称vc）区分不同的功能页面
@@ -188,11 +186,116 @@ extension SampleVcView : AusbinVcViewDelegate{
 }
 ```
 **关于vcView的设计模式：**
-- 1.为每个有效UI事件（点击、长按等，并会触发model数据的更新等事件）定义一个action，常量名为`ACTION_...`(名称必须可读且有意义，标记好该action实际对应的事件)
+> - 1.为每个有效UI事件（点击、长按等，并会触发model数据的更新等事件）定义一个action，常量名为`ACTION_...`(名称必须可读且有意义，标记好该action实际对应的事件)
 - 2.规定有效的actions数组，必须判断该action的有效性，没有设置可行的action将无法向vcRouter发送请求
 - 3.vcView无法获取model数据，只能得到vcRouter提供的可用数据（来自model），并且为只读模式，即vcView无法修改model的数据
 - 4.通过将所有的有效UI事件封装为action，所有事件作为action交付代理方法`asb_handleAction()`进行统一处理，限制了vcRouter处理action的唯一入口，还可以封禁某个action，使其事件失效
 - 5.遵循vcView与vcService(或vcModel)互不信任的模式，vcView无法直接操作vcService(或vcModel)，只能得到vcRouter提供的只读数据；vcService(或vcModel)也无法直接操作vcView
+
+###### （5）SampleVcRouter.swift
+
+新增vcRouter类，作为vcView和vcService的信任中介。这是Ausbin框架的重点。
+
+- 1.创建vcService，提供vcModel数据
+- 2.引入外部vcView
+- 3.创建**dataSet** (vcService提供给vcView的变量集)
+- 4.创建**handler** (处理vcView的Action事件，通过vcService更新vcModel数据)
+- 5.开始监听vcModel的数据改变(+KVC)
+- 6. vcView实现`AusbinVcRouterDelegate`代理
+- 7.代理方法`asb_handleKeyPathChange()`KVC 监听到了vcModel变化，使vcView刷新UI
+- 8.代理方法`asb_deinitRouter()`解除监听vcModel的数据改变(-KVC)
+
+```swift
+class SampleVcRouter: NSObject {
+    
+    private var vcService : SampleVcService!;
+    private weak var vcView : SampleVcView!;
+    
+    init(vcView : SampleVcView) {
+        super.init();
+        
+        self.vcService = SampleVcService();
+        self.dataSet = DataSet.init(model: self.vcService.vcModel);
+        self.handler = Handler.init(service: self.vcService);
+        
+        self.vcView = vcView;
+        self.vcView.asb_setRouter(router: self);
+        
+        // [Ausbin] 开始监听vcModel的数据改变(+KVC)
+        self.asb_vc_router_addObserver(vcModel: self.vcService.vcModel);
+    }
+    
+    required init(coder aDecoder: NSCoder?) {
+        super.init();
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        self.asb_handleKeyPathChange(keyPath: keyPath, object: object);
+    }
+    
+    // [Ausbin] vcService提供给vcView的变量，根据vcView的实际需要进行选择性的提供
+    @objc var dataSet : DataSet!;
+    
+    class DataSet: NSObject {
+        
+        private var model : SampleVcModel!;
+        
+        init(model : SampleVcModel) {
+            super.init();
+            self.model = model;
+        }
+        
+        required init(coder aDecoder: NSCoder?) {
+            super.init();
+        }
+        
+        // [Ausbin] 限制变量的只读
+        @objc var innerText  : String!{
+            get{
+                return self.model.innerText;
+            }
+        };
+    }
+    
+    // [Ausbin] 处理vcView的Action事件，通过vcService刷新vcModel数据
+    var handler : Handler!;
+    class Handler: NSObject {
+        
+        private var service : SampleVcService!;
+        
+        init(service : SampleVcService) {
+            super.init();
+            self.service = service;
+        }
+        
+        required init(coder aDecoder: NSCoder?) {
+            super.init();
+        }
+        
+        func changeInnerText(){
+            self.service.changeInnerText();
+        }
+    }
+}
+
+extension SampleVcRouter : AusbinVcRouterDelegate{
+    
+    // [Ausbin]  KVC 监听vcModel变化->刷新vcView
+    func asb_handleKeyPathChange(keyPath: String?, object: Any?){
+        let fullKeyPath = self.vcService.vcModel.asb_vc_model_getFullKeyPath(object: object, keyPath: keyPath);
+        //若vcModel有子对象people,people对象有子对象child,child有属性subChild,则subChild的fullKeyPath为people.child.subChild(以此类推)
+        if(fullKeyPath == "innerText"){
+            self.vcView.asb_refreshViews(routerKey: #keyPath(SampleVcRouter.dataSet.innerText));
+        }
+    }
+    
+    // [Ausbin]  解除监听vcModel的数据改变(-KVC)
+    func asb_deinitRouter(){
+        self.asb_vc_router_removeObserver(vcModel: self.vcService.vcModel);
+    }
+}
+```
+
 
 ##### 最终效果
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545810778989.gif)
@@ -201,4 +304,10 @@ extension SampleVcView : AusbinVcViewDelegate{
 
 ### 基于Ausbin的进阶例子
 待续
-微信交流：**ikrboy**
+
+| Item      | Value |
+| --------- | -----:|
+| 作者  | **黄智彬** |
+| 原创  | **100%** |
+| 微信  | **ikrboy** |
+| 邮箱  |   ikrboy@163.com |
