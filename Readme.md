@@ -34,16 +34,16 @@ PS: 业务再多也不怕啦~
 	> vc代码
 
 + **SampleVcModel.swift**
-	> vc的model，存储数据
+	> vc的model，数据持久层，存储数据
 
 + **SampleVcService.swift**
-	> vc的service，直接操作model
+	> vc的service，逻辑处理层，直接操作model
 
 + **SampleVcView.swift**
-	> vc的view，只负责UI相关的业务
+	> vc的view，视图层，只负责UI相关的业务
 
 + **SampleVcRouter.swift**
-	> vc的router，service与view互相信任的中间件
+	> vc的router，中间层，service与view互相信任的中间件
 
 ##### 提示： 
 + Ausbin框架的引入步骤写在注释里，用注释`// [Ausbin] ……`注明，没有注明的代码就和我们之前开发vc的流程类似，大家可以适当忽略。
