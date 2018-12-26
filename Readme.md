@@ -24,6 +24,9 @@ PS: 业务再多也不怕啦~
 ### Ausbin框架版本
 `1.1.0`
 
+### Ausbin框架结构图
+![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/network.jpg)
+
 ### 基于Ausbin的最简单的例子
 以一个最简单的Sample作为例子，分析一下Ausbin的运行过程。下面是Sample这个vc的目录结构（具体参考master/Ausbin/Controllers/Sample）, Sample的文件夹里面有5个文件:
 
