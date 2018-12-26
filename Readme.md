@@ -276,9 +276,10 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 ```
 
 **关于Ausbin的设计模式：**
-> - 1.&nbsp;vcView无法获取model数据，只能得到vcRouter提供的可用数据（数据来自model），并且对于vcView数据只读，无法修改
-> - 2.&nbsp;遵循vcView与vcService(或vcModel)互不信任的模式: vcView无法直接操作vcService(或vcModel)，只能得到vcRouter提供的只读数据；vcService(或vcModel)也无法直接操作vcView
-> - 3.&nbsp;Ausbin的引入步骤简单且易上手：
+> - 1.&nbsp;遵循vcView与vcService(或vcModel)互不信任的模式: 
+>   - (1):&nbsp;vcView无法直接操作vcService(或vcModel)，只能得到vcRouter提供的只读数据
+>   - (2):&nbsp;vcService(或vcModel)也无法直接操作vcView
+> - 2.&nbsp;Ausbin的引入步骤简单且易上手：
 >   - vc层:&nbsp;只需初始化vcRouter，并在vc的deinit时销毁，无其他额外的引入代码
 >   - vcModel层:&nbsp;无额外的引入代码，只需保证KVC监听的变量支持objc特性
 >   - vcService层:&nbsp;无额外的引入代码
