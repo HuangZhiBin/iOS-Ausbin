@@ -25,10 +25,11 @@ Ausbin框架是基于数据驱动的iOS开源框架，其原理类似于前端�
 
 ##### （1）SampleViewController.swift
 
-ViewController处理的东西很少，和以前一样，初始化vcView添加加到self.view。vc最重要的步骤就是初始化vcRouter，并在vc的deinit时清除。
+ViewController代码简洁，没有额外的特殊操作。最重要的步骤就是初始化vcRouter，并在vc的deinit时清除。
 
 > Ausbin框架的引入步骤写在注释里，用注释`// [Ausbin] ……`注明，没有注明的代码就和我们之前开发vc的流程类似，大家可以适当忽略
 
+```swift
 class SampleViewController: UIViewController {
 
 var vcView : SampleVcView!;
@@ -51,76 +52,7 @@ deinit {
 self.vcRouter.asb_deinitRouter();
 }
 }
-
-预格式化文本：
-
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
-
-#### JS代码
-
-```javascript
-function test(){
-console.log("Hello world!");
-}
-
-(function(){
-var box = function(){
-return box.fn.init();
-};
-
-box.prototype = box.fn = {
-init : function(){
-console.log('box.init()');
-
-return this;
-},
-
-add : function(str){
-alert("add", str);
-
-return this;
-},
-
-remove : function(str){
-alert("remove", str);
-
-return this;
-}
-};
-
-box.fn.init.prototype = box.fn;
-
-window.box =box;
-})();
-
-var testBox = box();
-testBox.add("jQuery").remove("jQuery");
 ```
-
-#### HTML代码 HTML codes
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-<mate charest="utf-8" />
-<title>Hello world!</title>
-</head>
-<body>
-<h1>Hello world!</h1>
-</body>
-</html>
-```
-
-### 图片 Images
-
-> Follow your heart.
-
-![](https://pandao.github.io/editor.md/examples/images/8.jpg)
-
 
 ### 绘制表格 Tables
 
@@ -139,23 +71,6 @@ Content Cell  | Content Cell
 | ------------- | ------------- |
 | Content Cell  | Content Cell  |
 | Content Cell  | Content Cell  |
-
-| Function name | Description                    |
-| ------------- | ------------------------------ |
-| `help()`      | Display the help window.       |
-| `destroy()`   | **Destroy your computer!**     |
-
-| Left-Aligned  | Center Aligned  | Right Aligned |
-| :------------ |:---------------:| -----:|
-| col 3 is      | some wordy text | $1600 |
-| col 2 is      | centered        |   $12 |
-| zebra stripes | are neat        |    $1 |
-
-| Item      | Value |
-| --------- | -----:|
-| Computer  | $1600 |
-| Phone     |   $12 |
-| Pipe      |    $1 |
 
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/ausbin.png)
 
