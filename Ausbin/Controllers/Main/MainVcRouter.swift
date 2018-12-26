@@ -49,15 +49,6 @@ class MainVcRouter: AusbinVcRouter {
             self.vcModel = vcModel;
         }
         
-        override var description: String{
-            set{
-                
-            }
-            get{
-                return "";
-            }
-        }
-        
         required init(coder aDecoder: NSCoder?) {
             super.init();
         }
@@ -66,7 +57,6 @@ class MainVcRouter: AusbinVcRouter {
             get{
                 return self.vcModel.items;
             }
-            
         };
         
         @objc var checkedRowIndex : NSNumber!{

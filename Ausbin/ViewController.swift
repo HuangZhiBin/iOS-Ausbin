@@ -28,13 +28,25 @@ class ViewController: UIViewController {
         self.view.addSubview(btn);
         btn.addTarget(self, action: #selector(self.clickBtn), for: .touchUpInside);
         
-        
-
+        let btn2 : UIButton = UIButton.init(type: .system);
+        btn2.frame = CGRect.init(x: 10, y: 300, width: ScreenWidth-20, height: 50);
+        btn2.layer.masksToBounds = true;
+        btn2.layer.cornerRadius = 3;
+        btn2.setTitle("最简单的例子", for: .normal);
+        btn2.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        btn2.setTitleColor(UIColor.init(hexString: "ffffff"), for: .normal);
+        btn2.backgroundColor = UIColor.init(hexString: "00a85a");
+        self.view.addSubview(btn2);
+        btn2.addTarget(self, action: #selector(self.clickBtn2), for: .touchUpInside);
         // Do any additional setup after loading the view.
     }
     
     @objc func clickBtn(){
         self.show(MainViewController(), sender: nil);
+    }
+    
+    @objc func clickBtn2(){
+        self.show(SampleViewController(), sender: nil);
     }
 
     override func didReceiveMemoryWarning() {
