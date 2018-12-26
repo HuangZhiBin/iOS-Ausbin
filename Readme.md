@@ -307,7 +307,7 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 
 
 ##### 最终效果
-![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545810778989.gif)
+![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545819873521.gif)
 ------------
 
 ### 基于Ausbin的进阶例子
