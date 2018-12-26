@@ -21,17 +21,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ausbin数据驱动框架" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7N-SY-uda">
-                                <rect key="frame" x="57" y="317" width="261.5" height="33.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
-                                <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ausbin" translatesAutoresizingMaskIntoConstraints="NO" id="D2f-AI-EpB">
+                                <rect key="frame" x="97" y="243" width="180" height="180"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="180" id="R8a-0a-q6x"/>
+                                    <constraint firstAttribute="width" constant="180" id="iNY-RG-33f"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="y7N-SY-uda" firstAttribute="centerY" secondItem="YwE-1t-Nas" secondAttribute="centerY" id="MhO-Pp-NLc"/>
-                            <constraint firstItem="y7N-SY-uda" firstAttribute="centerX" secondItem="YwE-1t-Nas" secondAttribute="centerX" id="qkf-6Z-1tG"/>
+                            <constraint firstItem="D2f-AI-EpB" firstAttribute="centerX" secondItem="YwE-1t-Nas" secondAttribute="centerX" id="g2n-Hr-bCy"/>
+                            <constraint firstItem="D2f-AI-EpB" firstAttribute="centerY" secondItem="YwE-1t-Nas" secondAttribute="centerY" id="vcR-mf-iVs"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -40,4 +41,7 @@
             <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ausbin" width="201" height="201"/>
+    </resources>
 </document>

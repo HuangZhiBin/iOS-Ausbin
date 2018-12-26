@@ -80,7 +80,9 @@ extension SampleVcView : AusbinVcViewDelegate{
     // [Ausbin] 接受vcView的action事件，并让vcRouter作出相应的处理(即vcRouter调用vcService的接口更新数据)
     func asb_handleAction(action : String, params: [String:Any?]){
         // [Ausbin] 必须判断该action的有效性
-        if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_BTN)){
+        guard (self.asb_vc_view_isActionAvailble(action: action)) else { return; }
+        
+        if(action == ACTION_CLICK_BTN){
             self.vcRouter.handler.changeInnerText();
         }
     }

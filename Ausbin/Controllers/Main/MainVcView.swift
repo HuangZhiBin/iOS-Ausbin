@@ -230,23 +230,25 @@ extension MainVcView : AusbinVcViewDelegate{
         return [
             ACTION_CLICK_LEVEL_BTN_1,
             ACTION_CLICK_LEVEL_BTN_2,
-            ACTION_CLICK_LEVEL_BTN_3,
+            //ACTION_CLICK_LEVEL_BTN_3,
             ACTION_CLICK_CENTER_BTN,
             ACTION_SELECT_TABLE_ROW
         ];
     }
     
     func asb_handleAction(action : String, params: [String:Any?]){
-        if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_1)){
+        guard (self.asb_vc_view_isActionAvailble(action: action)) else { return; }
+        
+        if(action == ACTION_CLICK_LEVEL_BTN_1){
             self.vcRouter.handler.changeLevelValue1();
         }
-        else if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_2)){
+        else if(action == ACTION_CLICK_LEVEL_BTN_2){
             self.vcRouter.handler.changeLevelValue2();
         }
-        else if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_3)){
+        else if(action == ACTION_CLICK_LEVEL_BTN_3){
             self.vcRouter.handler.changeLevelValue3();
         }
-        else if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_CENTER_BTN)){
+        else if(action == ACTION_CLICK_CENTER_BTN){
             self.showLoadingProgressHUB("请稍等");
             self.vcRouter.handler.webLoadList(success: { () in
                 self.hideLoadingProgressHUB();
@@ -256,7 +258,7 @@ extension MainVcView : AusbinVcViewDelegate{
                 self.showProgressHUB(forSuccess: false, message: "网络繁忙，请重试");
             });
         }
-        else if(self.asb_vc_view_isActionAvailble(action, ACTION_SELECT_TABLE_ROW)){
+        else if(action == ACTION_SELECT_TABLE_ROW){
             print(params["index"] as! Int);
             let indexValue = params["index"] as! Int;
             self.vcRouter.handler.changeTableValue(index: indexValue);
