@@ -315,6 +315,12 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 ### 基于Ausbin的进阶例子
 以Main作为例子，分析一下实际业务应用时可能遇到的情况。（具体参考master/Ausbin/Controllers/Main）
 - 1.&nbsp;当vcModel为多个子对象互相嵌套时，使所有子对象都能响应KVC
++ vcModel
+    + innerText (1级子变量)
+    + ChildModel
+        + innerText (2级子变量)
+        + ChildItemModel
+	        + innerText (3级子变量)
 - 2.&nbsp;子对象互相嵌套时，获取vcModel子对象的keyPath
 - 3.&nbsp;网络访问的情况
 
