@@ -48,25 +48,25 @@ ViewController代码简洁，没有额外的特殊操作。
 ```swift
 class SampleViewController: UIViewController {
     
-		var vcView : SampleVcView!;
-		var vcRouter : SampleVcRouter!;
+    var vcView : SampleVcView!;
+    var vcRouter : SampleVcRouter!;
     
-		override func viewDidLoad() {
-				super.viewDidLoad();
+    override func viewDidLoad() {
+        super.viewDidLoad();
         
-				self.title = "最简单的例子";
+		self.title = "最简单的例子";
         
-				self.vcView = SampleVcView(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height:ScreenHeight-Status_Bar_Height-Navigation_Bar_Height));
-				self.view.addSubview(self.vcView);
+		self.vcView = SampleVcView(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height:ScreenHeight-Status_Bar_Height-Navigation_Bar_Height));
+		self.view.addSubview(self.vcView);
         
-				// [Ausbin] 初始化vcRouter
-				self.vcRouter = SampleVcRouter.init(vcView: self.vcView);
-		}
+		// [Ausbin] 初始化vcRouter
+		self.vcRouter = SampleVcRouter.init(vcView: self.vcView);
+	}
     
-		deinit {
-				// [Ausbin] 清除vcRouter
-				self.vcRouter.asb_deinitRouter();
-		}
+	deinit {
+		// [Ausbin] 清除vcRouter
+		self.vcRouter.asb_deinitRouter();
+	}
 }
 ```
 
@@ -77,8 +77,8 @@ vcModel需要注意的是，变量需要加入objc特性`@objc dynamic`实现KVC
 ```swift
 class SampleVcModel: NSObject {
     
-		// [Ausbin] 必须为变量添加objc特性支持KVC:@objc dynamic
-		@objc dynamic var innerText : String! = "这是最初始的值:0";
+	// [Ausbin] 必须为变量添加objc特性支持KVC:@objc dynamic
+	@objc dynamic var innerText : String! = "这是最初始的值:0";
     
 }
 ```
@@ -90,21 +90,21 @@ vcService直接操作vcModel，为vcRouter提供接口，不参与其他的事�
 ```swift
 class SampleVcService: NSObject {
     
-		var vcModel: SampleVcModel!;
+	var vcModel: SampleVcModel!;
     
-		override init() {
-				super.init();
-				// [Ausbin] 初始化vcModel
-				self.vcModel = SampleVcModel();
-		}
+    override init() {
+        super.init();
+		// [Ausbin] 初始化vcModel
+        self.vcModel = SampleVcModel();
+    }
     
-		// [Ausbin] 提供修改model的接口
-		func changeInnerText(){
-				let now = Date()
-				let timeInterval: TimeInterval = now.timeIntervalSince1970
-				let millisecond = CLongLong(round(timeInterval*1000))
-				self.vcModel.innerText = "最新的innerText的值:"+String(millisecond);
-		}
+    // [Ausbin] 提供修改model的接口
+    func changeInnerText(){
+        let now = Date()
+        let timeInterval: TimeInterval = now.timeIntervalSince1970
+        let millisecond = CLongLong(round(timeInterval*1000))
+        self.vcModel.innerText = "最新的innerText的值:"+String(millisecond);
+    }
 }
 ```
 >  vcService提供了changeInnerText的方法，调用该方法，实现对vcModel的变量innerText的修改。为了便于展示变化效果，每一次调用后将改为时间戳的形式进行展示。
@@ -126,59 +126,59 @@ vcView需要建立与vcRouter的联系，一是将接收到的UI事件（点击�
 ```swift
 class SampleVcView: UIView {
     
-		// [Ausbin] 为每一个UI响应事件添加action(前提是这个action的触发会更新model的数据)
-		let ACTION_CLICK_BTN = UIView.asb_vc_view_generateAction();
+    // [Ausbin] 为每一个UI响应事件添加action(前提是这个action的触发会更新model的数据)
+    let ACTION_CLICK_BTN = UIView.asb_vc_view_generateAction();
     
-		// [Ausbin] vcRouter实例，定义为weak防止强制持有
-		private weak var vcRouter : SampleVcRouter!{
-			didSet{
-					// [Ausbin] model刷新当前view
-					self.asb_refreshViews(routerKey: nil);
-			}
-		}
+    // [Ausbin] vcRouter实例，定义为weak防止强制持有
+    private weak var vcRouter : SampleVcRouter!{
+        didSet{
+            // [Ausbin] model刷新当前view
+            self.asb_refreshViews(routerKey: nil);
+        }
+    }
     
-		//初始化vcView时执行
-		func initAllViews(){
-				//UI初始化代码，此处省略……
+	//初始化vcView时执行
+    func initAllViews(){
+        //UI初始化代码，此处省略……
         
-				//btn按钮的点击事件（kUIButtonBlockTouchUpInside 为第三方方法，通过block响应btn的点击事件，感兴趣的可自行google）
-				self.btn.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
-						self?.asb_handleAction(action: (self?.ACTION_CLICK_BTN)!, params: [:]);
-				});
-		}
+		//btn按钮的点击事件（kUIButtonBlockTouchUpInside 为第三方方法，通过block响应btn的点击事件，感兴趣的可自行google）
+        self.btn.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
+            self?.asb_handleAction(action: (self?.ACTION_CLICK_BTN)!, params: [:]);
+        });
+    }
     
-		//UI初始化代码，此处省略……
+	//UI初始化代码，此处省略……
 }
 
 // [Ausbin] 必须为VcView实现AusbinVcViewDelegate代理
 extension SampleVcView : AusbinVcViewDelegate{
     
-		// [Ausbin] 引入外部vcRouter
-		func asb_setRouter(router : NSObject){
-				self.vcRouter = router as! SampleVcRouter;
-		}
+    // [Ausbin] 引入外部vcRouter
+    func asb_setRouter(router : NSObject){
+        self.vcRouter = router as! SampleVcRouter;
+    }
     
-		// [Ausbin] 定义可执行的action数组，没有设置可行的action将无法更新model
-		func asb_getAvailableActions() -> [String]{
-				return [
-						ACTION_CLICK_BTN
-				];
-		}
+    // [Ausbin] 定义可执行的action数组，没有设置可行的action将无法更新model
+    func asb_getAvailableActions() -> [String]{
+        return [
+            ACTION_CLICK_BTN
+        ];
+    }
     
-		// [Ausbin] 接受vcView的action事件，让vcRouter调用vcService的接口更新数据
-		func asb_handleAction(action : String, params: [String:Any?]){
-				// [Ausbin] 必须判断该action的有效性
-				if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_BTN)){
-						self.vcRouter.handler.changeInnerText();
-				}
-		}
+    // [Ausbin] 接受vcView的action事件，让vcRouter调用vcService的接口更新数据
+    func asb_handleAction(action : String, params: [String:Any?]){
+        // [Ausbin] 必须判断该action的有效性
+		if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_BTN)){
+            self.vcRouter.handler.changeInnerText();
+        }
+    }
     
-		// [Ausbin] 让vcView接受vcRouter的UI更新请求，刷新UI
-		func asb_refreshViews(routerKey: String?){
-				if(routerKey == nil || routerKey == #keyPath(SampleVcRouter.dataSet.innerText)){
-						self.label.text = self.vcRouter.dataSet.innerText;
-				}
-		}
+    // [Ausbin] 让vcView接受vcRouter的UI更新请求，刷新UI
+    func asb_refreshViews(routerKey: String?){
+        if(routerKey == nil || routerKey == #keyPath(SampleVcRouter.dataSet.innerText)){
+            self.label.text = self.vcRouter.dataSet.innerText;
+        }
+    }
 }
 ```
 关于vcView的设计模式：
