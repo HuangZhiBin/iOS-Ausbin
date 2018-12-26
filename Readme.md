@@ -278,13 +278,13 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 **关于Ausbin的设计模式：**
 > - 1.&nbsp;遵循vcView与vcService(或vcModel)互不信任的模式: 
 >   - (1)&nbsp;vcView无法直接操作vcService(或vcModel)，只能得到vcRouter提供的只读数据
->   - (2)   &nbsp;vcService(或vcModel)也无法直接操作vcView
+>   - (2)&nbsp;vcService(或vcModel)也无法直接操作vcView
 > - 2.&nbsp;Ausbin的引入步骤简单且易上手：
->   - vc层:&nbsp;只需初始化vcRouter，并在vc的deinit时销毁，无其他额外的引入代码
->   - vcModel层:&nbsp;无额外的引入代码，只需保证KVC监听的变量支持objc特性
->   - vcService层:&nbsp;无额外的引入代码
->   - vcView层:&nbsp;只需定义私有变量vcRouter，实现AusbinVcViewDelegate代理
->   - vcRouter层:&nbsp;Ausbin的核心实现，是在原有的vc+model+service+view的基础上新增的中间层，需要定义`handler`(vcRouter -> vcService)和`dataSet`(vcRouter -> vcView)两大变量，并实现AusbinVcRouterDelegate代理
+>   - (1)&nbsp;vc层:&nbsp;只需初始化vcRouter，并在vc的deinit时销毁，无其他额外的引入代码
+>   - (2)&nbsp;vcModel层:&nbsp;无额外的引入代码，只需保证KVC监听的变量支持objc特性
+>   - (3)&nbsp;vcService层:&nbsp;无额外的引入代码
+>   - (4)&nbsp;vcView层:&nbsp;只需定义私有变量vcRouter，实现AusbinVcViewDelegate代理
+>   - (5)&nbsp;vcRouter层:&nbsp;Ausbin的核心实现，是在原有的vc+model+service+view的基础上新增的中间层，需要定义`handler`(vcRouter -> vcService)和`dataSet`(vcRouter -> vcView)两大变量，并实现AusbinVcRouterDelegate代理
 
 ##### 最终效果
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545819873521.gif)
