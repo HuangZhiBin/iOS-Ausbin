@@ -124,14 +124,14 @@ class SampleVcService: NSObject {
 
 vcView需要建立与vcRouter的联系，一是将接收到的UI事件（点击按钮、长按、切换图片等）反馈给vcRouter，二是响应vcRouter返回的UI刷新请求。
 
-- 1.为每一个UI响应事件添加action
-- 2.创建`weak`类型的私有vcRouter实例(weak防止强制持有，避免循环引用)
-- 3.vcRouter实例赋值后执行刷新当前view
-- 4.vcView实现`AusbinVcViewDelegate`代理
-- 5.代理方法`asb_setRouter()`引入外部vcRouter
-- 6.代理方法`asb_getAvailableActions()`定义可执行的action数组，没有设置可行的action将无法向vcRouter发送请求
-- 7.代理方法`asb_handleAction()`处理vcView的action事件
-- 8.代理方法`asb_refreshViews()`接受vcRouter的UI更新请求
+- 1.&nbsp;为每一个UI响应事件添加action
+- 2.&nbsp;创建`weak`类型的私有vcRouter实例(weak防止强制持有，避免循环引用)
+- 3.&nbsp;vcRouter实例赋值后执行刷新当前view
+- 4.&nbsp;vcView实现`AusbinVcViewDelegate`代理
+- 5.&nbsp;代理方法`asb_setRouter()`引入外部vcRouter
+- 6.&nbsp;代理方法`asb_getAvailableActions()`定义可执行的action数组，没有设置可行的action将无法向vcRouter发送请求
+- 7.&nbsp;代理方法`asb_handleAction()`处理vcView的action事件
+- 8.&nbsp;代理方法`asb_refreshViews()`接受vcRouter的UI更新请求
 
 ```swift
 class SampleVcView: UIView {
@@ -192,24 +192,24 @@ extension SampleVcView : AusbinVcViewDelegate{
 }
 ```
 **关于vcView的设计模式：**
-> - 1.为每个有效UI事件（点击、长按等，并会更新model的等事件）定义一个action，常量名为`ACTION_...`(名称必须可读且有意义，标记了该action实际对应的事件)
-> - 2.规定有效的actions数组，向vcRouter发送action请求前必须判断该action的有效性，没有设置可行的action将无法向vcRouter发送请求
-> - 3.vcView无法获取model数据，只能得到vcRouter提供的可用数据（数据来自model），并且对于vcView数据只读，无法修改
-> - 4.通过将所有的有效UI事件封装为action，所有事件作为action交付代理方法`asb_handleAction()`进行统一处理，控制了vcRouter处理action的唯一入口；还可以封禁某个action，使其无法向vcRouter发送请求
-> - 5.遵循vcView与vcService(或vcModel)互不信任的模式，vcView无法直接操作vcService(或vcModel)，只能得到vcRouter提供的只读数据；vcService(或vcModel)也无法直接操作vcView
+> - 1.&nbsp;为每个有效UI事件（点击、长按等，并会更新model的等事件）定义一个action，常量名为`ACTION_...`(名称必须可读且有意义，标记了该action实际对应的事件)
+> - 2.&nbsp;规定有效的actions数组，向vcRouter发送action请求前必须判断该action的有效性，没有设置可行的action将无法向vcRouter发送请求
+> - 3.&nbsp;vcView无法获取model数据，只能得到vcRouter提供的可用数据（数据来自model），并且对于vcView数据只读，无法修改
+> - 4.&nbsp;通过将所有的有效UI事件封装为action，所有事件作为action交付代理方法`asb_handleAction()`进行统一处理，控制了vcRouter处理action的唯一入口；还可以封禁某个action，使其无法向vcRouter发送请求
+> - 5.&nbsp;遵循vcView与vcService(或vcModel)互不信任的模式，vcView无法直接操作vcService(或vcModel)，只能得到vcRouter提供的只读数据；vcService(或vcModel)也无法直接操作vcView
 
 ###### （5）SampleVcRouter.swift
 
 新增vcRouter类，作为vcView和vcService的信任中介。这是Ausbin框架的重点。
 
-- 1.创建vcService(创建时同样也初始化了vcModel)，提供vcModel数据
-- 2.引入外部vcView
-- 3.创建**dataSet** (vcRouter提供给vcView的变量集)
-- 4.创建**handler** (vcRouter处理vcView的Action事件，通过vcService更新vcModel数据)
-- 5.开始通过KVC监听vcModel的数据改变(+KVC)
-- 6.vcView实现`AusbinVcRouterDelegate`代理
-- 7.代理方法`asb_handleKeyPathChange()`当KVC监听到了vcModel变化，vcRouter通知vcView刷新UI
-- 8.代理方法`asb_deinitRouter()`在vc销毁时解除监听vcModel的数据改变(-KVC)
+- 1.&nbsp;创建vcService(创建时同样也初始化了vcModel)，提供vcModel数据
+- 2.&nbsp;引入外部vcView
+- 3.&nbsp;创建**dataSet** (vcRouter提供给vcView的变量集)
+- 4.&nbsp;创建**handler** (vcRouter处理vcView的Action事件，通过vcService更新vcModel数据)
+- 5.&nbsp;开始通过KVC监听vcModel的数据改变(+KVC)
+- 6.&nbsp;vcView实现`AusbinVcRouterDelegate`代理
+- 7.&nbsp;代理方法`asb_handleKeyPathChange()`当KVC监听到了vcModel变化，vcRouter通知vcView刷新UI
+- 8.&nbsp;代理方法`asb_deinitRouter()`在vc销毁时解除监听vcModel的数据改变(-KVC)
 
 ```swift
 class SampleVcRouter: NSObject {
@@ -309,9 +309,9 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 
 ### 基于Ausbin的进阶例子
 以Main作为例子，分析一下实际业务应用时可能遇到的情况。（具体参考master/Ausbin/Controllers/Main）
-- 1.当vcModel为多个子对象互相嵌套时，使所有子对象都能响应KVC
-- 2.子对象互相嵌套时，获取vcModel子对象的keyPath
-- 3.网络访问的情况
+- 1.&nbsp;当vcModel为多个子对象互相嵌套时，使所有子对象都能响应KVC
+- 2.&nbsp;子对象互相嵌套时，获取vcModel子对象的keyPath
+- 3.&nbsp;网络访问的情况
 
 ##### 最终效果
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545813617457.gif)
@@ -321,8 +321,8 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 
 ### 讨论
 项目还存在以下的问题，欢迎批评指正
-- 1.如何更加方便地引入Ausbin？（代码更精简）
-- 2.
+- 1.&nbsp;如何更加方便地引入Ausbin？（代码更精简）
+- 2.&nbsp;如何使vcRouter更精简
 
 待续……
 
