@@ -174,7 +174,7 @@ extension SampleVcView : AusbinVcViewDelegate{
 
 新增vcRouter类，作为vcView和vcService的信任中介。这是Ausbin框架的重点。
 
-- 1.&nbsp;创建vcService(vcService创建的同样也初始化了vcModel)
+- 1.&nbsp;创建vcService(创建vcService的同时也初始化了vcModel)
 - 2.&nbsp;引入外部vcView
 - 3.&nbsp;创建**dataSet** (vcRouter提供给vcView的变量集)
 - 4.&nbsp;创建**handler** (vcRouter调用vcService的接口更新vcModel数据)
@@ -319,6 +319,7 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 - 3.&nbsp;vc间的跳转应该在哪里处理？
 - 4.&nbsp;Ausbin能多大程度给繁杂的业务带来维护的好处？
 - 5.&nbsp;Ausbin最大的问题，你发现了吗？
+- 6.&nbsp;Ausbin的最佳定位是一种框架、一种工具，还是一种分层思想？
 
 待续……
 
