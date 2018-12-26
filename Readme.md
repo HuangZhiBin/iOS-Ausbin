@@ -284,7 +284,7 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 >   - vcModel层:&nbsp;无额外的引入代码，只需保证KVC监听的变量支持objc特性
 >   - vcService层:&nbsp;无额外的引入代码
 >   - vcView层:&nbsp;只需定义私有变量vcRouter，实现AusbinVcViewDelegate代理
->   - vcRouter层:&nbsp;Ausbin的核心实现，是在原有的vc+model+service+view的基础上新增的中间层，需要定义`**handler**`(vcRouter -> vcService)和`**dataSet**`(vcRouter -> vcView)两大变量，并实现AusbinVcRouterDelegate代理
+>   - vcRouter层:&nbsp;Ausbin的核心实现，是在原有的vc+model+service+view的基础上新增的中间层，需要定义`handler`(vcRouter -> vcService)和`dataSet`(vcRouter -> vcView)两大变量，并实现AusbinVcRouterDelegate代理
 
 ##### 最终效果
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545819873521.gif)
