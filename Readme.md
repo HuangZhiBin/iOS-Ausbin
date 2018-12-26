@@ -299,6 +299,7 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 
 ##### 最终效果
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545810778989.gif)
+------------
 
 ### 基于Ausbin的进阶例子
 以Main作为例子，分析一下Ausbin框架。（具体参考master/Ausbin/Controllers/Main）
