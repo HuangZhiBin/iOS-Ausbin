@@ -10,8 +10,10 @@ import UIKit
 
 class SampleVcView: UIView {
     
+    // [Ausbin] 为每一个UI响应事件添加action(前提是这个action的触发会更新model的数据)
     let ACTION_CLICK_BTN = UIView.asb_vc_view_generateAction();
     
+    // [Ausbin] 引入外部vcRouter，定义为weak,防止强制持有
     private weak var vcRouter : SampleVcRouter!{
         didSet{
             //model初始化view
@@ -19,7 +21,6 @@ class SampleVcView: UIView {
         }
     }
 
-    //可以将外界的参数传进来
     override init(frame: CGRect) {
         super.init(frame: frame);
         self.initAllViews();
@@ -60,24 +61,30 @@ class SampleVcView: UIView {
     }();
 }
 
+// [Ausbin] 必须为VcView实现AusbinVcViewDelegate代理
+// MARK: - 实现AusbinVcViewDelegate代理
 extension SampleVcView : AusbinVcViewDelegate{
     
+    // [Ausbin] 引入外部vcRouter
     func asb_setRouter(router : NSObject){
         self.vcRouter = router as! SampleVcRouter;
     }
     
+    // [Ausbin] 定义可执行的action数组，没有设置可行的action将无法更新model
     func asb_getAvailableActions() -> [String]{
         return [
             ACTION_CLICK_BTN
         ];
     }
     
+    // [Ausbin] 接受vcView的action事件，并让vcRouter作出相应的处理(即vcRouter调用vcService的接口更新数据)
     func asb_handleAction(action : String, params: [String:Any?]){
         if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_BTN)){
-            self.vcRouter.handler.changeLevelValue1();
+            self.vcRouter.handler.changeInnerText();
         }
     }
     
+    // [Ausbin] 接受vcRouter的UI更新请求，并让vcView作出相应的UI刷新操作
     func asb_refreshViews(routerKey: String?){
         if(routerKey == nil || routerKey == #keyPath(SampleVcRouter.dataSet.innerText)){
             self.label.text = self.vcRouter.dataSet.innerText;

@@ -10,6 +10,7 @@ import UIKit
 
 class SampleVcModel: NSObject {
     
+    // [Ausbin] 必须为变量添加objc特性支持KVC:@objc dynamic
     @objc dynamic var innerText : String! = "这是最初始的值:0";
     
 }

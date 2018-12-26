@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SampleVcRouter: AusbinVcRouter {
+class SampleVcRouter: NSObject {
     
     private var vcService : SampleVcService!;
     
@@ -74,8 +74,8 @@ class SampleVcRouter: AusbinVcRouter {
             super.init();
         }
         
-        func changeLevelValue1(){
-            self.vcService.changeLevelValue1();
+        func changeInnerText(){
+            self.vcService.changeInnerText();
         }
     }
 }

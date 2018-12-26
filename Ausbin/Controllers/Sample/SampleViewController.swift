@@ -21,12 +21,12 @@ class SampleViewController: UIViewController {
         self.vcView = SampleVcView(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height:ScreenHeight-Status_Bar_Height-Navigation_Bar_Height));
         self.view.addSubview(self.vcView);
         
-        //初始化vcRouter
+        // [Ausbin] 初始化vcRouter
         self.vcRouter = SampleVcRouter.init(vcView: self.vcView);
     }
     
     deinit {
-        //清除vcRouter
+        // [Ausbin] 清除vcRouter
         self.vcRouter.asb_deinitRouter();
     }
 }

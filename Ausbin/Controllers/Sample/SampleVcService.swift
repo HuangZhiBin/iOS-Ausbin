@@ -8,6 +8,7 @@
 
 import UIKit
 
+// [Ausbin] vcService单纯地操作model，不做其他任何处理，包括view、router的操作
 class SampleVcService: NSObject {
     
     var vcModel: SampleVcModel!;
@@ -17,7 +18,8 @@ class SampleVcService: NSObject {
         self.vcModel = SampleVcModel();
     }
     
-    func changeLevelValue1(){
+    // [Ausbin] 提供修改model的接口
+    func changeInnerText(){
         let now = Date()
         let timeInterval: TimeInterval = now.timeIntervalSince1970
         let millisecond = CLongLong(round(timeInterval*1000))

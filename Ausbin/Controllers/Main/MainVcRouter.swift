@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainVcRouter: AusbinVcRouter {
+class MainVcRouter: NSObject {
     
     private var vcService : MainVcService!;
     
