@@ -12,6 +12,7 @@ class MainVcView: UIView {
     
     //action的值可以随意取，但要保证不重复
     let ACTION_CLICK_CENTER_BTN = UIView.asb_vc_view_generateAction();
+    
     let ACTION_CLICK_LEVEL_BTN_1 = UIView.asb_vc_view_generateAction();
     let ACTION_CLICK_LEVEL_BTN_2 = UIView.asb_vc_view_generateAction();
     let ACTION_CLICK_LEVEL_BTN_3 = UIView.asb_vc_view_generateAction();
