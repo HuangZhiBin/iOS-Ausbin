@@ -154,7 +154,7 @@ class SampleVcView: UIView {
     func initAllViews(){
         //UI初始化代码，此处省略……
         
-        //btn按钮的点击事件（kUIButtonBlockTouchUpInside 为第三方方法，通过block响应btn的点击事件，感兴趣的可自行google）
+        //btn按钮的点击事件
         self.btn.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
             self?.asb_handleAction(action: (self?.ACTION_CLICK_BTN)!, params: [:]);
         });
