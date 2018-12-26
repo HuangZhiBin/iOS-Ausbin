@@ -3,7 +3,7 @@
 Ausbin框架是基于数据驱动的iOS开源框架，其原理类似于前端的VUE/react框架。
 > Ausbin is an iOS open-source framework based on Data-driven project, just like frontend frameworks, like VUE/react etc.
 
-###推荐使用数据驱动框架的原因
+### 推荐使用数据驱动框架的原因
 - 在iOS的开发过程中，我们将ViewController（以下简称vc）区分不同的功能页面
 - vc的代码包括了view的创建和刷新、数据的访问、以及vc间的跳转
 - 为了快速完成业务，将所有view、model的操作写在vc里面，随着业务的深入，代码的维护成本越来越高
@@ -13,21 +13,30 @@ Ausbin框架是基于数据驱动的iOS开源框架，其原理类似于前端�
 - view与model之间动态绑定，由model决定view的显示，而model也可以根据view的交互做出相应的处理，两者的交互由中间件完成，实现业务的解耦
 
 ### Ausbin框架核心技术
-KVC
+`KVC`
 
 ### 基于Ausbin的最简单的例子
 以一个最简单的Sample作为例子，分析一下Ausbin的运行过程。下面是Sample这个vc的目录结构（具体参考master/Ausbin/Controllers/Sample）, Sample的文件夹里面有五个文件:
-+ Sample
-+ **SampleViewController.swift**
-+ **SampleVcModel.swift**： vc的model
-+ **SampleVcService.swift**： vc的service，直接操作model
-+ **SampleVcView.swift**： vc的view，只负责UI相关的业务
-+ **SampleVcRouter.swift**： vc的router，service与view互相信任的中间件
 
->  Ausbin框架的引入步骤写在注释里，用注释`// [Ausbin] ……`注明，没有注明的代码就和我们之前开发vc的流程类似，大家可以适当忽略。下面对每个文件进行分析。
++ （1）**SampleViewController.swift**
+> vc代码
 
-------------
-##### （1）SampleViewController.swift
++ （2）**SampleVcModel.swift**
+> vc的model
+
++ （3）**SampleVcService.swift**
+> vc的service，直接操作model
+
++ （4）**SampleVcView.swift**
+> vc的view，只负责UI相关的业务
+
++ （5）**SampleVcRouter.swift**
+> vc的router，service与view互相信任的中间件
+
+提示： Ausbin框架的引入步骤写在注释里，用注释`// [Ausbin] ……`注明，没有注明的代码就和我们之前开发vc的流程类似，大家可以适当忽略。下面对每个文件进行分析。
+
+##### 代码分析
+###### （1）SampleViewController.swift
 ViewController代码简洁，没有额外的特殊操作。
 - 在`viewDidLoad()`初始化vcRouter
 - 在`deinit()`时清除初始化vcRouter
@@ -56,7 +65,7 @@ self.vcRouter.asb_deinitRouter();
 }
 ```
 ------------
-##### （2）SampleVcModel.swift
+###### （2）SampleVcModel.swift
 
 vcModel需要注意的是，变量需要加入objc特性`@objc dynamic`实现KVC。
 
@@ -69,7 +78,7 @@ class SampleVcModel: NSObject {
 }
 ```
 ------------
-##### （3）SampleVcService.swift
+###### （3）SampleVcService.swift
 
 vcService直接操作vcModel，为vcRouter提供接口，不参与其他的事务。
 
@@ -96,7 +105,7 @@ self.vcModel.innerText = "最新的innerText的值:"+String(millisecond);
 >  vcService提供了changeInnerText的方法，调用该方法，实现对vcModel的变量innerText的修改。为了便于展示变化效果，每一次调用后将改为时间戳的形式进行展示。
 
 ------------
-##### （4）SampleVcView.swift
+###### （4）SampleVcView.swift
 
 vcView需要建立与vcRouter的联系，一是将接收到的UI事件（点击按钮、长按、切换图片等）反馈给vcRouter，二是响应vcRouter返回的UI刷新请求。
 
