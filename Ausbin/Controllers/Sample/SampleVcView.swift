@@ -13,7 +13,7 @@ class SampleVcView: UIView {
     // [Ausbin] 为每一个UI响应事件添加action(前提是这个action的触发会更新model的数据)
     let ACTION_CLICK_BTN = UIView.asb_vc_view_generateAction();
     
-    // [Ausbin] 引入外部vcRouter，定义为weak,防止强制持有
+    // [Ausbin] vcRouter实例，定义为weak防止强制持有
     private weak var vcRouter : SampleVcRouter!{
         didSet{
             // [Ausbin] model初始化view

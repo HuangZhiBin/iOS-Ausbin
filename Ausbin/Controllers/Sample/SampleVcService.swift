@@ -15,6 +15,7 @@ class SampleVcService: NSObject {
     
     override init() {
         super.init();
+        // [Ausbin] 初始化vcModel
         self.vcModel = SampleVcModel();
     }
     
