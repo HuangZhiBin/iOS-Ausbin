@@ -28,6 +28,6 @@ class MainViewController: UIViewController {
     
     deinit {
         //清除vcRouter
-        self.vcRouter.deinitRouter();
+        self.vcRouter.asb_deinitRouter();
     }
 }

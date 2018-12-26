@@ -9,6 +9,7 @@
 import UIKit
 
 extension NSObject {
+    
     /// 获取属性名和类型列表
     ///
     /// - Returns: 属性名和类型的字典

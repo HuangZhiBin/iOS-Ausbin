@@ -44,17 +44,4 @@ extension NSObject {
             print("[Ausbin] 🔥remove Observer for propertyName " + propertyName);
         }
     }
-    
-    func asb_vc_router_getKeyPath(obj : Any?) -> String? {
-        let properties : [String:String] = self.asb_getProperties()!;//getAllProperties(obj: obj);
-        for property in properties{
-            let propertyName = property.key;
-            //let typeName = property.value;
-            let isTheSameProperty : Bool = ((self.value(forKey: propertyName) as AnyObject) === (obj as AnyObject));
-            if(isTheSameProperty){
-                return propertyName;
-            }
-        }
-        return nil;
-    }
 }

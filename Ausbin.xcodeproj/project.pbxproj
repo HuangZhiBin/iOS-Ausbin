@@ -29,6 +29,7 @@
 		34B6F7BA21D1212100D8A9AD /* UIButton+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F7B921D1212100D8A9AD /* UIButton+Block.m */; };
 		34B6F7BD21D123E100D8A9AD /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F7BC21D123E100D8A9AD /* UIColor+Hex.m */; };
 		34B6F7C021D1260700D8A9AD /* UIView+Show.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B6F7BE21D1260700D8A9AD /* UIView+Show.m */; };
+		34F0D6C121D31C0800E62CED /* AusbinVcRouterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F0D6C021D31C0800E62CED /* AusbinVcRouterDelegate.swift */; };
 		34F268A721D25FC7006C0990 /* MainVcRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F268A621D25FC7006C0990 /* MainVcRouter.swift */; };
 		34F268A921D28005006C0990 /* NSObject+VcRouter+Ausbin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F268A821D28005006C0990 /* NSObject+VcRouter+Ausbin.swift */; };
 		34F268AB21D28A46006C0990 /* NSObject+Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F268AA21D28A46006C0990 /* NSObject+Property.swift */; };
@@ -64,6 +65,7 @@
 		34B6F7BC21D123E100D8A9AD /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		34B6F7BE21D1260700D8A9AD /* UIView+Show.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Show.m"; sourceTree = "<group>"; };
 		34B6F7BF21D1260700D8A9AD /* UIView+Show.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Show.h"; sourceTree = "<group>"; };
+		34F0D6C021D31C0800E62CED /* AusbinVcRouterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AusbinVcRouterDelegate.swift; sourceTree = "<group>"; };
 		34F268A621D25FC7006C0990 /* MainVcRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVcRouter.swift; sourceTree = "<group>"; };
 		34F268A821D28005006C0990 /* NSObject+VcRouter+Ausbin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+VcRouter+Ausbin.swift"; sourceTree = "<group>"; };
 		34F268AA21D28A46006C0990 /* NSObject+Property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Property.swift"; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				3449CD1821D1D28A0017C289 /* NSObject+VcModel+Ausbin.swift */,
 				34F268A821D28005006C0990 /* NSObject+VcRouter+Ausbin.swift */,
 				34F268AA21D28A46006C0990 /* NSObject+Property.swift */,
+				34F0D6C021D31C0800E62CED /* AusbinVcRouterDelegate.swift */,
 			);
 			path = AusbinFramework;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				34B6F7AF21D1201500D8A9AD /* MyNavigationBar.swift in Sources */,
 				34B6F7AA21D11FCE00D8A9AD /* MainVcView.swift in Sources */,
 				34B6F7A821D11FCE00D8A9AD /* MainVcModel.swift in Sources */,
+				34F0D6C121D31C0800E62CED /* AusbinVcRouterDelegate.swift in Sources */,
 				3449CD2221D22EAE0017C289 /* ViewController.swift in Sources */,
 				34B6F77A21D11FC000D8A9AD /* AusbinVcViewDelegate.swift in Sources */,
 				3449CD1921D1D28A0017C289 /* NSObject+VcModel+Ausbin.swift in Sources */,

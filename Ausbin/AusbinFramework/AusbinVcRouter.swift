@@ -10,11 +10,5 @@ import UIKit
 
 class AusbinVcRouter: NSObject {
     
-    func handleKeyPathChange(keyPath: String?, object: Any?){
-        
-    }
     
-    func deinitRouter(){
-        
-    }
 }

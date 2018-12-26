@@ -19,7 +19,7 @@ class MainVcView: UIView {
     
     private weak var vcRouter : MainVcRouter!{
         didSet{
-            //必须在view加载完成后执行下面的代码
+            //model初始化view
             self.asb_refreshViews(routerKey: nil);
         }
     }
@@ -49,19 +49,19 @@ class MainVcView: UIView {
         self.tableView.addSubview(self.levelBtn3);
         
         self.centerBtn.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
-            self?.asb_handleAction(action: (self?.ACTION_CLICK_CENTER_BTN)!, params: []);
+            self?.asb_handleAction(action: (self?.ACTION_CLICK_CENTER_BTN)!, params: [:]);
         });
         
         self.levelBtn1.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
-            self?.asb_handleAction(action: (self?.ACTION_CLICK_LEVEL_BTN_1)!, params: []);
+            self?.asb_handleAction(action: (self?.ACTION_CLICK_LEVEL_BTN_1)!, params: [:]);
         });
         
         self.levelBtn2.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
-            self?.asb_handleAction(action: (self?.ACTION_CLICK_LEVEL_BTN_2)!, params: []);
+            self?.asb_handleAction(action: (self?.ACTION_CLICK_LEVEL_BTN_2)!, params: [:]);
         });
         
         self.levelBtn3.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
-            self?.asb_handleAction(action: (self?.ACTION_CLICK_LEVEL_BTN_3)!, params: []);
+            self?.asb_handleAction(action: (self?.ACTION_CLICK_LEVEL_BTN_3)!, params: [:]);
         });
     }
     
@@ -173,7 +173,7 @@ extension MainVcView : UITableViewDelegate,UITableViewDataSource{
         if(self.vcRouter == nil){
             return 0;
         }
-        return self.vcRouter.items.count;
+        return self.vcRouter.dataSet.items.count;
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -189,7 +189,7 @@ extension MainVcView : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item : ListItemModel = self.vcRouter.items[indexPath.row];
+        let item : ListItemModel = self.vcRouter.dataSet.items[indexPath.row];
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CELL_IDENTIFIER, for: indexPath) as! MainTableViewCell;
         
@@ -197,7 +197,7 @@ extension MainVcView : UITableViewDelegate,UITableViewDataSource{
         
         cell.selectedBackgroundView = UIView.init(frame: cell.frame);
         cell.selectedBackgroundView?.backgroundColor = UIColor.init(hexString: "f9f9f9");
-        if(indexPath.row == self.vcRouter.checkedRowIndex.intValue){
+        if(indexPath.row == self.vcRouter.dataSet.checkedRowIndex.intValue){
             cell.checkImageView.image = UIImage.init(named: "checked");
         }
         else{
@@ -211,7 +211,7 @@ extension MainVcView : UITableViewDelegate,UITableViewDataSource{
         tableView.deselectRow(at: indexPath, animated: false);
         print("didSelectRowAt=\(indexPath.row)");
         
-        self.asb_handleAction(action: ACTION_SELECT_TABLE_ROW, params: [indexPath.row]);
+        self.asb_handleAction(action: ACTION_SELECT_TABLE_ROW, params: ["index":indexPath.row]);
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -226,7 +226,7 @@ extension MainVcView : AusbinVcViewDelegate{
         self.vcRouter = router as! MainVcRouter;
     }
     
-    func asb_getActions() -> [String]{
+    func asb_getAvailableActions() -> [String]{
         return [
             ACTION_CLICK_LEVEL_BTN_1,
             ACTION_CLICK_LEVEL_BTN_2,
@@ -236,19 +236,19 @@ extension MainVcView : AusbinVcViewDelegate{
         ];
     }
     
-    func asb_handleAction(action : String, params: [Any]){
+    func asb_handleAction(action : String, params: [String:Any?]){
         if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_1)){
-            self.vcRouter.changeLevelValue1();
+            self.vcRouter.handler.changeLevelValue1();
         }
         else if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_2)){
-            self.vcRouter.changeLevelValue2();
+            self.vcRouter.handler.changeLevelValue2();
         }
         else if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_LEVEL_BTN_3)){
-            self.vcRouter.changeLevelValue3();
+            self.vcRouter.handler.changeLevelValue3();
         }
         else if(self.asb_vc_view_isActionAvailble(action, ACTION_CLICK_CENTER_BTN)){
             self.showLoadingProgressHUB("请稍等");
-            self.vcRouter.webLoadList(success: { () in
+            self.vcRouter.handler.webLoadList(success: { () in
                 self.hideLoadingProgressHUB();
             }, error: { (errorCode : String, errorMsg : String) in
                 self.showProgressHUB(forSuccess: false, message: errorMsg);
@@ -257,24 +257,28 @@ extension MainVcView : AusbinVcViewDelegate{
             });
         }
         else if(self.asb_vc_view_isActionAvailble(action, ACTION_SELECT_TABLE_ROW)){
-            print(params[0] as! Int);
-            let indexValue = params[0] as! Int;
-            self.vcRouter.changeTableValue(index: indexValue);
+            print(params["index"] as! Int);
+            let indexValue = params["index"] as! Int;
+            self.vcRouter.handler.changeTableValue(index: indexValue);
         }
     }
     
     func asb_refreshViews(routerKey: String?){
-        if(routerKey == nil || routerKey == "items"){
+        
+        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.items)){
             self.tableView.reloadData();
         }
-        if(routerKey == nil || routerKey == "innerText1"){
-            self.levelLabel1.text = self.vcRouter.innerText1;
+        
+        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.innerText1)){
+            self.levelLabel1.text = self.vcRouter.dataSet.innerText1;
         }
-        if(routerKey == nil || routerKey == "innerText2"){
-            self.levelLabel2.text = self.vcRouter.innerText2;
+        
+        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.innerText2)){
+            self.levelLabel2.text = self.vcRouter.dataSet.innerText2;
         }
-        if(routerKey == nil || routerKey == "innerText3"){
-            self.levelLabel3.text = self.vcRouter.innerText3;
+        
+        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.innerText3)){
+            self.levelLabel3.text = self.vcRouter.dataSet.innerText3;
         }
     }
 }

@@ -35,7 +35,7 @@ extension UIView {
     
     func asb_vc_view_isActionAvailble(_ action: String, _ targetAction: String) -> Bool{
         if(self.asb_actions == nil){
-            self.asb_actions = (self as! AusbinVcViewDelegate).asb_getActions();
+            self.asb_actions = (self as! AusbinVcViewDelegate).asb_getAvailableActions();
             for item in self.asb_actions!{
                 print("actions=\(item)");
             }

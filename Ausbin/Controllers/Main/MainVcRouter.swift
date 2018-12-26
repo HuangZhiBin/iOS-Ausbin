@@ -18,10 +18,13 @@ class MainVcRouter: AusbinVcRouter {
         super.init();
         
         self.vcService = MainVcService();
+        self.dataSet = DataSet.init(vcModel: self.vcService.vcModel);
+        self.handler = Handler.init(vcService: self.vcService);
+        
         self.vcView = vcView;
         self.vcView.asb_setRouter(router: self);
         
-        //MARK: - Step1 开始监听vcModel的数据改变(+KVC)
+        //MARK: - 开始监听vcModel的数据改变(+KVC)
         self.asb_vc_router_addObserver(vcModel: self.vcService.vcModel);
     }
     
@@ -30,84 +33,127 @@ class MainVcRouter: AusbinVcRouter {
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        self.handleKeyPathChange(keyPath: keyPath, object: object);
+        self.asb_handleKeyPathChange(keyPath: keyPath, object: object);
         //self.asb_handleKeyPathChange(object: object, keyPath: keyPath);
     }
     
-    //MARK: - Step2 KVC 监听Model变化->刷新View
-    override func handleKeyPathChange(keyPath: String?, object: Any?){
-        let fullKeyPath = self.vcService.vcModel.asb_vc_model_getFullKeyPath(object: object, keyPath: keyPath);
-        if(fullKeyPath == "items"){
-            self.vcView.asb_refreshViews(routerKey: "items");
+    //MARK: - Model提供给View刷新界面的部分公开变量
+    @objc var dataSet : DataSet!;
+    
+    class DataSet: NSObject {
+        
+        private var vcModel : MainVcModel!;
+        
+        init(vcModel : MainVcModel) {
+            super.init();
+            self.vcModel = vcModel;
         }
-        if(fullKeyPath == "innerText"){
-            self.vcView.asb_refreshViews(routerKey: "innerText1");
+        
+        override var description: String{
+            set{
+                
+            }
+            get{
+                return "";
+            }
         }
-        if(fullKeyPath == "childModel.innerText"){
-            self.vcView.asb_refreshViews(routerKey: "innerText2");
+        
+        required init(coder aDecoder: NSCoder?) {
+            super.init();
         }
-        if(fullKeyPath == "childModel.childItemModel.innerText"){
-            self.vcView.asb_refreshViews(routerKey: "innerText3");
-        }
+        
+        @objc var items : [ListItemModel]!{
+            get{
+                return self.vcModel.items;
+            }
+            
+        };
+        
+        @objc var checkedRowIndex : NSNumber!{
+            get{
+                return self.vcModel.checkedRowIndex;
+            }
+        };
+        
+        @objc var innerText1  : String!{
+            get{
+                return self.vcModel.innerText;
+            }
+        };
+        
+        @objc var innerText2  : String!{
+            get{
+                return self.vcModel.childModel.innerText;
+            }
+        };
+        
+        @objc var innerText3  : String!{
+            get{
+                return self.vcModel.childModel.childItemModel.innerText;
+            }
+        };
     }
     
-    
-    
-    //MARK: - Step3 提供给View刷新界面的数据
-    var items : [ListItemModel]!{
-        get{
-            return self.vcService.vcModel.items;
+    //MARK: - 处理View的Action事件，通过Service刷新Model数据
+    var handler : Handler!;
+    class Handler: NSObject {
+        
+        private var vcService : MainVcService!;
+        
+        init(vcService : MainVcService) {
+            super.init();
+            self.vcService = vcService;
         }
-    };
-    
-    var checkedRowIndex : NSNumber!{
-        get{
-            return self.vcService.vcModel.checkedRowIndex;
+        
+        required init(coder aDecoder: NSCoder?) {
+            super.init();
         }
-    };
-    
-    var innerText1  : String!{
-        get{
-            return self.vcService.vcModel.innerText;
+        
+        func changeLevelValue1(){
+            self.vcService.changeLevelValue1();
         }
-    };
-    
-    var innerText2  : String!{
-        get{
-            return self.vcService.vcModel.childModel.innerText;
+        
+        func changeLevelValue2(){
+            self.vcService.changeLevelValue2();
         }
-    };
-    
-    var innerText3  : String!{
-        get{
-            return self.vcService.vcModel.childModel.childItemModel.innerText;
+        
+        func changeLevelValue3(){
+            self.vcService.changeLevelValue3();
         }
-    };
-    
-    //MARK: - Step4 提供给View刷新数据的接口方法
-    func changeLevelValue1(){
-        self.vcService.changeLevelValue1();
-    }
-    
-    func changeLevelValue2(){
-        self.vcService.changeLevelValue2();
-    }
-    
-    func changeLevelValue3(){
-        self.vcService.changeLevelValue3();
-    }
-    
-    func changeTableValue(index : Int){
-        self.vcService.changeTableValue(index: index);
-    }
-    
-    func webLoadList(success: @escaping ServiceSuccessCallback, error: @escaping ServiceErrorCallback,  fail : @escaping ServiceNetworkFailCallback){
-        self.vcService.webLoadList(success: success, error: error, fail: fail);
-    }
-    
-    //MARK: - Step5 解除监听vcModel的数据改变(-KVC)
-    override func deinitRouter(){
-        self.asb_vc_router_removeObserver(vcModel: self.vcService.vcModel);
+        
+        func changeTableValue(index : Int){
+            self.vcService.changeTableValue(index: index);
+        }
+        
+        func webLoadList(success: @escaping ServiceSuccessCallback, error: @escaping ServiceErrorCallback,  fail : @escaping ServiceNetworkFailCallback){
+            self.vcService.webLoadList(success: success, error: error, fail: fail);
+        }
     }
 
+}
+
+extension MainVcRouter : AusbinVcRouterDelegate{
+    
+    //MARK: - KVC 监听Model变化->刷新View
+    func asb_handleKeyPathChange(keyPath: String?, object: Any?){
+        let fullKeyPath = self.vcService.vcModel.asb_vc_model_getFullKeyPath(object: object, keyPath: keyPath);
+        
+        if(fullKeyPath == "items"){
+            self.vcView.asb_refreshViews(routerKey: #keyPath(MainVcRouter.dataSet.items));
+        }
+        if(fullKeyPath == "innerText"){
+            self.vcView.asb_refreshViews(routerKey: #keyPath(MainVcRouter.dataSet.innerText1));
+        }
+        if(fullKeyPath == "childModel.innerText"){
+            self.vcView.asb_refreshViews(routerKey: #keyPath(MainVcRouter.dataSet.innerText2));
+        }
+        if(fullKeyPath == "childModel.childItemModel.innerText"){
+            self.vcView.asb_refreshViews(routerKey: #keyPath(MainVcRouter.dataSet.innerText3));
+        }
+    }
+    
+    //MARK: - 解除监听vcModel的数据改变(-KVC)
+    func asb_deinitRouter(){
+        self.asb_vc_router_removeObserver(vcModel: self.vcService.vcModel);
+    }
 }
