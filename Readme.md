@@ -90,7 +90,7 @@ vcModel需要注意的是，变量需要加入objc特性`@objc dynamic`实现KVC
 ```swift
 class SampleVcModel: NSObject {
     
-    // [Ausbin] 必须为变量添加objc特性支持KVC:@objc dynamic
+    // 必须为变量添加objc特性支持KVC:@objc dynamic
     @objc dynamic var innerText : String! = "这是最初始的值:0";
     
 }
@@ -107,11 +107,11 @@ class SampleVcService: NSObject {
     
     override init() {
         super.init();
-        // [Ausbin] 初始化vcModel
+        // 初始化vcModel
         self.vcModel = SampleVcModel();
     }
     
-    // [Ausbin] 提供修改model的接口
+    // 提供修改model的接口
     func changeInnerText(){
         let now = Date()
         let timeInterval: TimeInterval = now.timeIntervalSince1970
@@ -200,7 +200,7 @@ class SampleVcRouter: NSObject {
         self.vcView = vcView;
         self.vcView.asb_setRouter(router: self);
         
-        //MARK: - 开始监听vcModel的数据改变(+KVC)
+        // [Ausbin] 开始监听vcModel的数据改变(+KVC)
         self.asb_vc_router_addObserver(vcModel: self.vcService.vcModel);
     }
     
@@ -257,6 +257,7 @@ class SampleVcRouter: NSObject {
     }
 }
 
+// [Ausbin]  vcRouter必须实现AusbinVcRouterDelegate代理
 extension SampleVcRouter : AusbinVcRouterDelegate{
     
     // [Ausbin]  KVC 监听vcModel变化->刷新vcView
