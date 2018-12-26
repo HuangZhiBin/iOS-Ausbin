@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainVcRouter: NSObject {
+class MainVcRouter: AusbinVcRouter {
     
     private var vcService : MainVcService!;
     
@@ -29,9 +29,13 @@ class MainVcRouter: NSObject {
         super.init();
     }
     
-    //MARK: - Step2 KVC 监听Model变化->刷新View
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        self.handleKeyPathChange(keyPath: keyPath, object: object);
         //self.asb_handleKeyPathChange(object: object, keyPath: keyPath);
+    }
+    
+    //MARK: - Step2 KVC 监听Model变化->刷新View
+    override func handleKeyPathChange(keyPath: String?, object: Any?){
         let fullKeyPath = self.vcService.vcModel.asb_vc_model_getFullKeyPath(object: object, keyPath: keyPath);
         if(fullKeyPath == "items"){
             self.vcView.asb_refreshViews(routerKey: "items");
@@ -46,6 +50,8 @@ class MainVcRouter: NSObject {
             self.vcView.asb_refreshViews(routerKey: "innerText3");
         }
     }
+    
+    
     
     //MARK: - Step3 提供给View刷新界面的数据
     var items : [ListItemModel]!{
@@ -100,7 +106,7 @@ class MainVcRouter: NSObject {
     }
     
     //MARK: - Step5 解除监听vcModel的数据改变(-KVC)
-    func deinitRouter(){
+    override func deinitRouter(){
         self.asb_vc_router_removeObserver(vcModel: self.vcService.vcModel);
     }
 
