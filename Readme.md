@@ -322,7 +322,8 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
             + ChildItemModel
 	            + **innerText** (3级子变量)
 - 2.&nbsp;子对象互相嵌套时，获取vcModel子对象的keyPath
-- 3.&nbsp;网络访问的情况
+- 3.&nbsp;变量为数组时，数组任一对象(索引值为index)的属性值改变不会触发KVC，可通过`vcModel.arr = vcModel.arr`或者`vcModel.arr[index] = vcModel.arr[index]`的形式强制触发KVC
+- 4.&nbsp;网络访问的情况
 
 ##### 最终效果
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545813617457.gif)
