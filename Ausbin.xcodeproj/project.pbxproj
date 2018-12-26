@@ -145,11 +145,11 @@
 			isa = PBXGroup;
 			children = (
 				34B6F77321D11FC000D8A9AD /* AusbinVcViewDelegate.swift */,
+				34F0D6C021D31C0800E62CED /* AusbinVcRouterDelegate.swift */,
 				34B6F77521D11FC000D8A9AD /* UIView+VcView+Ausbin.swift */,
 				3449CD1821D1D28A0017C289 /* NSObject+VcModel+Ausbin.swift */,
 				34F268A821D28005006C0990 /* NSObject+VcRouter+Ausbin.swift */,
 				34F268AA21D28A46006C0990 /* NSObject+Property.swift */,
-				34F0D6C021D31C0800E62CED /* AusbinVcRouterDelegate.swift */,
 			);
 			path = AusbinFramework;
 			sourceTree = "<group>";

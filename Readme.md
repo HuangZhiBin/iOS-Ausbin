@@ -127,36 +127,25 @@ class SampleVcService: NSObject {
 
 vcView需要建立与vcRouter的联系，一是将接收到的UI事件（点击按钮、长按、切换图片等）反馈给vcRouter，二是响应vcRouter返回的UI刷新请求。
 
-- 1.&nbsp;为每一个UI响应事件添加action
-- 2.&nbsp;创建`weak`类型的私有vcRouter实例(weak防止强制持有，避免循环引用)
-- 3.&nbsp;vcRouter实例赋值后执行刷新当前view
-- 4.&nbsp;vcView实现`AusbinVcViewDelegate`代理
-- 5.&nbsp;代理方法`asb_setRouter()`引入外部vcRouter
-- 6.&nbsp;代理方法`asb_getAvailableActions()`定义可执行的action数组，没有设置可行的action将无法向vcRouter发送请求
-- 7.&nbsp;代理方法`asb_handleAction()`处理vcView的action事件
-- 8.&nbsp;代理方法`asb_refreshViews()`接受vcRouter的UI更新请求
+- 1.&nbsp;创建`weak`类型的私有vcRouter实例(weak防止强制持有，避免循环引用)
+- 2.&nbsp;vcRouter实例赋值后执行刷新当前view
+- 3.&nbsp;vcView实现`AusbinVcViewDelegate`代理
+- 4.&nbsp;代理方法`asb_setRouter()`引入外部vcRouter
+- 5.&nbsp;代理方法`asb_refreshViews()`接受vcRouter的UI更新请求
 
 ```swift
 class SampleVcView: UIView {
     
-    // [Ausbin] 为每一个UI响应事件添加action(前提是这个action的触发会更新model的数据)
-    let ACTION_CLICK_BTN = UIView.asb_vc_view_generateAction();
-    
     // [Ausbin] vcRouter实例，定义为weak防止强制持有
-    private weak var vcRouter : SampleVcRouter!{
-        didSet{
-            // [Ausbin] model刷新当前view
-            self.asb_refreshViews(routerKey: nil);
-        }
-    }
+    private weak var vcRouter : SampleVcRouter!
+
+    //UI初始化代码，此处省略……
     
-    //初始化vcView时执行
     func initAllViews(){
         //UI初始化代码，此处省略……
         
-        //btn按钮的点击事件
         self.btn.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
-            self?.asb_handleAction(action: (self?.ACTION_CLICK_BTN)!, params: [:]);
+            self?.vcRouter.handler.changeInnerText();
         });
     }
     
@@ -169,26 +158,11 @@ extension SampleVcView : AusbinVcViewDelegate{
     // [Ausbin] 引入外部vcRouter
     func asb_setRouter(router : NSObject){
         self.vcRouter = router as! SampleVcRouter;
+        // [Ausbin] model初始化view
+        self.asb_refreshViews(routerKey: nil);
     }
     
-    // [Ausbin] 定义可执行的action数组，没有设置可行的action将无法向vcRouter发送请求
-    func asb_getAvailableActions() -> [String]{
-        return [
-            ACTION_CLICK_BTN
-        ];
-    }
-    
-    // [Ausbin] 接受vcView的action事件，让vcRouter调用vcService的接口更新数据
-    func asb_handleAction(action : String, params: [String:Any?]){
-        // [Ausbin] 必须判断该action的有效性
-        guard (self.asb_vc_view_isActionAvailble(action: action)) else { return; }
-        
-        if(action == ACTION_CLICK_BTN){
-            self.vcRouter.handler.changeInnerText();
-        }
-    }
-    
-    // [Ausbin] 让vcView接受vcRouter的UI更新请求，刷新UI
+    // [Ausbin] 接受vcRouter的UI更新请求，并让vcView作出相应的UI刷新操作
     func asb_refreshViews(routerKey: String?){
         if(routerKey == nil || routerKey == #keyPath(SampleVcRouter.dataSet.innerText)){
             self.label.text = self.vcRouter.dataSet.innerText;
@@ -196,12 +170,6 @@ extension SampleVcView : AusbinVcViewDelegate{
     }
 }
 ```
-**关于vcView的设计模式：**
-> - 1.&nbsp;为每个有效UI事件（点击、长按等，并会更新model的等事件）定义一个action，常量名为`ACTION_...`(名称必须可读且有意义，标记了该action实际对应的事件)
-> - 2.&nbsp;规定有效的actions数组，向vcRouter发送action请求前必须判断该action的有效性，没有设置可行的action将无法向vcRouter发送请求
-> - 3.&nbsp;vcView无法获取model数据，只能得到vcRouter提供的可用数据（数据来自model），并且对于vcView数据只读，无法修改
-> - 4.&nbsp;通过将所有的有效UI事件封装为action，所有事件作为action交付代理方法`asb_handleAction()`进行统一处理，控制了vcRouter处理action的唯一入口；还可以封禁某个action，使其无法向vcRouter发送请求
-> - 5.&nbsp;遵循vcView与vcService(或vcModel)互不信任的模式，vcView无法直接操作vcService(或vcModel)，只能得到vcRouter提供的只读数据；vcService(或vcModel)也无法直接操作vcView
 
 ###### （5）SampleVcRouter.swift
 
@@ -220,6 +188,7 @@ extension SampleVcView : AusbinVcViewDelegate{
 class SampleVcRouter: NSObject {
     
     private var vcService : SampleVcService!;
+    
     private weak var vcView : SampleVcView!;
     
     init(vcView : SampleVcView) {
@@ -232,7 +201,7 @@ class SampleVcRouter: NSObject {
         self.vcView = vcView;
         self.vcView.asb_setRouter(router: self);
         
-        // [Ausbin] 开始监听vcModel的数据改变(+KVC)
+        //MARK: - 开始监听vcModel的数据改变(+KVC)
         self.asb_vc_router_addObserver(vcModel: self.vcService.vcModel);
     }
     
@@ -246,7 +215,7 @@ class SampleVcRouter: NSObject {
     
     // [Ausbin] vcService提供给vcView的变量，根据vcView的实际需要进行选择性的提供
     @objc var dataSet : DataSet!;
-    
+    //DataSet为内部类
     class DataSet: NSObject {
         
         private var model : SampleVcModel!;
@@ -260,7 +229,6 @@ class SampleVcRouter: NSObject {
             super.init();
         }
         
-        // [Ausbin] 限制变量的只读
         @objc var innerText  : String!{
             get{
                 return self.model.innerText;
@@ -270,6 +238,7 @@ class SampleVcRouter: NSObject {
     
     // [Ausbin] 处理vcView的Action事件，通过vcService刷新vcModel数据
     var handler : Handler!;
+    //Handler为内部类
     class Handler: NSObject {
         
         private var service : SampleVcService!;
@@ -307,6 +276,9 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 }
 ```
 
+**关于Ausbin的设计模式：**
+> - 1.&nbsp;vcView无法获取model数据，只能得到vcRouter提供的可用数据（数据来自model），并且对于vcView数据只读，无法修改
+> - 2.&nbsp;遵循vcView与vcService(或vcModel)互不信任的模式: vcView无法直接操作vcService(或vcModel)，只能得到vcRouter提供的只读数据；vcService(或vcModel)也无法直接操作vcView
 
 ##### 最终效果
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545819873521.gif)

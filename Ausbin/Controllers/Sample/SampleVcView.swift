@@ -10,16 +10,8 @@ import UIKit
 
 class SampleVcView: UIView {
     
-    // [Ausbin] 为每一个UI响应事件添加action(前提是这个action的触发会更新model的数据)
-    let ACTION_CLICK_BTN = UIView.asb_vc_view_generateAction();
-    
     // [Ausbin] vcRouter实例，定义为weak防止强制持有
-    private weak var vcRouter : SampleVcRouter!{
-        didSet{
-            // [Ausbin] model初始化view
-            self.asb_refreshViews(routerKey: nil);
-        }
-    }
+    private weak var vcRouter : SampleVcRouter!
 
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -68,6 +60,8 @@ extension SampleVcView : AusbinVcViewDelegate{
     // [Ausbin] 引入外部vcRouter
     func asb_setRouter(router : NSObject){
         self.vcRouter = router as! SampleVcRouter;
+        // [Ausbin] model初始化view
+        self.asb_refreshViews(routerKey: nil);
     }
     
     // [Ausbin] 接受vcRouter的UI更新请求，并让vcView作出相应的UI刷新操作

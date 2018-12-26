@@ -37,7 +37,7 @@ class SampleVcRouter: NSObject {
         self.asb_handleKeyPathChange(keyPath: keyPath, object: object);
     }
     
-    //MARK: - Model提供给View刷新界面的部分公开变量
+    // [Ausbin] vcService提供给vcView的变量，根据vcView的实际需要进行选择性的提供
     @objc var dataSet : DataSet!;
     
     class DataSet: NSObject {
@@ -60,7 +60,7 @@ class SampleVcRouter: NSObject {
         };
     }
     
-    //MARK: - 处理View的Action事件，通过Service刷新Model数据
+    // [Ausbin] 处理vcView的Action事件，通过vcService刷新vcModel数据
     var handler : Handler!;
     class Handler: NSObject {
         
@@ -83,7 +83,7 @@ class SampleVcRouter: NSObject {
 
 extension SampleVcRouter : AusbinVcRouterDelegate{
     
-    //MARK: - KVC 监听Model变化->刷新View
+    // [Ausbin]  KVC 监听vcModel变化->刷新vcView
     func asb_handleKeyPathChange(keyPath: String?, object: Any?){
         let fullKeyPath = self.vcService.vcModel.asb_vc_model_getFullKeyPath(object: object, keyPath: keyPath);
         //若vcModel有子对象people,people对象有子对象child,child有属性subChild,则subChild的fullKeyPath为people.child.subChild(以此类推)
@@ -92,7 +92,7 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
         }
     }
     
-    //MARK: - 解除监听vcModel的数据改变(-KVC)
+    // [Ausbin]  解除监听vcModel的数据改变(-KVC)
     func asb_deinitRouter(){
         self.asb_vc_router_removeObserver(vcModel: self.vcService.vcModel);
     }
