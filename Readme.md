@@ -300,10 +300,25 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 ##### 最终效果
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545810778989.gif)
 
+### 基于Ausbin的进阶例子
+以Main作为例子，分析一下Ausbin框架。（具体参考master/Ausbin/Controllers/Main）
+- 1.当vcModel为多个子对象互相嵌套时，使所有子对象都能响应KVC
+- 2.子对象互相嵌套时，获取vcModel子对象的keyPath
+- 3.网络访问的情况
+
+##### 最终效果
+![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545813617457.gif)
+
 > PS: 业务再多也不怕啦~
 
-### 基于Ausbin的进阶例子
-待续
+
+### 讨论
+项目还存在以下的问题，欢迎批评指正
+- 1.当vcModel为多个子对象互相嵌套时，如何使所有子对象都能响应KVC
+- 2.获取vcModel子对象的keyPath
+- 3.更加方便地引入Ausbin
+
+待续……
 
 | Item      | Value |
 | --------- | -----:|
