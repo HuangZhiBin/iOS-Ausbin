@@ -16,7 +16,7 @@ class SampleVcView: UIView {
     // [Ausbin] 引入外部vcRouter，定义为weak,防止强制持有
     private weak var vcRouter : SampleVcRouter!{
         didSet{
-            //model初始化view
+            // [Ausbin] model初始化view
             self.asb_refreshViews(routerKey: nil);
         }
     }

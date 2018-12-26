@@ -8,6 +8,7 @@
 
 import UIKit
 
+// [Ausbin] 新增Router类，作为vcView和vcService的信任中介
 class SampleVcRouter: NSObject {
     
     private var vcService : SampleVcService!;
@@ -18,8 +19,8 @@ class SampleVcRouter: NSObject {
         super.init();
         
         self.vcService = SampleVcService();
-        self.dataSet = DataSet.init(vcModel: self.vcService.vcModel);
-        self.handler = Handler.init(vcService: self.vcService);
+        self.dataSet = DataSet.init(model: self.vcService.vcModel);
+        self.handler = Handler.init(service: self.vcService);
         
         self.vcView = vcView;
         self.vcView.asb_setRouter(router: self);
@@ -41,11 +42,11 @@ class SampleVcRouter: NSObject {
     
     class DataSet: NSObject {
         
-        private var vcModel : SampleVcModel!;
+        private var model : SampleVcModel!;
         
-        init(vcModel : SampleVcModel) {
+        init(model : SampleVcModel) {
             super.init();
-            self.vcModel = vcModel;
+            self.model = model;
         }
         
         required init(coder aDecoder: NSCoder?) {
@@ -54,7 +55,7 @@ class SampleVcRouter: NSObject {
         
         @objc var innerText  : String!{
             get{
-                return self.vcModel.innerText;
+                return self.model.innerText;
             }
         };
     }
@@ -63,11 +64,11 @@ class SampleVcRouter: NSObject {
     var handler : Handler!;
     class Handler: NSObject {
         
-        private var vcService : SampleVcService!;
+        private var service : SampleVcService!;
         
-        init(vcService : SampleVcService) {
+        init(service : SampleVcService) {
             super.init();
-            self.vcService = vcService;
+            self.service = service;
         }
         
         required init(coder aDecoder: NSCoder?) {
@@ -75,7 +76,7 @@ class SampleVcRouter: NSObject {
         }
         
         func changeInnerText(){
-            self.vcService.changeInnerText();
+            self.service.changeInnerText();
         }
     }
 }
