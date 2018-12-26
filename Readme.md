@@ -329,6 +329,6 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 | Item      | Value |
 | --------- | -----:|
 | 作者  | **黄智彬** |
-| 原创  | **100%** |
+| 原创  | **YES** |
 | 微信  | **ikrboy** |
 | 邮箱  |   **ikrboy@163.com** |
