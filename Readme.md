@@ -303,7 +303,8 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 	            + **innerText** (3级子变量)
 - 2.&nbsp;子对象互相嵌套时，获取vcModel子对象的keyPath
 - 3.&nbsp;变量为数组时，数组任一对象(索引值为index)的属性值改变不会触发KVC，可通过`vcModel.arr = vcModel.arr`或者`vcModel.arr[index] = vcModel.arr[index]`的形式强制触发KVC
-- 4.&nbsp;网络访问的情况
+- 4.&nbsp;KVC监听的变量需要objc特性的支持，Int、Float等基础类型不支持，建议使用NSNumber
+- 5.&nbsp;网络访问的情况
 
 ##### 最终效果
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545813617457.gif)
@@ -312,9 +313,12 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 
 
 ### 讨论
-项目还存在以下的问题，欢迎批评指正
+项目还存在以下的问题，欢迎批评指正：
 - 1.&nbsp;如何更加方便地引入Ausbin？（代码更精简）
-- 2.&nbsp;如何使vcRouter更精简
+- 2.&nbsp;如何使vcRouter更精简？
+- 3.&nbsp;vc间的跳转应该在哪里处理？
+- 4.&nbsp;Ausbin能多大程度给繁杂的业务带来维护的好处？
+- 5.&nbsp;Ausbin最大的问题，你发现了吗？
 
 待续……
 
