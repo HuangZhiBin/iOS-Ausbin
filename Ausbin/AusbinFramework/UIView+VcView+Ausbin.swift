@@ -34,7 +34,7 @@ extension UIView {
     }
     
     func asb_vc_view_isActionAvailble(action: String) -> Bool{
-        var asb_actions = (self as! AusbinVcViewDelegate).asb_getAvailableActions();
+        let asb_actions = (self as! AusbinVcViewDelegate).asb_getAvailableActions();
         if(asb_actions.contains(action)){
             return true;
         }
@@ -59,27 +59,6 @@ extension UIView {
         return ranStr
         
     }
-    
-//    var asb_viewChangeDelegate : AusbinVcViewChangeDelegate? {
-//        get {
-//            return objc_getAssociatedObject(self, &viewChangeKey) as? AusbinVcViewChangeDelegate;
-//        }
-//        set(newValue) {
-//            objc_setAssociatedObject(self, &viewChangeKey, newValue, .OBJC_ASSOCIATION_ASSIGN);
-//        }
-//    };
-    
-    //MARK: - 自定义方法
-//    func asb_isAvailable(action: String) -> Bool {
-//        if(self.asb_actions != nil){
-//            return self.asb_actions!.contains(action);
-//        }
-//        return false;
-//    }
-//
-//    func asb_setAction(_ initActions: [String]) {
-//        self.asb_actions = initActions;
-//    }
     
     
 
