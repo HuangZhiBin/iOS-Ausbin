@@ -17,20 +17,16 @@ class SampleVcRouter: AusbinVcRouter {
     @objc var dataSet : SampleVcModel!;
     
     init(vcView : SampleVcView) {
-        super.init(handler: SampleVcService(), vcModelKeyPath: #keyPath(SampleVcService.vcModel), handlerKeyPath: #keyPath(SampleVcRouter.handler), dataSetKeyPath:#keyPath(SampleVcRouter.dataSet), vcView: vcView);
+        super.init(
+            handler: SampleVcService(),
+            vcModelKeyPath: #keyPath(SampleVcService.vcModel),
+            handlerKeyPath: #keyPath(SampleVcRouter.handler),
+            dataSetKeyPath:#keyPath(SampleVcRouter.dataSet),
+            vcView: vcView
+        );
     }
     
     required init(coder aDecoder: NSCoder?) {
         super.init(coder: nil);
-    }
-    
-    // [Ausbin]  KVC 监听vcModel变化->刷新vcView
-    override func asb_handleKeyPathChange(keyPath: String?, object: Any?){
-        self.handleKeyPathChange(keyPath: keyPath, object: object, targetKeyPathsAndRouterKeys: ["innerText": #keyPath(MainVcRouter.dataSet.innerText)]);
-    }
-    
-    // [Ausbin]  解除监听vcModel的数据改变(-KVC)
-    override func asb_deinitRouter(){
-        super.asb_deinitRouter();
     }
 }

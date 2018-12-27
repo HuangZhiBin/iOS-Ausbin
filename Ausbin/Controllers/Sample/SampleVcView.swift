@@ -61,12 +61,12 @@ extension SampleVcView : AusbinVcViewDelegate{
     func asb_setRouter(router : NSObject){
         self.vcRouter = router as! SampleVcRouter;
         // [Ausbin] model初始化view
-        self.asb_refreshViews(routerKey: nil);
+        self.asb_refreshViews(fullKeyPath: nil);
     }
     
     // [Ausbin] 接受vcRouter的UI更新请求，并让vcView作出相应的UI刷新操作
-    func asb_refreshViews(routerKey: String?){
-        if(routerKey == nil || routerKey == #keyPath(SampleVcRouter.dataSet.innerText)){
+    func asb_refreshViews(fullKeyPath: String?){
+        if(fullKeyPath == nil || fullKeyPath == "innerText"){
             self.label.text = self.vcRouter.dataSet.innerText;
         }
     }

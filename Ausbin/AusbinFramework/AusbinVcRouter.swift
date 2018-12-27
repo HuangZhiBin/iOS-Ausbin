@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AusbinVcRouter: NSObject, AusbinVcRouterDelegate{
+class AusbinVcRouter: NSObject{
     
     private var dataK : Any!;
     private weak var vcView : UIView!;
@@ -18,10 +18,8 @@ class AusbinVcRouter: NSObject, AusbinVcRouterDelegate{
         
         self.setValue(handler, forKey: handlerKeyPath);
         
-        let dataSet = handler.value(forKey: vcModelKeyPath);
-        self.setValue(dataSet, forKey: dataSetKeyPath);
-        self.dataK = dataSet;
-        
+        self.dataK = handler.value(forKey: vcModelKeyPath);
+        self.setValue(self.dataK, forKey: dataSetKeyPath);
         
         self.vcView = vcView;
         (self.vcView as! AusbinVcViewDelegate).asb_setRouter(router: self);
@@ -46,14 +44,10 @@ class AusbinVcRouter: NSObject, AusbinVcRouterDelegate{
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         //print(keyPath);
-        self.asb_handleKeyPathChange(keyPath: keyPath, object: object);
-    }
-    
-    func handleKeyPathChange(keyPath: String?, object: Any?, targetKeyPathsAndRouterKeys: [String : String]){
+        //self.asb_handleKeyPathChange(keyPath: keyPath, object: object);
+        
         let fullKeyPath = (self.dataK as! NSObject).asb_vc_model_getFullKeyPath(object: object, keyPath: keyPath);
-        if(targetKeyPathsAndRouterKeys.keys.contains(fullKeyPath!)){
-            (self.vcView as! AusbinVcViewDelegate).asb_refreshViews(routerKey: targetKeyPathsAndRouterKeys[fullKeyPath!]);
-        }
+        (self.vcView as! AusbinVcViewDelegate).asb_refreshViews(fullKeyPath: fullKeyPath);
     }
     
     private func addRouterObserver(vcModel : AnyObject){

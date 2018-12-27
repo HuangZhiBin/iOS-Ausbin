@@ -220,24 +220,24 @@ extension MainVcView : AusbinVcViewDelegate{
     func asb_setRouter(router : NSObject){
         self.vcRouter = router as! MainVcRouter;
         //model初始化view
-        self.asb_refreshViews(routerKey: nil);
+        self.asb_refreshViews(fullKeyPath : nil);
     }
     
-    func asb_refreshViews(routerKey: String?){
+    func asb_refreshViews(fullKeyPath : String?){
         
-        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.items)){
+        if(fullKeyPath == nil || fullKeyPath == "items"){
             self.tableView.reloadData();
         }
         
-        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.innerText)){
+        if(fullKeyPath == nil || fullKeyPath == "innerText"){
             self.levelLabel1.text = self.vcRouter.dataSet.innerText;
         }
         
-        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.childModel.innerText)){
+        if(fullKeyPath == nil || fullKeyPath == "childModel.innerText"){
             self.levelLabel2.text = self.vcRouter.dataSet.childModel.innerText;
         }
         
-        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.childModel.childItemModel.innerText)){
+        if(fullKeyPath == nil || fullKeyPath == "childModel.childItemModel.innerText"){
             self.levelLabel3.text = self.vcRouter.dataSet.childModel.childItemModel.innerText;
         }
     }
