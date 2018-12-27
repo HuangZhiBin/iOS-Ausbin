@@ -28,7 +28,7 @@ PS: 业务再多也不怕啦~
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/network3.jpg)
 
 ### 基于Ausbin的最简单的例子
-以一个最简单的Sample作为例子，分析一下Ausbin的运行过程。下面是Sample这个vc的目录结构（具体参考master/Ausbin/Controllers/Sample）, Sample的文件夹里面有5个文件:
+以一个最简单的Sample作为例子，分析一下Ausbin的运行过程。下面是Sample这个vc的目录结构（具体参考/Ausbin/Controllers/Sample）, Sample的文件夹里面有5个文件:
 
 + **SampleViewController.swift**
 	> vc代码
@@ -46,6 +46,7 @@ PS: 业务再多也不怕啦~
 	> vc的router，中间层，service与view互相信任的中间件
 
 ##### 提示： 
++ Ausbin框架的核心代码位于/Ausbin/AusbinFramework/
 + Ausbin框架的引入步骤写在注释里，用注释`// [Ausbin] ……`注明，没有注明的代码就和我们之前开发vc的流程类似，大家可以适当忽略。
 + Ausbin框架的代理方法或扩展方法均以`asb_`开头，以便区分。
     + vcModel的扩展方法以`asb_vc_model_`开头
@@ -222,7 +223,7 @@ class SampleVcRouter: AusbinVcRouter {
 ------------
 
 ### 基于Ausbin的进阶例子
-以Main作为例子，分析一下实际业务应用时可能遇到的情况。（具体参考master/Ausbin/Controllers/Main）
+以Main作为例子，分析一下实际业务应用时可能遇到的情况。（具体参考/Ausbin/Controllers/Main）
 - 1.&nbsp;当vcModel为多个子对象互相嵌套时，使所有子对象都能响应KVC
     + vcModel
         + **innerText** (1级子变量)
