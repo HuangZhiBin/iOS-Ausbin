@@ -10,7 +10,7 @@ import UIKit
 
 class MainVcService: NSObject {
     
-    var vcModel: MainVcModel!;
+    @objc var vcModel: MainVcModel!;
     
     override init() {
         super.init();

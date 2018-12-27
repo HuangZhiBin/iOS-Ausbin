@@ -229,16 +229,16 @@ extension MainVcView : AusbinVcViewDelegate{
             self.tableView.reloadData();
         }
         
-        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.innerText1)){
-            self.levelLabel1.text = self.vcRouter.dataSet.innerText1;
+        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.innerText)){
+            self.levelLabel1.text = self.vcRouter.dataSet.innerText;
         }
         
-        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.innerText2)){
-            self.levelLabel2.text = self.vcRouter.dataSet.innerText2;
+        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.childModel.innerText)){
+            self.levelLabel2.text = self.vcRouter.dataSet.childModel.innerText;
         }
         
-        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.innerText3)){
-            self.levelLabel3.text = self.vcRouter.dataSet.innerText3;
+        if(routerKey == nil || routerKey == #keyPath(MainVcRouter.dataSet.childModel.childItemModel.innerText)){
+            self.levelLabel3.text = self.vcRouter.dataSet.childModel.childItemModel.innerText;
         }
     }
 }

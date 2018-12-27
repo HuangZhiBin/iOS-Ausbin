@@ -11,7 +11,7 @@ import UIKit
 // [Ausbin] vcService单纯地操作model，不做其他任何处理，包括view、router的操作
 class SampleVcService: NSObject {
     
-    var vcModel: SampleVcModel!;
+    @objc var vcModel: SampleVcModel!;
     
     override init() {
         super.init();
