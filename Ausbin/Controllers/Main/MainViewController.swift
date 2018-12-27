@@ -18,7 +18,6 @@ class MainViewController: UIViewController {
         
         self.title = "演示";
         
-        //初始化vcView
         self.vcView = MainVcView(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height:ScreenHeight-Status_Bar_Height-Navigation_Bar_Height));
         self.view.addSubview(self.vcView);
         

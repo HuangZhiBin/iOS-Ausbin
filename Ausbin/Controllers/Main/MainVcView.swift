@@ -10,7 +10,12 @@ import UIKit
 
 class MainVcView: UIView {
     
-    private weak var vcRouter : MainVcRouter!;
+    @objc weak var vcRouter : MainVcRouter!{
+        didSet{
+            //model初始化view
+            self.asb_refreshViews(fullKeyPath : nil);
+        }
+    };
     
     let CELL_IDENTIFIER = "cell";
 
@@ -215,13 +220,8 @@ extension MainVcView : UITableViewDelegate,UITableViewDataSource{
 
 }
 
+// [Ausbin] 必须为VcView实现AusbinVcViewDelegate代理
 extension MainVcView : AusbinVcViewDelegate{
-    
-    func asb_setRouter(router : NSObject){
-        self.vcRouter = router as! MainVcRouter;
-        //model初始化view
-        self.asb_refreshViews(fullKeyPath : nil);
-    }
     
     func asb_refreshViews(fullKeyPath : String?){
         

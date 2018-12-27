@@ -11,7 +11,12 @@ import UIKit
 class SampleVcView: UIView {
     
     // [Ausbin] vcRouter实例，定义为weak防止强制持有
-    private weak var vcRouter : SampleVcRouter!
+    @objc weak var vcRouter : SampleVcRouter!{
+        didSet{
+            // [Ausbin] model初始化view
+            self.asb_refreshViews(fullKeyPath: nil);
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -54,15 +59,7 @@ class SampleVcView: UIView {
 }
 
 // [Ausbin] 必须为VcView实现AusbinVcViewDelegate代理
-// MARK: - 实现AusbinVcViewDelegate代理
 extension SampleVcView : AusbinVcViewDelegate{
-    
-    // [Ausbin] 引入外部vcRouter
-    func asb_setRouter(router : NSObject){
-        self.vcRouter = router as! SampleVcRouter;
-        // [Ausbin] model初始化view
-        self.asb_refreshViews(fullKeyPath: nil);
-    }
     
     // [Ausbin] 接受vcRouter的UI更新请求，并让vcView作出相应的UI刷新操作
     func asb_refreshViews(fullKeyPath: String?){

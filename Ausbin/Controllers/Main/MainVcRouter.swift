@@ -17,11 +17,12 @@ class MainVcRouter: AusbinVcRouter {
 
     init(vcView : MainVcView) {
         super.init(
-            handler: MainVcService(),
+            vcService: MainVcService(),
             vcModelKeyPath: #keyPath(MainVcService.vcModel),
+            vcView: vcView,
+            vcRouterPathKey: #keyPath(MainVcView.vcRouter),
             handlerKeyPath: #keyPath(MainVcRouter.handler),
-            dataSetKeyPath: #keyPath(MainVcRouter.dataSet),
-            vcView: vcView
+            dataSetKeyPath: #keyPath(MainVcRouter.dataSet)
         );
     }
     

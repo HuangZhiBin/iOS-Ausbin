@@ -13,16 +13,16 @@ class AusbinVcRouter: NSObject{
     private var dataK : Any!;
     private weak var vcView : UIView!;
     
-    init(handler: NSObject, vcModelKeyPath: String, handlerKeyPath: String, dataSetKeyPath: String, vcView : UIView) {
+    init(vcService: NSObject, vcModelKeyPath: String, vcView : UIView, vcRouterPathKey : String, handlerKeyPath: String, dataSetKeyPath: String) {
         super.init();
         
-        self.setValue(handler, forKey: handlerKeyPath);
+        self.setValue(vcService, forKey: handlerKeyPath);
         
-        self.dataK = handler.value(forKey: vcModelKeyPath);
+        self.dataK = vcService.value(forKey: vcModelKeyPath);
         self.setValue(self.dataK, forKey: dataSetKeyPath);
         
         self.vcView = vcView;
-        (self.vcView as! AusbinVcViewDelegate).asb_setRouter(router: self);
+        self.vcView.setValue(self, forKey: vcRouterPathKey);
         
         //MARK: - 开始监听vcModel的数据改变(+KVC)
         self.addRouterObserver(vcModel: self.dataK as AnyObject);
@@ -32,16 +32,12 @@ class AusbinVcRouter: NSObject{
         super.init();
     }
     
-    //MARK: - KVC 监听Model变化->刷新View
-    func asb_handleKeyPathChange(keyPath: String?, object: Any?){
-        
-    }
-    
     //MARK: - 解除监听vcModel的数据改变(-KVC)
     func asb_deinitRouter(){
         self.removeRouterObserver(vcModel: self.dataK as AnyObject);
     }
     
+    //MARK: - KVC 监听Model变化->刷新View
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         //print(keyPath);
         //self.asb_handleKeyPathChange(keyPath: keyPath, object: object);
