@@ -19,7 +19,7 @@ PS: 业务再多也不怕啦~
 `Swift4`
 
 ### Ausbin框架核心技术
-`KVC`
+`KVC` `反射`
 
 ### Ausbin框架版本
 `1.1.0`
@@ -103,6 +103,7 @@ vcService直接操作vcModel，为vcRouter提供接口，不参与其他的事�
 ```swift
 class SampleVcService: NSObject {
     
+    // [Ausbin] 必须为变量vcModel添加objc特性支持KVC:@objc
     var vcModel: SampleVcModel!;
     
     override init() {
@@ -127,16 +128,20 @@ class SampleVcService: NSObject {
 
 vcView需要建立与vcRouter的联系，一是将接收到的UI事件（点击按钮、长按、切换图片等）反馈给vcRouter，二是响应vcRouter返回的UI刷新请求。
 
-- 1.&nbsp;创建`weak`类型的私有vcRouter实例(weak防止强制持有，避免循环引用，类型为私有，保证vcRouter实例由代理引入)
+- 1.&nbsp;创建`weak`类型的vcRouter实例(weak防止强制持有，避免循环引用)，引入外部vcRouter，刷新当前view
 - 2.&nbsp;vcView实现`AusbinVcViewDelegate`代理
-- 3.&nbsp;代理方法`asb_setRouter()`引入外部vcRouter，刷新当前view
-- 4.&nbsp;代理方法`asb_refreshViews()`接受vcRouter的UI更新请求
+- 3.&nbsp;代理方法`asb_refreshViews()`接受vcRouter的UI更新请求
 
 ```swift
 class SampleVcView: UIView {
     
-    // [Ausbin] vcRouter实例，定义为weak防止强制持有
-    private weak var vcRouter : SampleVcRouter!
+    // [Ausbin] 必须为变量vcRouter添加objc特性支持KVC:@objc，定义为weak防止强制持有
+    @objc weak var vcRouter : SampleVcRouter!{
+        didSet{
+            // model初始化view
+            self.asb_refreshViews(fullKeyPath: nil);
+        }
+    }
 
     //UI初始化代码，此处省略……
     
@@ -144,6 +149,7 @@ class SampleVcView: UIView {
         //UI初始化代码，此处省略……
         
         self.btn.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
+            //向vcRouter发送事件
             self?.vcRouter.handler.changeInnerText();
         });
     }
@@ -154,16 +160,10 @@ class SampleVcView: UIView {
 // [Ausbin] 必须为VcView实现AusbinVcViewDelegate代理
 extension SampleVcView : AusbinVcViewDelegate{
     
-    // [Ausbin] 引入外部vcRouter
-    func asb_setRouter(router : NSObject){
-        self.vcRouter = router as! SampleVcRouter;
-        // [Ausbin] model初始化view
-        self.asb_refreshViews(routerKey: nil);
-    }
-    
-    // [Ausbin] 接受vcRouter的UI更新请求，并让vcView作出相应的UI刷新操作
-    func asb_refreshViews(routerKey: String?){
-        if(routerKey == nil || routerKey == #keyPath(SampleVcRouter.dataSet.innerText)){
+    // 接受vcRouter的UI更新请求，并让vcView作出相应的UI刷新操作
+    func asb_refreshViews(fullKeyPath: String?){
+        //fullKeyPath为nil默认执行代码，用于view的数据初始化
+        if(fullKeyPath == nil || fullKeyPath == "innerText"){
             self.label.text = self.vcRouter.dataSet.innerText;
         }
     }
@@ -174,119 +174,48 @@ extension SampleVcView : AusbinVcViewDelegate{
 
 新增vcRouter类，作为vcView和vcService的信任中介。这是Ausbin框架的重点。
 
-- 1.&nbsp;创建vcService(创建vcService的同时也初始化了vcModel)
-- 2.&nbsp;引入外部vcView
+- 1.&nbsp;继承AusbinVcRouter
+- 2.&nbsp;引入外部vcView，初始化vcRouter
 - 3.&nbsp;创建**dataSet** (vcRouter提供给vcView的变量集)
 - 4.&nbsp;创建**handler** (vcRouter调用vcService的接口更新vcModel数据)
-- 5.&nbsp;开始通过KVC监听vcModel的数据改变(+KVC)
-- 6.&nbsp;vcRouter实现`AusbinVcRouterDelegate`代理
-- 7.&nbsp;代理方法`asb_handleKeyPathChange()`当KVC监听到了vcModel变化，vcRouter通知vcView刷新UI
-- 8.&nbsp;代理方法`asb_deinitRouter()`在vc销毁时解除监听vcModel的数据改变(-KVC)
 
 ```swift
-class SampleVcRouter: NSObject {
+class SampleVcRouter: AusbinVcRouter {
     
-    private var vcService : SampleVcService!;
+    // 处理View的Action事件，通过Service刷新Model数据，必须为变量vcRouter添加objc特性支持KVC:@objc
+    @objc var handler : SampleVcService!;
     
-    private weak var vcView : SampleVcView!;
+    // Model提供给View刷新界面的model数据，必须为变量vcRouter添加objc特性支持KVC:@objc
+    @objc var dataSet : SampleVcModel!;
     
     init(vcView : SampleVcView) {
-        super.init();
-        
-        self.vcService = SampleVcService();
-        self.dataSet = DataSet.init(model: self.vcService.vcModel);
-        self.handler = Handler.init(service: self.vcService);
-        
-        self.vcView = vcView;
-        self.vcView.asb_setRouter(router: self);
-        
-        // [Ausbin] 开始监听vcModel的数据改变(+KVC)
-        self.asb_vc_router_addObserver(vcModel: self.vcService.vcModel);
+        super.init(
+            vcService: SampleVcService(),
+            vcModelKeyPath: #keyPath(SampleVcService.vcModel),
+            vcView: vcView,
+            vcRouterPathKey: #keyPath(SampleVcView.vcRouter),
+            handlerKeyPath: #keyPath(SampleVcRouter.handler),
+            dataSetKeyPath: #keyPath(SampleVcRouter.dataSet)
+        );
     }
     
     required init(coder aDecoder: NSCoder?) {
-        super.init();
-    }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        self.asb_handleKeyPathChange(keyPath: keyPath, object: object);
-    }
-    
-    // [Ausbin] vcService根据vcView的实际需要，选择性的给vcView提供只读数据
-    @objc var dataSet : DataSet!;
-    //DataSet为内部类
-    class DataSet: NSObject {
-        
-        private var model : SampleVcModel!;
-        
-        init(model : SampleVcModel) {
-            super.init();
-            self.model = model;
-        }
-        
-        required init(coder aDecoder: NSCoder?) {
-            super.init();
-        }
-        
-        @objc var innerText  : String!{
-            get{
-                return self.model.innerText;
-            }
-        };
-    }
-    
-    // [Ausbin] 调用vcService提供的接口更新vcModel数据
-    var handler : Handler!;
-    //Handler为内部类
-    class Handler: NSObject {
-        
-        private var service : SampleVcService!;
-        
-        init(service : SampleVcService) {
-            super.init();
-            self.service = service;
-        }
-        
-        required init(coder aDecoder: NSCoder?) {
-            super.init();
-        }
-        
-        func changeInnerText(){
-            self.service.changeInnerText();
-        }
-    }
-}
-
-// [Ausbin]  vcRouter必须实现AusbinVcRouterDelegate代理
-extension SampleVcRouter : AusbinVcRouterDelegate{
-    
-    // [Ausbin]  KVC 监听vcModel变化->刷新vcView
-    func asb_handleKeyPathChange(keyPath: String?, object: Any?){
-        let fullKeyPath = self.vcService.vcModel.asb_vc_model_getFullKeyPath(object: object, keyPath: keyPath);
-        //若vcModel有子对象people,people对象有子对象child,child有属性subChild,则subChild的fullKeyPath为people.child.subChild(以此类推)
-        if(fullKeyPath == "innerText"){
-            self.vcView.asb_refreshViews(routerKey: #keyPath(SampleVcRouter.dataSet.innerText));
-        }
-    }
-    
-    // [Ausbin]  解除监听vcModel的数据改变(-KVC)
-    func asb_deinitRouter(){
-        self.asb_vc_router_removeObserver(vcModel: self.vcService.vcModel);
+        super.init(coder: nil);
     }
 }
 ```
 
 **关于Ausbin的设计模式：**
 > - 1.&nbsp;遵循vcView与vcService(或vcModel)互不信任的模式: 
->   - (1)&nbsp;vcView无法直接操作vcService(或vcModel)，只能得到vcRouter提供的只读数据
->   - (2)&nbsp;vcService(或vcModel)也无法直接操作vcView
+>   - (1)&nbsp;vcView不直接操作vcService(或vcModel)，只得到vcRouter提供的dataSet数据，以及通过vcRouter提供的handler处理数据
+>   - (2)&nbsp;vcService(或vcModel)不直接操作vcView，通过KVC由vcRouter通知vcView刷新UI
 >   - (3)&nbsp;vcRouter作为vcView与vcService都信任的中间层，负责二者的交互
-> - 2.&nbsp;Ausbin的引入步骤简单且易上手：
+> - 2.&nbsp;Ausbin的引入步骤简单易上手：
 >   - (1)&nbsp;**vc层**:&nbsp;只需初始化vcRouter，并在vc的deinit时销毁，无其他额外的引入代码
->   - (2)&nbsp;**vcModel层**:&nbsp;无额外的引入代码，只需保证KVC监听的变量支持objc特性
->   - (3)&nbsp;**vcService层**:&nbsp;无额外的引入代码
->   - (4)&nbsp;**vcView层**:&nbsp;只需定义私有变量vcRouter，实现AusbinVcViewDelegate代理
->   - (5)&nbsp;**vcRouter层**:&nbsp;Ausbin的核心实现，是在原有的vc+model+service+view的基础上新增的中间层，需要定义`handler`(vcRouter -> vcService)和`dataSet`(vcRouter -> vcView)两大变量，并实现AusbinVcRouterDelegate代理
+>   - (2)&nbsp;**vcModel层**:&nbsp;无额外的引入代码，只需保证KVC监听的变量支持objc+dynamic特性
+>   - (3)&nbsp;**vcService层**:&nbsp;无额外的引入代码，只需保证KVC监听的变量vcModel支持objc特性
+>   - (4)&nbsp;**vcView层**:&nbsp;只需定义weak变量vcRouter，保证vcRouter支持objc特性，并实现AusbinVcViewDelegate代理
+>   - (5)&nbsp;**vcRouter层**:&nbsp;Ausbin的核心实现，是在原有的vc+model+service+view的基础上新增的中间层，需要定义`handler`(vcRouter -> vcService)和`dataSet`(vcRouter -> vcView)两大变量
 
 ##### 最终效果
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545819873521.gif)
@@ -305,6 +234,7 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 - 3.&nbsp;变量为数组时，数组任一对象(索引值为index)的属性值改变不会触发KVC，可通过`vcModel.arr = vcModel.arr`或者`vcModel.arr[index] = vcModel.arr[index]`的形式强制触发KVC
 - 4.&nbsp;KVC监听的变量需要objc特性的支持，Int、Float等基础类型不支持，建议使用NSNumber
 - 5.&nbsp;网络访问的情况
+- 6.&nbsp;UITableView的数据刷新
 
 ##### 最终效果
 ![](http://wxtopik.oss-cn-shanghai.aliyuncs.com/app/images/1545813617457.gif)
@@ -319,7 +249,7 @@ extension SampleVcRouter : AusbinVcRouterDelegate{
 - 3.&nbsp;vc间的跳转应该在哪里处理？
 - 4.&nbsp;Ausbin能多大程度给繁杂的业务带来维护的好处？
 - 5.&nbsp;Ausbin最大的问题，你发现了吗？
-- 6.&nbsp;Ausbin的最佳定位是一种框架、一种工具，还是一种分层思想？
+- 6.&nbsp;Ausbin的定位是一种框架、一种工具，还是一种分层思想？
 
 待续……
 

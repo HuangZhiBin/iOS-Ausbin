@@ -11,9 +11,10 @@ import UIKit
 // [Ausbin] 新增Router类，作为vcView和vcService的信任中介
 class SampleVcRouter: AusbinVcRouter {
     
-    //MARK: - 处理View的Action事件，通过Service刷新Model数据
+    // 处理View的Action事件，通过Service刷新Model数据，必须为变量vcRouter添加objc特性支持KVC:@objc
     @objc var handler : SampleVcService!;
-    //MARK: - Model提供给View刷新界面的model数据
+    
+    // Model提供给View刷新界面的model数据，必须为变量vcRouter添加objc特性支持KVC:@objc
     @objc var dataSet : SampleVcModel!;
     
     init(vcView : SampleVcView) {

@@ -10,10 +10,10 @@ import UIKit
 
 class SampleVcView: UIView {
     
-    // [Ausbin] vcRouter实例，定义为weak防止强制持有
+    // [Ausbin] 必须为变量vcRouter添加objc特性支持KVC:@objc，定义为weak防止强制持有
     @objc weak var vcRouter : SampleVcRouter!{
         didSet{
-            // [Ausbin] model初始化view
+            // model初始化view
             self.asb_refreshViews(fullKeyPath: nil);
         }
     }
@@ -34,6 +34,7 @@ class SampleVcView: UIView {
         self.addSubview(self.btn);
         
         self.btn.setAction(kUIButtonBlockTouchUpInside, with: {[weak self] () in
+            //向vcRouter发送事件
             self?.vcRouter.handler.changeInnerText();
         });
     }
@@ -61,10 +62,9 @@ class SampleVcView: UIView {
 // [Ausbin] 必须为VcView实现AusbinVcViewDelegate代理
 extension SampleVcView : AusbinVcViewDelegate{
     
-    // [Ausbin] 接受vcRouter的UI更新请求，并让vcView作出相应的UI刷新操作
+    // 接受vcRouter的UI更新请求，并让vcView作出相应的UI刷新操作
     func asb_refreshViews(fullKeyPath: String?){
         //fullKeyPath为nil默认执行代码，用于view的数据初始化
-        
         if(fullKeyPath == nil || fullKeyPath == "innerText"){
             self.label.text = self.vcRouter.dataSet.innerText;
         }

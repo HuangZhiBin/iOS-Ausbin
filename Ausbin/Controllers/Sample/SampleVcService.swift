@@ -8,9 +8,10 @@
 
 import UIKit
 
-// [Ausbin] vcService单纯地操作model，不做其他任何处理，包括view、router的操作
+// vcService单纯地操作model，不做其他任何处理，包括view、router的操作
 class SampleVcService: NSObject {
     
+    // [Ausbin] 必须为变量vcModel添加objc特性支持KVC:@objc
     @objc var vcModel: SampleVcModel!;
     
     override init() {
