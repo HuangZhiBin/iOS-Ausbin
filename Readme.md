@@ -168,7 +168,7 @@ extension SampleVcView : AusbinVcViewDelegate{
     }
 }
 ```
-> 关于`asb_refreshViews()`代理方法的参数`fullKeyPath`的说明，请参考下面的进阶例子中关于”子对象互相嵌套时，获取vcModel子对象的keyPath“的解释。
+> 关于`asb_refreshViews()`代理方法的参数`fullKeyPath`的说明，请参考下面的进阶例子中关于“子对象互相嵌套时，获取vcModel子对象的keyPath”的解释。
 
 ###### （5）SampleVcRouter.swift
 
@@ -230,7 +230,11 @@ class SampleVcRouter: AusbinVcRouter {
             + **innerText** (2级子变量)
             + childItemModel: ChildItemModel
 	            + **innerText** (3级子变量)
-- 2.&nbsp;子对象互相嵌套时，获取vcModel子对象的keyPath<br />fullKeyPath为完整的keyPath，例如上面的vcModel对象，vcModel下面的innerText的fullKeyPath为`innerText`，childModel下面的innerText的fullKeyPath为`childModel.innerText`，childItemModel下面的innerText的fullKeyPath为`childModel.childItemModel.innerText`，以此类推
+- 2.&nbsp;子对象互相嵌套时，获取vcModel子对象的keyPath<br />fullKeyPath为完整的keyPath，以上面的vcModel对象为例：
+>   - vcModel下面的innerText的fullKeyPath为`innerText`
+>   - childModel下面的innerText的fullKeyPath为`childModel.innerText`
+>   - childItemModel下面的innerText的fullKeyPath为`childModel.childItemModel.innerText`
+>   - 以此类推
 - 3.&nbsp;变量为数组时，数组任一对象(索引值为index)的属性值改变不会触发KVC，可通过`vcModel.arr = vcModel.arr`或者`vcModel.arr[index] = vcModel.arr[index]`的形式强制触发KVC
 - 4.&nbsp;KVC监听的变量需要objc特性的支持，Int、Float等基础类型不支持，建议使用NSNumber
 - 5.&nbsp;网络访问的情况
