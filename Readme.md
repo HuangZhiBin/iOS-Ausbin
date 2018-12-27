@@ -50,7 +50,6 @@ PS: 业务再多也不怕啦~
 + Ausbin框架的代理方法或扩展方法均以`asb_`开头，以便区分。
     + vcModel的扩展方法以`asb_vc_model_`开头
 	+ vcView的扩展方法以`asb_vc_view_`开头
-    + vcRouter的扩展方法以`asb_vc_router_`开头
 
 ##### 代码分析
 ###### （1）SampleViewController.swift
