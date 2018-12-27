@@ -43,7 +43,13 @@ class AusbinVcRouter: NSObject{
         //self.asb_handleKeyPathChange(keyPath: keyPath, object: object);
         
         let fullKeyPath = (self.dataK as! NSObject).asb_vc_model_getFullKeyPath(object: object, keyPath: keyPath);
-        (self.vcView as! AusbinVcViewDelegate).asb_refreshViews(fullKeyPath: fullKeyPath);
+        
+        if(self.vcView is AusbinVcViewDelegate){
+            (self.vcView as! AusbinVcViewDelegate).asb_refreshViews(fullKeyPath: fullKeyPath);
+        }
+        else{
+            fatalError("vcView is not implemented to AusbinVcViewDelegate");
+        }
     }
     
     private func addRouterObserver(vcModel : AnyObject){
