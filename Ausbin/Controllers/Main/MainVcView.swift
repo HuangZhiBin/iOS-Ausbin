@@ -224,6 +224,7 @@ extension MainVcView : UITableViewDelegate,UITableViewDataSource{
 extension MainVcView : AusbinVcViewDelegate{
     
     func asb_refreshViews(fullKeyPath : String?){
+        //fullKeyPath为nil默认执行代码，用于view的数据初始化
         
         if(fullKeyPath == nil || fullKeyPath == "items"){
             self.tableView.reloadData();

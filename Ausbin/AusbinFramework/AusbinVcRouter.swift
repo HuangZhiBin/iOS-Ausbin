@@ -11,7 +11,7 @@ import UIKit
 class AusbinVcRouter: NSObject{
     
     private var dataK : Any!;
-    private weak var vcView : UIView!;
+    private weak var vcView : UIView!;//vcView实例，定义为weak防止强制持有
     
     init(vcService: NSObject, vcModelKeyPath: String, vcView : UIView, vcRouterPathKey : String, handlerKeyPath: String, dataSetKeyPath: String) {
         super.init();

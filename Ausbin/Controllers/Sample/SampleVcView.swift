@@ -63,6 +63,8 @@ extension SampleVcView : AusbinVcViewDelegate{
     
     // [Ausbin] 接受vcRouter的UI更新请求，并让vcView作出相应的UI刷新操作
     func asb_refreshViews(fullKeyPath: String?){
+        //fullKeyPath为nil默认执行代码，用于view的数据初始化
+        
         if(fullKeyPath == nil || fullKeyPath == "innerText"){
             self.label.text = self.vcRouter.dataSet.innerText;
         }
