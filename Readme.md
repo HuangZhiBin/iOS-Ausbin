@@ -1,4 +1,5 @@
 # Ausbin框架
+代码不再更新，最新代码请参考https://github.com/HuangZhiBin/Ausbin
 ### 基于数据驱动的iOS开源框架
 Ausbin框架是基于数据驱动的iOS开源框架，其原理类似于前端的VUE/react框架。
 PS: 业务再多也不怕啦~
